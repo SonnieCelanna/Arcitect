@@ -4654,13 +4654,20 @@ let saveTimeout = null;
 let saveInProgress = false;
 let pendingSave = false;
 let db = null;
+let storageReady = false;
 
 // IndexedDB wrapper
 const Storage = {
+  mode: 'none',
+  
   async init() {
+    if (storageReady) return true;
+    
     // Try Claude's window.storage first (for artifacts)
     if (window.storage && typeof window.storage.get === 'function') {
       this.mode = 'claude';
+      storageReady = true;
+      console.log('Storage: Using Claude artifacts');
       return true;
     }
     
@@ -4669,14 +4676,18 @@ const Storage = {
       try {
         db = await this.openDB();
         this.mode = 'indexeddb';
+        storageReady = true;
+        console.log('Storage: Using IndexedDB');
         return true;
       } catch (e) {
-        console.log('IndexedDB failed, falling back to localStorage');
+        console.log('IndexedDB failed:', e);
       }
     }
     
     // Fall back to localStorage
     this.mode = 'localstorage';
+    storageReady = true;
+    console.log('Storage: Using localStorage (limited capacity)');
     return true;
   },
   
@@ -4684,10 +4695,18 @@ const Storage = {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open(DB_NAME, DB_VERSION);
       
-      request.onerror = () => reject(request.error);
-      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => {
+        console.error('IndexedDB open error:', request.error);
+        reject(request.error);
+      };
+      
+      request.onsuccess = () => {
+        console.log('IndexedDB opened successfully');
+        resolve(request.result);
+      };
       
       request.onupgradeneeded = (e) => {
+        console.log('IndexedDB upgrade needed');
         const database = e.target.result;
         if (!database.objectStoreNames.contains(STORE_NAME)) {
           database.createObjectStore(STORE_NAME, { keyPath: 'key' });
@@ -4697,11 +4716,15 @@ const Storage = {
   },
   
   async get(key) {
+    if (!storageReady) await this.init();
+    
     if (this.mode === 'claude') {
       try {
         const result = await window.storage.get(key);
         if (result && result.value) return result.value;
-      } catch (e) {}
+      } catch (e) {
+        console.log('Claude storage get failed:', e);
+      }
       return null;
     }
     
@@ -4711,9 +4734,16 @@ const Storage = {
           const tx = db.transaction(STORE_NAME, 'readonly');
           const store = tx.objectStore(STORE_NAME);
           const request = store.get(key);
-          request.onsuccess = () => resolve(request.result?.value || null);
-          request.onerror = () => resolve(null);
+          request.onsuccess = () => {
+            const result = request.result?.value || null;
+            resolve(result);
+          };
+          request.onerror = () => {
+            console.log('IndexedDB get error:', request.error);
+            resolve(null);
+          };
         } catch (e) {
+          console.log('IndexedDB transaction error:', e);
           resolve(null);
         }
       });
@@ -4723,16 +4753,21 @@ const Storage = {
     try {
       return localStorage.getItem(key);
     } catch (e) {
+      console.log('localStorage get failed:', e);
       return null;
     }
   },
   
   async set(key, value) {
+    if (!storageReady) await this.init();
+    
     if (this.mode === 'claude') {
       try {
         await window.storage.set(key, value);
         return true;
-      } catch (e) {}
+      } catch (e) {
+        console.log('Claude storage set failed:', e);
+      }
       return false;
     }
     
@@ -4742,9 +4777,22 @@ const Storage = {
           const tx = db.transaction(STORE_NAME, 'readwrite');
           const store = tx.objectStore(STORE_NAME);
           const request = store.put({ key, value });
-          request.onsuccess = () => resolve(true);
-          request.onerror = () => resolve(false);
+          
+          request.onsuccess = () => {
+            resolve(true);
+          };
+          request.onerror = () => {
+            console.error('IndexedDB set error:', request.error);
+            resolve(false);
+          };
+          tx.oncomplete = () => {
+            // Transaction completed successfully
+          };
+          tx.onerror = () => {
+            console.error('IndexedDB transaction error:', tx.error);
+          };
         } catch (e) {
+          console.error('IndexedDB set exception:', e);
           resolve(false);
         }
       });
@@ -4755,12 +4803,10 @@ const Storage = {
       localStorage.setItem(key, value);
       return true;
     } catch (e) {
-      console.error('Storage failed:', e);
+      console.error('localStorage set failed:', e);
       return false;
     }
-  },
-  
-  mode: 'localstorage'
+  }
 };
 
 async function loadState() {
@@ -4780,9 +4826,9 @@ async function loadState() {
 }
 
 function saveState() {
-  // Debounce saves - wait 1.5 seconds after last change
+  // Debounce saves - wait 500ms after last change
   if (saveTimeout) clearTimeout(saveTimeout);
-  saveTimeout = setTimeout(() => doSave(), 1500);
+  saveTimeout = setTimeout(() => doSave(), 500);
 }
 
 async function doSave() {
@@ -4800,9 +4846,14 @@ async function doSave() {
   });
   
   try {
-    await Storage.set(STORAGE_KEY, data);
+    const success = await Storage.set(STORAGE_KEY, data);
+    if (success) {
+      console.log('Saved successfully, data size:', Math.round(data.length / 1024), 'KB');
+    } else {
+      console.error('Save returned false');
+    }
   } catch (e) {
-    console.log('Save failed:', e);
+    console.error('Save failed:', e);
   }
   
   saveInProgress = false;
