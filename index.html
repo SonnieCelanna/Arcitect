@@ -4655,6 +4655,7 @@ let saveInProgress = false;
 let pendingSave = false;
 let db = null;
 let storageReady = false;
+let initialLoadComplete = false;
 
 // IndexedDB wrapper
 const Storage = {
@@ -4883,14 +4884,17 @@ async function loadState() {
   
   try {
     const saved = await Storage.get(STORAGE_KEY);
+    console.log('loadState - raw data exists:', !!saved);
     if (saved) {
       const data = JSON.parse(saved);
+      console.log('loadState - parsed stories:', data.stories?.length || 0);
       state.stories = data.stories || [];
       state.globalRoster = data.globalRoster || [];
     }
   } catch (e) {
-    console.log('Starting fresh or storage unavailable');
+    console.error('loadState error:', e);
   }
+  console.log('loadState - final state.stories:', state.stories.length);
   renderDropdown();
 }
 
@@ -5375,7 +5379,12 @@ function renderBeats() {
   
   document.getElementById('frameworkWrapper').style.display = state.currentTab === 'plot' ? 'flex' : 'none';
   
-  const framework = FRAMEWORKS[scopeData.framework || 'custom'];
+  // Update framework dropdown to reflect current scope
+  const currentFramework = scopeData.framework || 'custom';
+  document.getElementById('frameworkSelect').value = currentFramework;
+  document.getElementById('frameworkBanner').textContent = FRAMEWORKS[currentFramework]?.description || '';
+  
+  const framework = FRAMEWORKS[currentFramework];
   const hasBeats = (scopeData.beats && scopeData.beats.length > 0) || 
                    (scopeData.framework && scopeData.framework !== 'custom');
   const hasChildren = !isDeepestLevel;
@@ -9318,11 +9327,12 @@ function populateLinkPicker(filter) {
   const story = getCurrentStory();
   if (!story) return;
   
+  const scopeData = getCurrentScopeData();
   const items = [];
   const f = filter.toLowerCase();
   
-  // Add plot beats
-  const plotBeats = story.framework === 'custom' ? (story.customBeats || []) : FRAMEWORKS[story.framework].beats;
+  // Add plot beats from current scope
+  const plotBeats = scopeData.framework === 'custom' ? (scopeData.beats || []) : (FRAMEWORKS[scopeData.framework]?.beats || []);
   plotBeats.forEach((beat, i) => {
     if (!f || beat.name.toLowerCase().includes(f)) {
       items.push({
@@ -9335,25 +9345,29 @@ function populateLinkPicker(filter) {
     }
   });
   
-  // Add arc beats
-  (story.organizers || []).forEach((org, orgIdx) => {
-    (org.characters || []).forEach((char, charIdx) => {
-      (char.arcs || []).forEach((arc, arcIdx) => {
-        (arc.beats || []).forEach((beat, beatIdx) => {
-          const title = beat.title || `Beat ${beatIdx + 1}`;
-          if (!f || title.toLowerCase().includes(f) || char.name.toLowerCase().includes(f) || arc.name.toLowerCase().includes(f)) {
-            items.push({
-              type: 'arc',
-              id: `arc-${orgIdx}-${charIdx}-${arcIdx}-${beatIdx}`,
-              title: title,
-              subtitle: `${char.name} · ${arc.name}`,
-              orgIdx, charIdx, arcIdx, beatIdx
-            });
-          }
-        });
+  // Add arc beats from current scope's characters
+  const characters = scopeData.characters || [];
+  characters.forEach((char, charIdx) => {
+    (char.arcs || []).forEach((arc, arcIdx) => {
+      (arc.beats || []).forEach((beat, beatIdx) => {
+        const title = beat.title || `Beat ${beatIdx + 1}`;
+        if (!f || title.toLowerCase().includes(f) || char.name.toLowerCase().includes(f) || arc.name.toLowerCase().includes(f)) {
+          items.push({
+            type: 'arc',
+            id: `arc-${charIdx}-${arcIdx}-${beatIdx}`,
+            title: title,
+            subtitle: `${char.name} - ${arc.name}`,
+            charIdx, arcIdx, beatIdx
+          });
+        }
       });
     });
   });
+  
+  if (items.length === 0) {
+    container.innerHTML = '<div class="search-empty">No beats found. Add plot or character arc beats first.</div>';
+    return;
+  }
   
   container.innerHTML = items.slice(0, 15).map(item => `
     <div class="link-picker-item" onclick="createLink('${item.id}')">
@@ -9363,7 +9377,7 @@ function populateLinkPicker(filter) {
         <div class="link-picker-subtitle">${escapeHtml(item.subtitle)}</div>
       </div>
     </div>
-  `).join('') || '<div class="search-empty">No beats found</div>';
+  `).join('');
 }
 
 function filterLinkPicker(value) {
@@ -9374,26 +9388,25 @@ function createLink(targetId) {
   if (!currentLinkSource) return;
   
   const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
   const linkType = document.getElementById('linkTypeSelect').value;
   
   // Get source ID
   let sourceId;
   if (currentLinkSource.type === 'plot') {
     sourceId = `plot-${currentLinkSource.indices[0]}`;
-    if (!story.beatLinks) story.beatLinks = {};
-    if (!story.beatLinks[sourceId]) story.beatLinks[sourceId] = [];
+    if (!scopeData.beatLinks) scopeData.beatLinks = {};
+    if (!scopeData.beatLinks[sourceId]) scopeData.beatLinks[sourceId] = [];
     
-    const exists = story.beatLinks[sourceId].some(l => l.target === targetId);
+    const exists = scopeData.beatLinks[sourceId].some(l => l.target === targetId);
     if (!exists) {
-      story.beatLinks[sourceId].push({ target: targetId, type: linkType });
+      scopeData.beatLinks[sourceId].push({ target: targetId, type: linkType });
     }
   } else {
     const [charIdx, arcIdx, beatIdx] = currentLinkSource.indices;
-    sourceId = `arc-${state.currentOrganizerId}-${charIdx}-${arcIdx}-${beatIdx}`;
-    
-    const org = story.organizers.find(o => o.id === state.currentOrganizerId);
-    if (org) {
-      const beat = org.characters[charIdx]?.arcs[arcIdx]?.beats[beatIdx];
+    const char = scopeData.characters?.[charIdx];
+    if (char) {
+      const beat = char.arcs?.[arcIdx]?.beats?.[beatIdx];
       if (beat) {
         if (!beat.links) beat.links = [];
         const exists = beat.links.some(l => l.target === targetId);
@@ -9411,29 +9424,30 @@ function createLink(targetId) {
   if (currentLinkSource.type === 'plot') {
     renderBeats();
   } else {
-    renderOrganizerContent();
+    renderArcs();
   }
 }
 
 function removeLink(sourceType, sourceIndices, targetId) {
   const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
   
   if (sourceType === 'plot') {
     const sourceId = `plot-${sourceIndices[0]}`;
-    if (story.beatLinks && story.beatLinks[sourceId]) {
-      story.beatLinks[sourceId] = story.beatLinks[sourceId].filter(l => l.target !== targetId);
+    if (scopeData.beatLinks && scopeData.beatLinks[sourceId]) {
+      scopeData.beatLinks[sourceId] = scopeData.beatLinks[sourceId].filter(l => l.target !== targetId);
     }
     renderBeats();
   } else {
     const [charIdx, arcIdx, beatIdx] = sourceIndices;
-    const org = story.organizers.find(o => o.id === state.currentOrganizerId);
-    if (org) {
-      const beat = org.characters[charIdx]?.arcs[arcIdx]?.beats[beatIdx];
+    const char = scopeData.characters?.[charIdx];
+    if (char) {
+      const beat = char.arcs?.[arcIdx]?.beats?.[beatIdx];
       if (beat && beat.links) {
         beat.links = beat.links.filter(l => l.target !== targetId);
       }
     }
-    renderOrganizerContent();
+    renderArcs();
   }
   
   story.updatedAt = Date.now();
@@ -9441,24 +9455,22 @@ function removeLink(sourceType, sourceIndices, targetId) {
 }
 
 function getLinkLabel(targetId) {
-  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
   
   if (targetId.startsWith('plot-')) {
     const idx = parseInt(targetId.split('-')[1]);
-    const beats = story.framework === 'custom' ? story.customBeats : FRAMEWORKS[story.framework].beats;
+    const beats = scopeData.framework === 'custom' ? (scopeData.beats || []) : (FRAMEWORKS[scopeData.framework]?.beats || []);
     return beats[idx]?.name || `Beat ${idx + 1}`;
   } else {
     const parts = targetId.split('-');
-    const orgIdx = parseInt(parts[1]);
-    const charIdx = parseInt(parts[2]);
-    const arcIdx = parseInt(parts[3]);
-    const beatIdx = parseInt(parts[4]);
+    const charIdx = parseInt(parts[1]);
+    const arcIdx = parseInt(parts[2]);
+    const beatIdx = parseInt(parts[3]);
     
-    const org = story.organizers[orgIdx];
-    if (org) {
-      const char = org.characters[charIdx];
-      const arc = char?.arcs[arcIdx];
-      const beat = arc?.beats[beatIdx];
+    const char = scopeData.characters?.[charIdx];
+    if (char) {
+      const arc = char.arcs?.[arcIdx];
+      const beat = arc?.beats?.[beatIdx];
       if (beat) {
         return `${char.name}: ${beat.title || 'Beat ' + (beatIdx + 1)}`;
       }
