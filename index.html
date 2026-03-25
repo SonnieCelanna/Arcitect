@@ -1210,6 +1210,180 @@ body {
 .arc-type-badge.negative { background: var(--accent-arc-negative); color: var(--text-primary); }
 .arc-type-badge.flat { background: var(--accent-arc-flat); color: var(--text-primary); }
 
+/* Guidance Mode */
+.guidance-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  font-weight: 500;
+}
+.guidance-toggle:hover { background: var(--bg-card-hover); border-color: var(--accent); }
+.guidance-toggle.active { 
+  background: var(--accent); 
+  color: white; 
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+.guidance-toggle-icon { font-size: 1rem; font-weight: 700; }
+
+.guidance-hint {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+  border-left: 3px solid var(--accent);
+  padding: 0.6rem 0.8rem;
+  margin-top: 0.5rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.guidance-hint strong { color: var(--text-primary); }
+.guidance-hint.collapsed { display: none; }
+
+.guidance-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 0.4rem;
+  flex-shrink: 0;
+}
+.guidance-trigger:hover { background: var(--accent); color: var(--bg-base); border-color: var(--accent); }
+
+.framework-guidance {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.framework-guidance-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.framework-guidance-text {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Arc Subtabs */
+.arc-subtabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.arc-subtab {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.arc-subtab:hover { color: var(--text-primary); }
+.arc-subtab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.arc-subtab-content { padding: 0.5rem 0; }
+
+.arc-type-selector,
+.arc-structure-selector {
+  margin-bottom: 1rem;
+}
+.arc-type-selector select,
+.arc-structure-selector select {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+.arc-type-fields { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.arc-structure-info {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+}
+.arc-structure-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.arc-beat-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0.25rem 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+/* Arc Framework Selector - legacy, keeping for compatibility */
+.arc-framework-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.arc-framework-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.arc-framework-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.arc-framework-select {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg-base);
+  color: var(--text-primary);
+}
+.arc-framework-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
 .arc-name { font-weight: 500; color: var(--text-primary); font-size: 0.95rem; }
 .arc-beat-count { font-size: 0.75rem; color: var(--text-muted); margin-left: 0.5rem; }
 
@@ -1250,6 +1424,7 @@ body {
 .arc-field:last-child { margin-bottom: 0; }
 
 .arc-field-label {
+  display: block;
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--text-secondary);
@@ -1293,6 +1468,19 @@ body {
 }
 
 .arc-beat-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+
+.arc-beat-header-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.arc-beat-fw-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
 
 .arc-beat-number {
   font-size: 0.65rem;
@@ -4091,6 +4279,10 @@ body {
     <div class="search-container">
       <button class="search-btn" onclick="openSearch()" title="Search (Ctrl+K)">Search</button>
     </div>
+    <button class="guidance-toggle" id="guidanceToggle" onclick="toggleGuidanceMode()" title="Toggle framework guidance" style="display: none;">
+      <span class="guidance-toggle-icon">?</span>
+      <span>Guide</span>
+    </button>
     <div class="view-toggle" id="viewToggle" style="display: none;">
       <button class="view-btn active" data-view="timeline" title="Timeline">Timeline</button>
       <button class="view-btn" data-view="columns" title="Columns by Act">Acts</button>
@@ -4607,29 +4799,476 @@ const FRAMEWORKS = {
 const ARC_TYPES = {
   'positive': {
     name: 'Positive Arc',
+    symbol: '+',
+    description: 'Character overcomes a Lie they believe, embraces Truth, and transforms for the better.',
     fields: [
       { key: 'lie', label: 'The Lie They Believe', placeholder: 'What false belief holds them back?' },
       { key: 'truth', label: 'The Truth They\'ll Learn', placeholder: 'What truth will they accept by the end?' },
       { key: 'want', label: 'What They Want', placeholder: 'Conscious goal' },
       { key: 'need', label: 'What They Need', placeholder: 'Unconscious need' }
-    ]
+    ],
+    frameworks: {
+      'positive-basic': {
+        name: 'Basic Positive Arc',
+        beats: [
+          { name: 'Living the Lie', guidance: '<strong>Show, don\'t tell:</strong> Your character makes choices based on their false belief, and those choices work (barely). The Lie feels like safety.<br><br><strong>Ask yourself:</strong> What specific choice does my character make here that they\'ll make DIFFERENTLY by the end?' },
+          { name: 'Lie Challenged', guidance: '<strong>Create cognitive dissonance:</strong> Something happens that contradicts the Lie, but the character explains it away or ignores it.<br><br><strong>Ask yourself:</strong> What evidence appears that they rationalize? How do they protect their worldview?' },
+          { name: 'Glimpse of Truth', guidance: '<strong>Use another character:</strong> Someone embodies or speaks the Truth. Your protagonist sees it but dismisses it—"that works for them, not me."<br><br><strong>Ask yourself:</strong> Who in my story represents what the protagonist could become? What do they say or do that plants a seed?' },
+          { name: 'Lie Reinforced', guidance: '<strong>Raise the stakes of change:</strong> The character doubles down because changing feels too costly—they\'d have to admit they were wrong, or lose something they value.<br><br><strong>Ask yourself:</strong> What would my character have to sacrifice to accept the Truth right now? Make that cost feel real.' },
+          { name: 'Crisis of Belief', guidance: '<strong>Make the Lie fail catastrophically:</strong> The false belief leads to a disaster that can\'t be rationalized away. Rock bottom.<br><br><strong>Ask yourself:</strong> What does my character lose because of the Lie? How does this force them to see the Lie for what it is?' },
+          { name: 'Truth Accepted', guidance: '<strong>This is internal, not external:</strong> The character finally accepts the Truth—often quietly, alone, without fanfare. The external climax tests this change.<br><br><strong>Ask yourself:</strong> What is the exact moment of surrender? What do they finally admit to themselves?' },
+          { name: 'Living the Truth', guidance: '<strong>Mirror the opening:</strong> Same type of situation, completely different response. Show who they\'ve become through action.<br><br><strong>Ask yourself:</strong> If I put my character in the exact same situation as the opening, what would they do differently now?' }
+        ]
+      },
+      'positive-detailed': {
+        name: 'Detailed Positive Arc',
+        beats: [
+          { name: 'Orphan State', guidance: '<strong>Establish the wound:</strong> What happened to make them believe the Lie? This is backstory, but it should SHOW in present behavior.<br><br><strong>Ask yourself:</strong> What\'s the origin of this false belief? How old were they when they adopted it as protection?' },
+          { name: 'Lie in Action', guidance: '<strong>Show consequences they don\'t see:</strong> The Lie affects their relationships, choices, opportunities. Others might notice; they can\'t.<br><br><strong>Ask yourself:</strong> What is my character blind to? What would a friend want to tell them but can\'t?' },
+          { name: 'Want Established', guidance: '<strong>Make the Want compelling but hollow:</strong> Their conscious goal emerges—something the Lie says will fix them. The audience should sense it won\'t.<br><br><strong>Ask yourself:</strong> What does my character think will make them whole? Why is this a symptom, not a cure?' },
+          { name: 'First Challenge', guidance: '<strong>Test the old approach:</strong> They pursue the Want using Lie-based methods. Partial success or interesting failure—but not complete collapse yet.<br><br><strong>Ask yourself:</strong> How does my character try to solve the problem using their old worldview? What happens?' },
+          { name: 'Truth Character Appears', guidance: '<strong>Introduce the mirror:</strong> Someone who embodies the Truth enters—mentor, love interest, even antagonist. They show what\'s possible.<br><br><strong>Ask yourself:</strong> Who represents the life/values my protagonist could have if they embraced the Truth?' },
+          { name: 'Want vs Need Tension', guidance: '<strong>Create internal friction:</strong> Pursuing the Want starts conflicting with the Need. The character feels the discomfort but doesn\'t understand it.<br><br><strong>Ask yourself:</strong> What choice does my character face where Want and Need pull in opposite directions?' },
+          { name: 'Midpoint Shift', guidance: '<strong>Deal a blow to the Lie:</strong> A revelation or reversal shakes their worldview. They start questioning—maybe not admitting it, but internally shifting.<br><br><strong>Ask yourself:</strong> What does my character learn that they can\'t unlearn? How does this change their approach?' },
+          { name: 'Regression', guidance: '<strong>Make them fight the change:</strong> Fear drives them back to the Lie. They push away Truth characters. Things get worse as a direct result.<br><br><strong>Ask yourself:</strong> What does my character do to resist changing? How does this backfire?' },
+          { name: 'All Is Lost', guidance: '<strong>Strip everything away:</strong> The Lie has cost them everything that matters. They can\'t hide anymore.<br><br><strong>Ask yourself:</strong> What does my character lose that they thought they couldn\'t live without? What are they left with?' },
+          { name: 'Dark Night / Surrender', guidance: '<strong>Give them stillness:</strong> No action—just sitting with the wreckage. The shift happens here, in silence, often alone.<br><br><strong>Ask yourself:</strong> What does my character finally admit in the silence? What truth emerges when the noise stops?' },
+          { name: 'Truth Embraced', guidance: '<strong>Make it a choice, not a realization:</strong> They choose the Truth even knowing the cost. This is about becoming, not winning.<br><br><strong>Ask yourself:</strong> What does my character choose to do that proves they\'ve changed? What do they sacrifice?' },
+          { name: 'Final Test', guidance: '<strong>Connect inner and outer:</strong> The external climax requires the internal change. Old them would fail; new them can succeed—or fail nobly.<br><br><strong>Ask yourself:</strong> How does my character\'s transformation enable (or affect) their external victory?' },
+          { name: 'New Equilibrium', guidance: '<strong>Show, don\'t tell:</strong> Life after transformation. Same character, integrated Truth. Contrast with opening.<br><br><strong>Ask yourself:</strong> If I showed only the first and last beats, would the transformation be visible?' }
+        ]
+      }
+    }
   },
   'negative': {
     name: 'Negative Arc',
+    symbol: '-',
+    description: 'Character rejects Truth and succumbs to a Lie, leading to their downfall or corruption.',
     fields: [
       { key: 'lie', label: 'The Lie That Consumes', placeholder: 'What false belief do they succumb to?' },
       { key: 'truth', label: 'The Truth They Reject', placeholder: 'What truth could have saved them?' },
       { key: 'want', label: 'What They Want', placeholder: 'The goal that corrupts them' },
       { key: 'downfall', label: 'Downfall', placeholder: 'How do they fall?' }
-    ]
+    ],
+    frameworks: {
+      'negative-disillusion': {
+        name: 'Disillusionment Arc',
+        beats: [
+          { name: 'False Belief in Truth', guidance: '<strong>Make them sympathetically naive:</strong> They believe something good about the world that the audience knows (or suspects) is false.<br><br><strong>Ask yourself:</strong> What idealistic belief does my character hold? Why is it understandable that they believe it?' },
+          { name: 'Cracks Appear', guidance: '<strong>Plant doubt:</strong> Small contradictions appear. They explain them away, but the seed is planted.<br><br><strong>Ask yourself:</strong> What first evidence appears that their belief is wrong? How do they rationalize it?' },
+          { name: 'Truth Revealed', guidance: '<strong>Make it undeniable:</strong> They encounter proof that can\'t be explained away. The world is not what they thought.<br><br><strong>Ask yourself:</strong> What specific event or revelation shatters their belief? Make it concrete and personal.' },
+          { name: 'Resistance', guidance: '<strong>Show the stages of grief:</strong> Denial, anger, bargaining. They fight against accepting this darker truth.<br><br><strong>Ask yourself:</strong> How does my character resist? What do they do to try to restore their old worldview?' },
+          { name: 'Bitter Acceptance', guidance: '<strong>Let something break:</strong> They accept the harsh truth, but it damages them. Hope dies. Cynicism enters.<br><br><strong>Ask yourself:</strong> What does my character lose internally when they accept this? What part of them dies?' },
+          { name: 'New Worldview', guidance: '<strong>Show the cost:</strong> They now operate from disillusionment. The audience should mourn who they were.<br><br><strong>Ask yourself:</strong> How does my character behave now that they\'ve lost their innocence? What do they do differently?' }
+        ]
+      },
+      'negative-fall': {
+        name: 'Fall Arc (Tragedy)',
+        beats: [
+          { name: 'Strength and Flaw', guidance: '<strong>Make them admirable but flawed:</strong> At their height—competent, successful, maybe even heroic. But there\'s a crack: pride, ambition, fear.<br><br><strong>Ask yourself:</strong> What does my character have that others admire? What flaw will destroy them? Both should be visible from the start.' },
+          { name: 'Temptation', guidance: '<strong>Make the Lie seductive:</strong> An opportunity that appeals directly to their flaw. It feels like a shortcut, a deserved reward, a necessary evil.<br><br><strong>Ask yourself:</strong> What does my character want that this temptation offers? Why does saying yes feel justified?' },
+          { name: 'First Compromise', guidance: '<strong>Keep it small:</strong> They cross a line but tell themselves it\'s just this once. They get away with it. The Lie feels validated.<br><br><strong>Ask yourself:</strong> What specific action does my character take that crosses a moral line? How do they justify it?' },
+          { name: 'Escalation', guidance: '<strong>Build the trap:</strong> Each compromise requires a bigger one to cover it. They\'re building a house of cards while believing it\'s a fortress.<br><br><strong>Ask yourself:</strong> What does my character have to do to protect what they\'ve done? How does each choice narrow their options?' },
+          { name: 'Point of No Return', guidance: '<strong>Close the door:</strong> They do something that cannot be undone. Allies become enemies. Redemption becomes costly.<br><br><strong>Ask yourself:</strong> What action makes it impossible to go back to who they were? What bridges burn?' },
+          { name: 'Truth Offered', guidance: '<strong>Give them an exit:</strong> Someone offers a way back—confession, surrender, redemption. They refuse. The Lie is now their identity.<br><br><strong>Ask yourself:</strong> Who offers my character a chance to turn back? Why do they refuse? Make the refusal feel tragic, not villainous.' },
+          { name: 'Consequences Arrive', guidance: '<strong>Collapse the house of cards:</strong> Everything falls apart. The structure they built on lies cannot stand.<br><br><strong>Ask yourself:</strong> How does my character\'s world crumble? What specifically fails, betrays, or abandons them?' },
+          { name: 'Final State', guidance: '<strong>Show what remains:</strong> The tragedy is complete. Perhaps a moment of clarity—too late. The audience should feel the loss.<br><br><strong>Ask yourself:</strong> Does my character realize what they\'ve become? Is the tragedy that they see it, or that they don\'t?' }
+        ]
+      },
+      'negative-corruption': {
+        name: 'Corruption Arc',
+        beats: [
+          { name: 'Ordinary Virtue', guidance: '<strong>Make them genuinely good:</strong> Not naive—actually good. Values, principles, maybe even heroism. The audience should root for them.<br><br><strong>Ask yourself:</strong> What does my character stand for at the start? What would they never do? (This is what they\'ll eventually do.)' },
+          { name: 'Wound/Pressure', guidance: '<strong>Break something important:</strong> An event that applies unbearable pressure—injustice, loss, betrayal. This isn\'t their fault.<br><br><strong>Ask yourself:</strong> What happens to my character that would make ANYONE consider crossing a line? Make it sympathetic.' },
+          { name: 'Justified Response', guidance: '<strong>Keep it understandable:</strong> Their response is harsh but defensible. Maybe even right. But it plants a seed.<br><br><strong>Ask yourself:</strong> What does my character do in response that the audience can\'t entirely condemn? Where\'s the seed of the Lie?' },
+          { name: 'Lie Takes Root', guidance: '<strong>Show the worldview shift:</strong> They start believing something dark about how the world works or who they must become.<br><br><strong>Ask yourself:</strong> What false lesson does my character learn from their experience? "The only way to..."' },
+          { name: 'Methods Shift', guidance: '<strong>Show the contradiction:</strong> Their means start violating their original ends. They become what they fought against.<br><br><strong>Ask yourself:</strong> What does my character do that their earlier self would be horrified by? Do they notice the hypocrisy?' },
+          { name: 'Last Good Choice', guidance: '<strong>Make the tragedy clear:</strong> A moment where they could still turn back. They choose not to. The audience should feel the loss.<br><br><strong>Ask yourself:</strong> What is the specific moment where my character consciously chooses darkness? What do they say no to?' },
+          { name: 'Full Corruption', guidance: '<strong>Complete the transformation:</strong> They\'re now the villain of their own story. But show the ghost of who they were.<br><br><strong>Ask yourself:</strong> Is there any trace of the original person left? Should there be?' }
+        ]
+      }
+    }
   },
   'flat': {
     name: 'Flat Arc',
+    symbol: '=',
+    description: 'Character already knows the Truth and changes the world/others around them through steadfast conviction.',
     fields: [
       { key: 'truth', label: 'The Truth They Hold', placeholder: 'What truth do they embody from the start?' },
       { key: 'test', label: 'How They\'re Tested', placeholder: 'What challenges their conviction?' },
       { key: 'impact', label: 'Who They Change', placeholder: 'Which characters transform because of them?' }
-    ]
+    ],
+    frameworks: {
+      'flat-basic': {
+        name: 'Basic Flat Arc',
+        beats: [
+          { name: 'Truth Established', guidance: '<strong>Show conviction in action:</strong> Your character lives their Truth from the start. Others might see them as naive, stubborn, or out of touch.<br><br><strong>Ask yourself:</strong> What does my character believe that puts them at odds with their world? How do they demonstrate it through behavior?' },
+          { name: 'Truth Tested Small', guidance: '<strong>Create pressure to compromise:</strong> Minor situations where it would be easier to bend. They don\'t.<br><br><strong>Ask yourself:</strong> What small tests does my character face? What would they gain by compromising? Why don\'t they?' },
+          { name: 'Impact on Others', guidance: '<strong>Show the ripple effect:</strong> Their steadfastness starts affecting others. Someone begins questioning their own Lie.<br><br><strong>Ask yourself:</strong> Who is watching my character? What do they see that makes them uncomfortable with their own choices?' },
+          { name: 'Truth Tested Large', guidance: '<strong>Make the cost real:</strong> Major pressure to abandon the Truth. Everything and everyone says they\'re wrong. They hold.<br><br><strong>Ask yourself:</strong> What does my character risk losing by maintaining their conviction? Make the temptation to bend genuinely compelling.' },
+          { name: 'Darkest Hour', guidance: '<strong>Isolate them:</strong> It seems like the Truth has failed completely. Others abandon it. The character stands alone.<br><br><strong>Ask yourself:</strong> How does my character feel when everyone abandons the Truth? What makes them hold on when there\'s no external reason to?' },
+          { name: 'Truth Vindicated', guidance: '<strong>Earn it:</strong> Events prove the Truth was right—not through luck, but through the character\'s unwavering action creating consequences.<br><br><strong>Ask yourself:</strong> How does my character\'s steadfastness lead to the outcome? The vindication should feel earned, not coincidental.' },
+          { name: 'World Changed', guidance: '<strong>Focus on others:</strong> The flat character is the same—but they\'ve moved the world. Show how others have transformed.<br><br><strong>Ask yourself:</strong> Who has changed because of my character? How is the world different? The flat character\'s victory is measured in others.' }
+        ]
+      },
+      'flat-catalyst': {
+        name: 'Catalyst Arc',
+        beats: [
+          { name: 'Enter the Lie World', guidance: '<strong>Make them the outsider:</strong> Your Truth-bearing character enters a community that operates on a Lie. They don\'t fit.<br><br><strong>Ask yourself:</strong> What is the Lie this community believes? How does my character\'s behavior immediately clash with it?' },
+          { name: 'Friction', guidance: '<strong>Show the conflict:</strong> Their Truth-based behavior creates problems. The community wants them to conform.<br><br><strong>Ask yourself:</strong> What specific conflicts arise from my character being themselves? Who pushes back hardest?' },
+          { name: 'First Convert', guidance: '<strong>Plant the seed:</strong> One character starts seeing things differently. Often someone who was already questioning.<br><br><strong>Ask yourself:</strong> Who in the community is ready to hear the Truth? What does my character do (not say) that opens their eyes?' },
+          { name: 'Lie Fights Back', guidance: '<strong>Raise the stakes:</strong> Those invested in the Lie push back hard. The protagonist faces consequences for their conviction.<br><br><strong>Ask yourself:</strong> Who has the most to lose if the Truth wins? What do they do to stop my character?' },
+          { name: 'Crisis of Faith (Others)', guidance: '<strong>Create a moment of choice:</strong> The community faces a crisis their Lie can\'t solve. The protagonist\'s Truth offers a way.<br><br><strong>Ask yourself:</strong> What situation forces the community to choose between their Lie and survival/success?' },
+          { name: 'Transformation', guidance: '<strong>Show the shift:</strong> Key characters embrace the Truth. The community begins to change.<br><br><strong>Ask yourself:</strong> Who changes? How do they show it? Make the transformation visible through action, not declaration.' },
+          { name: 'New Order', guidance: '<strong>Show the new world:</strong> The Lie-based system is replaced or reformed. The protagonist may move on—their work is done.<br><br><strong>Ask yourself:</strong> What does the community look like now? Does my character stay to maintain, or leave to catalyze elsewhere?' }
+        ]
+      }
+    }
+  }
+};
+
+// Guidance content for plot frameworks
+const FRAMEWORK_GUIDANCE = {
+  'three-act': {
+    overview: 'Three-act structure divides your story into Setup (25%), Confrontation (50%), and Resolution (25%). This is about PLOT EVENTS - what happens, what goes wrong, how it escalates, how it resolves. Character transformation is tracked separately in the Arcs tab.',
+    beats: {
+      'Setup / Exposition': '<strong>What to do:</strong> Establish the world, the status quo, and what\'s at stake. Introduce the key players and the situation before everything changes.<br><br><strong>Ask yourself:</strong> What does "normal" look like in this world? What relationships, locations, and dynamics need to be established before the disruption?<br><br><strong>Common mistake:</strong> Info-dumping. Weave exposition into scenes that are also doing something else—conflict, humor, tension.',
+      
+      'Inciting Incident': '<strong>What to do:</strong> The event that disrupts the status quo and sets the plot in motion. Something external happens that demands response.<br><br><strong>Ask yourself:</strong> What specific event makes this story happen NOW? Why can\'t it be ignored? What changes because of this moment?<br><br><strong>Common mistake:</strong> Making it too small or avoidable. This should be an undeniable disruption.',
+      
+      'First Act Turn': '<strong>What to do:</strong> The point where the main conflict is fully engaged. The setup is over; now we\'re in the thick of it. Often involves crossing a threshold or committing to a course of action.<br><br><strong>Ask yourself:</strong> What marks the clear transition from "before" to "during"? What door closes behind us here?<br><br><strong>Common mistake:</strong> Letting things drift into Act 2. There should be a clear moment of commitment or crossing over.',
+      
+      'Rising Action': '<strong>What to do:</strong> Escalate the conflict through a series of obstacles, complications, and attempts. Each development should raise stakes or reveal new problems.<br><br><strong>Ask yourself:</strong> How does each scene make the situation more complicated or dangerous? What new obstacles emerge? What attempts fail or succeed with consequences?<br><br><strong>Common mistake:</strong> Repetitive obstacles that don\'t change the situation. Each beat should alter the landscape.',
+      
+      'Midpoint': '<strong>What to do:</strong> A major shift at roughly the halfway mark. This could be a false victory (things seem won but aren\'t), false defeat (all seems lost but isn\'t), or a revelation that reframes everything.<br><br><strong>Ask yourself:</strong> What changes here that makes the second half feel different from the first? What new information or situation emerges?<br><br><strong>Common mistake:</strong> Treating midpoint as just another obstacle. It should fundamentally shift the story\'s direction or stakes.',
+      
+      'Complications / Dark Night': '<strong>What to do:</strong> Everything falls apart. Plans fail, resources are exhausted, allies are lost or scattered, the antagonist seems unstoppable. The situation is at its worst.<br><br><strong>Ask yourself:</strong> What collapses here? What gets taken away? How does the external situation reach its lowest point?<br><br><strong>Common mistake:</strong> Pulling punches. If things aren\'t genuinely dire, the eventual victory won\'t feel earned.',
+      
+      'Climax': '<strong>What to do:</strong> The final confrontation where the central conflict is decided. This is the big showdown, the ultimate test, the moment everything has been building toward.<br><br><strong>Ask yourself:</strong> What is the decisive confrontation? How does it resolve the central conflict established at the start?<br><br><strong>Common mistake:</strong> Anticlimactic resolution. The climax should directly address the story\'s main problem.',
+      
+      'Resolution': '<strong>What to do:</strong> Show the new status quo. The conflict is resolved—now what does the world look like? Tie off subplots, show consequences, establish the new normal.<br><br><strong>Ask yourself:</strong> What has changed in the world/situation since the beginning? What loose ends need addressing?<br><br><strong>Common mistake:</strong> Over-explaining or dragging it out. Resolution should be efficient—show the new state, don\'t belabor it.'
+    }
+  },
+  'save-the-cat': {
+    overview: 'Blake Snyder\'s 15-beat formula with specific timing for screenplays. The percentages are guidelines for pacing. This tracks PLOT EVENTS and story structure—character transformation is handled separately.',
+    beats: {
+      'Opening Image (1%)': '<strong>What to do:</strong> A visual snapshot of the world/situation at the start. This will contrast with the Final Image to show how things have changed.<br><br><strong>Ask yourself:</strong> What single image captures the starting state of this story? What visual will you mirror at the end?<br><br><strong>Common mistake:</strong> Starting with action that doesn\'t establish the status quo. This should be diagnostic of "before."',
+      
+      'Theme Stated (5%)': '<strong>What to do:</strong> The central thematic question or statement appears in dialogue—often as advice or observation that gets dismissed.<br><br><strong>Ask yourself:</strong> What is this story\'s argument? Can someone state it naturally in dialogue early on?<br><br><strong>Common mistake:</strong> Being too subtle. Snyder wants the theme stated clearly for the audience.',
+      
+      'Setup (1-10%)': '<strong>What to do:</strong> Establish the world, key relationships, and what\'s at stake. Show what needs to change or what\'s about to be disrupted.<br><br><strong>Ask yourself:</strong> Have I established the key players, relationships, and situation? Does the audience understand what "normal" is?<br><br><strong>Common mistake:</strong> All setup, no entertainment. These scenes must also engage—conflict, humor, intrigue.',
+      
+      'Catalyst (10%)': '<strong>What to do:</strong> The inciting incident. Life-changing news arrives. An event that disrupts everything and demands response.<br><br><strong>Ask yourself:</strong> What external event makes this story happen? Is it big enough to be undeniable?<br><br><strong>Common mistake:</strong> Internal realizations don\'t count. The catalyst must be an external event.',
+      
+      'Debate (10-20%)': '<strong>What to do:</strong> The response to the catalyst is weighed. Seeking advice, considering options, showing why this is a difficult choice.<br><br><strong>Ask yourself:</strong> What are the arguments for and against engaging with this new situation? What obstacles or fears exist?<br><br><strong>Common mistake:</strong> Skipping straight to action. The debate builds anticipation and establishes stakes.',
+      
+      'Break into Two (20%)': '<strong>What to do:</strong> The transition into the main story. The old world is left behind; a new situation begins. A clear threshold is crossed.<br><br><strong>Ask yourself:</strong> What marks the clear transition into Act 2? What threshold is crossed that can\'t be uncrossed?<br><br><strong>Common mistake:</strong> A gradual drift rather than a clear break. There should be a definitive moment.',
+      
+      'B Story (22%)': '<strong>What to do:</strong> A secondary plot thread begins—often a relationship that will help carry the theme and provide contrast to the main plot.<br><br><strong>Ask yourself:</strong> What subplot begins here? How does it connect to the main story\'s themes?<br><br><strong>Common mistake:</strong> B Story that\'s completely disconnected. It should echo or contrast with the A Story.',
+      
+      'Fun and Games (20-50%)': '<strong>What to do:</strong> Deliver on the premise. This is the trailer material—what the story promised to be about. Explore the new world/situation.<br><br><strong>Ask yourself:</strong> If someone asked "what\'s this story about?", are these scenes delivering that? Is the premise being explored?<br><br><strong>Common mistake:</strong> Rushing to the "important" plot. This IS important—it\'s why the audience showed up.',
+      
+      'Midpoint (50%)': '<strong>What to do:</strong> A major shift. False victory (apparent success that isn\'t) or false defeat (apparent disaster that isn\'t). Stakes rise, often with a ticking clock.<br><br><strong>Ask yourself:</strong> What changes here that makes the second half feel different? What new stakes or urgency emerge?<br><br><strong>Common mistake:</strong> A midpoint that doesn\'t change the game. After this, the rules should feel different.',
+      
+      'Bad Guys Close In (50-75%)': '<strong>What to do:</strong> Pressure mounts from all sides. External forces gain ground, plans start to fail, the team or support structure fractures.<br><br><strong>Ask yourself:</strong> How is the situation getting worse? What external pressures are tightening? What alliances are straining?<br><br><strong>Common mistake:</strong> Only external problems. Internal fractures and doubts compound the external pressure.',
+      
+      'All Is Lost (75%)': '<strong>What to do:</strong> The lowest point. A major loss—someone or something "dies" (literally or metaphorically). The plan has completely failed.<br><br><strong>Ask yourself:</strong> What is lost here that feels devastating? What is the "whiff of death"?<br><br><strong>Common mistake:</strong> Making it recoverable. This should feel final.',
+      
+      'Dark Night of the Soul (75-80%)': '<strong>What to do:</strong> Wallowing in defeat. The aftermath of All Is Lost. A pause before the final push where the situation seems hopeless.<br><br><strong>Ask yourself:</strong> What does the aftermath of failure look like? What sits in the wreckage?<br><br><strong>Common mistake:</strong> Skipping straight to the solution. The darkest moment needs to breathe.',
+      
+      'Break into Three (80%)': '<strong>What to do:</strong> A new approach emerges. Armed with something new—information, an ally, a realization about the problem—the final push begins.<br><br><strong>Ask yourself:</strong> What new element enables the final attempt? What\'s different about this approach?<br><br><strong>Common mistake:</strong> Same approach as before. Something must change to make victory possible.',
+      
+      'Finale (80-99%)': '<strong>What to do:</strong> Execute the new plan. The final confrontation. All the pieces come together for the climactic sequence.<br><br><strong>Ask yourself:</strong> How does this finale pay off what was set up? Does it resolve the central conflict?<br><br><strong>Common mistake:</strong> Introducing new elements. The finale should use what\'s been established.',
+      
+      'Final Image (99-100%)': '<strong>What to do:</strong> Mirror of Opening Image. Visual proof that the situation has changed. Show the new status quo.<br><br><strong>Ask yourself:</strong> How does this contrast with the Opening Image? Is the change visible?<br><br><strong>Common mistake:</strong> New situation instead of transformed situation. The contrast should be clear.'
+    }
+  }
+};
+
+// Character Arc Structure Guidance - same frameworks but focused on INTERNAL transformation
+const ARC_STRUCTURE_GUIDANCE = {
+  'three-act': {
+    overview: 'Three-act structure for character arcs: the internal journey of transformation. Setup establishes the starting state, Confrontation tests and challenges it, Resolution shows the outcome.',
+    beats: {
+      'Setup / Exposition': '<strong>Establish the starting state:</strong> Show your character\'s internal world—their beliefs, fears, and how they operate. The audience should understand who they are before change begins.<br><br><strong>Ask yourself:</strong> What specific behavior demonstrates my character\'s starting psychology?',
+      
+      'Inciting Incident': '<strong>The status quo is disrupted:</strong> Something happens that challenges the character\'s worldview. They encounter something that doesn\'t fit their current understanding.<br><br><strong>Ask yourself:</strong> What event forces my character to confront something new?',
+      
+      'First Act Turn': '<strong>Commitment to the journey:</strong> The character engages with the story\'s conflict, carrying their current beliefs into the challenge.<br><br><strong>Ask yourself:</strong> What does my character bring into this conflict? What do they expect?',
+      
+      'Rising Action': '<strong>Beliefs tested:</strong> Each obstacle challenges the character\'s worldview. Their approach is tested—sometimes it works, sometimes it fails.<br><br><strong>Ask yourself:</strong> How does each challenge affect my character\'s beliefs? What starts to shift?',
+      
+      'Midpoint': '<strong>A crucial shift:</strong> A revelation or experience that changes something fundamental in how the character sees things.<br><br><strong>Ask yourself:</strong> What does my character realize or experience here that they can\'t un-see?',
+      
+      'Complications / Dark Night': '<strong>The lowest point:</strong> Everything falls apart internally. The character faces their deepest challenge.<br><br><strong>Ask yourself:</strong> What breaks here? What must my character confront?',
+      
+      'Climax': '<strong>The defining action:</strong> The character acts from their transformed (or committed) state. This is where the arc pays off.<br><br><strong>Ask yourself:</strong> How does my character\'s internal journey manifest in this moment?',
+      
+      'Resolution': '<strong>The new state:</strong> Show who the character has become. Mirror the opening with contrast.<br><br><strong>Ask yourself:</strong> What would my character do differently now than at the start?'
+    },
+    byArcType: {
+      'positive': {
+        'Setup / Exposition': '<strong>Establish the Lie:</strong> Show your character operating under their false belief. It feels like safety or truth to them, even if the audience can see it\'s limiting.<br><br><strong>Ask yourself:</strong> What specific behavior demonstrates my character\'s Lie in action? How has this Lie protected them?',
+        'Inciting Incident': '<strong>The Lie is challenged:</strong> Something happens that doesn\'t fit the character\'s worldview. They encounter evidence their belief might be wrong, but resist or rationalize.<br><br><strong>Ask yourself:</strong> What event contradicts the Lie? How do they dismiss it?',
+        'First Act Turn': '<strong>Commitment despite the Lie:</strong> The character engages still operating from their false belief. They think they know what they need.<br><br><strong>Ask yourself:</strong> How does the Lie shape their approach? What do they expect will work?',
+        'Rising Action': '<strong>The Lie tested repeatedly:</strong> Each obstacle challenges the Lie. The character tries their old approach—it fails or succeeds at a cost. Cracks form.<br><br><strong>Ask yourself:</strong> How does each challenge reveal the Lie\'s inadequacy? What doubts form?',
+        'Midpoint': '<strong>Glimpse of Truth:</strong> A revelation shows the character what life could be like without the Lie. They\'re not ready to accept it yet.<br><br><strong>Ask yourself:</strong> What does my character glimpse that plants the seed of change?',
+        'Complications / Dark Night': '<strong>The Lie fails catastrophically:</strong> The false belief costs them everything. They can no longer pretend it works.<br><br><strong>Ask yourself:</strong> What does my character lose BECAUSE of the Lie?',
+        'Climax': '<strong>Truth in action:</strong> The character acts from new understanding. Old them would fail; new them succeeds.<br><br><strong>Ask yourself:</strong> How does embracing the Truth enable them to face this?',
+        'Resolution': '<strong>Living the Truth:</strong> Show who they\'ve become. Same situation as opening, completely different response.<br><br><strong>Ask yourself:</strong> What would they do differently now?'
+      },
+      'negative': {
+        'Setup / Exposition': '<strong>Establish the virtue or stability:</strong> Show your character before the fall—competent, moral, perhaps even admirable. The flaw exists but seems manageable.<br><br><strong>Ask yourself:</strong> What does my character have that they\'ll lose? What flaw is visible but not yet destructive?',
+        'Inciting Incident': '<strong>Temptation appears:</strong> Something offers a shortcut, revenge, power, or validation. It appeals directly to their flaw or wound.<br><br><strong>Ask yourself:</strong> What opportunity appears that my character should refuse but won\'t?',
+        'First Act Turn': '<strong>First compromise:</strong> The character crosses a line, telling themselves it\'s justified. They get away with it. The Lie is born or validated.<br><br><strong>Ask yourself:</strong> What line does my character cross? How do they justify it?',
+        'Rising Action': '<strong>Escalation:</strong> Each compromise requires a bigger one. The character builds on lies while believing they\'re building success.<br><br><strong>Ask yourself:</strong> How does each choice trap them further? What do they sacrifice to protect what they\'ve done?',
+        'Midpoint': '<strong>Point of no return:</strong> They do something that cannot be undone. The path back closes. They might not even realize it yet.<br><br><strong>Ask yourself:</strong> What action makes redemption costly or impossible?',
+        'Complications / Dark Night': '<strong>Truth offered and rejected:</strong> Someone offers a way out—confession, redemption, change. They refuse. The Lie has become their identity.<br><br><strong>Ask yourself:</strong> Who offers the Truth? Why does my character refuse it?',
+        'Climax': '<strong>Consequences arrive:</strong> Everything collapses. What they built on the Lie crumbles.<br><br><strong>Ask yourself:</strong> How does the structure of lies fall apart? What destroys them?',
+        'Resolution': '<strong>The final state:</strong> Show what they\'ve become. Perhaps a moment of clarity—too late. The audience should feel the tragedy.<br><br><strong>Ask yourself:</strong> Does my character realize what they\'ve lost? Which is more tragic—knowing or not knowing?'
+      },
+      'flat': {
+        'Setup / Exposition': '<strong>Establish the Truth they hold:</strong> Show your character already living from conviction. They may seem naive, stubborn, or out of touch to a world that believes the Lie.<br><br><strong>Ask yourself:</strong> What Truth does my character embody? How does it put them at odds with their world?',
+        'Inciting Incident': '<strong>Truth meets Lie-world:</strong> The character enters or confronts a situation dominated by a Lie they reject. Friction begins.<br><br><strong>Ask yourself:</strong> What Lie-based system does my character encounter? How do they clash immediately?',
+        'First Act Turn': '<strong>Commitment to stand:</strong> The character chooses to engage rather than retreat. They\'ll challenge the Lie, whatever it costs.<br><br><strong>Ask yourself:</strong> What does my character risk by staying? Why don\'t they just leave?',
+        'Rising Action': '<strong>Truth tested, influence spreads:</strong> The character faces pressure to compromise. Meanwhile, others begin questioning the Lie because of them.<br><br><strong>Ask yourself:</strong> Who starts to change because of my character? What pressure mounts on them?',
+        'Midpoint': '<strong>Impact visible:</strong> Clear evidence that the character\'s Truth is affecting others. But the Lie-system fights back harder.<br><br><strong>Ask yourself:</strong> Who has changed? How does the system retaliate?',
+        'Complications / Dark Night': '<strong>Standing alone:</strong> Seems like the Truth has failed. Others abandon it. The character holds alone, with no external reason to believe they\'re right.<br><br><strong>Ask yourself:</strong> What makes my character hold when everyone abandons them?',
+        'Climax': '<strong>Truth vindicated:</strong> The character\'s steadfastness leads to victory—not through luck, but through what their conviction created.<br><br><strong>Ask yourself:</strong> How does standing firm pay off? How is the victory earned?',
+        'Resolution': '<strong>World changed:</strong> The flat character is the same—but they\'ve moved the world. Show how others have transformed.<br><br><strong>Ask yourself:</strong> Who is different because of my character? How has the system changed?'
+      }
+    }
+  },
+  'save-the-cat': {
+    overview: 'Save the Cat for character arcs tracks the emotional and psychological beats of transformation. Each beat has a specific internal job—from establishing what\'s broken to proving the character has changed.',
+    beats: {
+      'Opening Image (1%)': '<strong>The Lie made visible:</strong> A snapshot of your character\'s internal state at the start. This should contrast sharply with the Final Image to show transformation.<br><br><strong>Ask yourself:</strong> What single moment captures my character\'s starting psychological state? What are they afraid of, avoiding, or believing?',
+      
+      'Theme Stated (5%)': '<strong>The Truth spoken:</strong> Someone states the theme—the Truth your character needs to learn—often as advice they dismiss or can\'t yet hear.<br><br><strong>Ask yourself:</strong> What is the Truth my character needs? Who says it to them, and why do they ignore it?',
+      
+      'Setup (1-10%)': '<strong>The Lie in context:</strong> Show the character\'s flaws, fears, and false beliefs in their everyday world. What\'s broken that they can\'t see?<br><br><strong>Ask yourself:</strong> What does my character want that\'s really a symptom of their Lie? What do they actually need?',
+      
+      'Catalyst (10%)': '<strong>The world intrudes:</strong> An external event that will eventually force internal change. The character\'s worldview is about to be tested.<br><br><strong>Ask yourself:</strong> How does this event threaten my character\'s Lie? What comfortable belief is about to be challenged?',
+      
+      'Debate (10-20%)': '<strong>Resistance to change:</strong> The character hesitates because change is scary. They weigh options, seek validation for staying the same.<br><br><strong>Ask yourself:</strong> What does my character fear about engaging with this challenge? What would they have to give up or face?',
+      
+      'Break into Two (20%)': '<strong>Committing while flawed:</strong> The character enters the new world still carrying their Lie. They think they know what they\'re doing.<br><br><strong>Ask yourself:</strong> How does my character\'s Lie shape their approach to the new situation? What do they expect?',
+      
+      'B Story (22%)': '<strong>The Truth character:</strong> Often the relationship that carries the theme. This person represents or teaches the Truth your character needs.<br><br><strong>Ask yourself:</strong> Who in my story embodies the Truth? How does their relationship with my character challenge the Lie?',
+      
+      'Fun and Games (20-50%)': '<strong>Testing the old way:</strong> The character explores the new world using their old beliefs. Sometimes it works, sometimes it doesn\'t. Cracks form.<br><br><strong>Ask yourself:</strong> How does my character apply their Lie to new situations? What small failures hint that it won\'t work?',
+      
+      'Midpoint (50%)': '<strong>Shift in understanding:</strong> A moment that changes how the character sees things. False victory reveals the Lie\'s cost, or false defeat forces them to question everything.<br><br><strong>Ask yourself:</strong> What does my character realize (or almost realize) here? How does their approach shift?',
+      
+      'Bad Guys Close In (50-75%)': '<strong>The Lie fights back:</strong> External pressure plus internal doubt. The character regresses, doubles down on the Lie, pushes away Truth characters.<br><br><strong>Ask yourself:</strong> How does my character retreat to the Lie under pressure? What relationships strain because of it?',
+      
+      'All Is Lost (75%)': '<strong>The Lie\'s final cost:</strong> The false belief has led to complete failure. Something the character valued "dies." They can\'t pretend anymore.<br><br><strong>Ask yourself:</strong> What does my character lose because of the Lie? What illusion finally dies?',
+      
+      'Dark Night of the Soul (75-80%)': '<strong>Surrender:</strong> The character sits in the wreckage. No more running. In the stillness, they finally see the Lie for what it is and glimpse the Truth.<br><br><strong>Ask yourself:</strong> What does my character finally admit to themselves? What Truth emerges from the silence?',
+      
+      'Break into Three (80%)': '<strong>Choosing the Truth:</strong> Armed with new understanding, the character chooses to act differently. This is the internal transformation made real.<br><br><strong>Ask yourself:</strong> What does my character choose that proves they\'ve changed? What do they do that old-them never could?',
+      
+      'Finale (80-99%)': '<strong>Truth in action:</strong> The character applies their transformation to the external conflict. They win (or lose nobly) because of who they\'ve become.<br><br><strong>Ask yourself:</strong> How does my character\'s internal change enable their external victory? Are inner and outer resolved together?',
+      
+      'Final Image (99-100%)': '<strong>Transformation complete:</strong> Mirror of Opening Image. Visual/emotional proof that the character has changed fundamentally.<br><br><strong>Ask yourself:</strong> If I showed Opening and Final Image back-to-back, would the internal transformation be visible?'
+    },
+    byArcType: {
+      'negative': {
+        'Opening Image (1%)': '<strong>Before the fall:</strong> Show the character at their best or most stable. This will contrast with the tragic Final Image.',
+        'Catalyst (10%)': '<strong>Temptation arrives:</strong> An opportunity that appeals to their flaw—power, revenge, shortcut to their goal.',
+        'Debate (10-20%)': '<strong>Considering the compromise:</strong> They weigh whether to cross the line. The right choice is still possible.',
+        'Break into Two (20%)': '<strong>First compromise:</strong> They make the choice that starts their descent. They justify it.',
+        'B Story (22%)': '<strong>The voice of conscience:</strong> A relationship that could save them—if they\'d listen.',
+        'Fun and Games (20-50%)': '<strong>The Lie seems to work:</strong> Their compromised approach brings success. The cost isn\'t visible yet.',
+        'Midpoint (50%)': '<strong>Point of no return:</strong> They do something that closes the path back. Bridges burn.',
+        'Bad Guys Close In (50-75%)': '<strong>Consequences compound:</strong> Protecting the Lie requires more lies. The structure grows unstable.',
+        'All Is Lost (75%)': '<strong>Truth offered:</strong> Someone offers redemption. They refuse. The Lie is now their identity.',
+        'Dark Night of the Soul (75-80%)': '<strong>Brief clarity:</strong> They might see what they\'ve become—and choose to continue anyway.',
+        'Finale (80-99%)': '<strong>Collapse:</strong> Everything built on lies crumbles. Consequences arrive.',
+        'Final Image (99-100%)': '<strong>The tragedy complete:</strong> Show what they\'ve become. Mirror Opening Image with devastating contrast.'
+      },
+      'flat': {
+        'Opening Image (1%)': '<strong>Truth embodied:</strong> Show the character living their conviction. They\'re the same at the end—it\'s the world that changes.',
+        'Theme Stated (5%)': '<strong>The Truth declared:</strong> The character states or demonstrates the theme early. Others dismiss it.',
+        'Setup (1-10%)': '<strong>A world of Lies:</strong> Establish the Lie-based system the character will challenge.',
+        'Catalyst (10%)': '<strong>Truth meets Lie:</strong> The character encounters the Lie-system directly. Conflict is inevitable.',
+        'Debate (10-20%)': '<strong>Counting the cost:</strong> The character considers what standing firm will cost them.',
+        'Break into Two (20%)': '<strong>Committing to stand:</strong> They choose to challenge the Lie rather than accommodate it.',
+        'B Story (22%)': '<strong>First convert:</strong> Someone begins questioning the Lie because of the character\'s example.',
+        'Fun and Games (20-50%)': '<strong>Influence spreads:</strong> The character\'s steadfastness affects others. The Lie-system pushes back.',
+        'Midpoint (50%)': '<strong>Visible impact:</strong> Clear evidence that others are changing. The system retaliates.',
+        'Bad Guys Close In (50-75%)': '<strong>Pressure mounts:</strong> The cost of conviction increases. Others urge compromise.',
+        'All Is Lost (75%)': '<strong>Standing alone:</strong> Seems like the Truth has failed. Allies abandon it.',
+        'Dark Night of the Soul (75-80%)': '<strong>Holding without proof:</strong> The character maintains conviction with no external reason to believe they\'re right.',
+        'Finale (80-99%)': '<strong>Truth vindicated:</strong> Their steadfastness pays off—not through luck but through what it created.',
+        'Final Image (99-100%)': '<strong>World changed:</strong> The character is the same, but they\'ve moved the world.'
+      }
+    }
+  },
+  'heros-journey': {
+    overview: 'The Hero\'s Journey for character arcs is fundamentally about psychological death and rebirth. The hero ventures into the unknown (externally and internally), faces their shadow, and returns transformed.',
+    beats: {
+      'Ordinary World': '<strong>The comfortable Lie:</strong> The hero in their familiar psychological state. The Lie feels like safety, even if something is subtly wrong or missing.<br><br><strong>Ask yourself:</strong> What is my character\'s internal "ordinary world"? What beliefs keep them comfortable but limited?',
+      
+      'Call to Adventure': '<strong>The Truth beckons:</strong> Something disrupts the character\'s internal status quo. An invitation to grow that they\'re not ready for.<br><br><strong>Ask yourself:</strong> What calls my character to change? How does this challenge their current worldview?',
+      
+      'Refusal of the Call': '<strong>Fear of change:</strong> The character resists because transformation is terrifying. The Lie feels safer than the unknown Truth.<br><br><strong>Ask yourself:</strong> What specifically does my character fear about changing? What does the Lie protect them from?',
+      
+      'Meeting the Mentor': '<strong>Wisdom offered:</strong> Someone who embodies or teaches the Truth the character needs. They offer guidance, but the character must still walk the path.<br><br><strong>Ask yourself:</strong> Who shows my character what\'s possible? What wisdom do they offer that the character isn\'t ready to fully accept?',
+      
+      'Crossing the Threshold': '<strong>Committing to growth:</strong> The character enters the "special world" of the story, leaving their psychological comfort zone behind. Point of no return.<br><br><strong>Ask yourself:</strong> What internal threshold does my character cross? What can they not go back to?',
+      
+      'Tests, Allies, Enemies': '<strong>The Lie tested:</strong> The character\'s beliefs are challenged repeatedly. They learn what works and what doesn\'t. Allies represent aspects of the Truth; enemies embody the Lie or its consequences.<br><br><strong>Ask yourself:</strong> How does each test reveal the inadequacy of the Lie? Who helps my character see differently?',
+      
+      'Approach to Inmost Cave': '<strong>Approaching the wound:</strong> The character nears the heart of their internal struggle—the core fear or false belief they\'ve been avoiding.<br><br><strong>Ask yourself:</strong> What is the deepest thing my character has been avoiding? What psychological "cave" are they approaching?',
+      
+      'Ordeal': '<strong>Death of the old self:</strong> The central crisis where the character must face their greatest fear. The Lie "dies" or the character does (metaphorically). Transformation happens in this crucible.<br><br><strong>Ask yourself:</strong> What internal death does my character experience? What belief or identity must they let go of?',
+      
+      'Reward': '<strong>The Truth claimed:</strong> Having survived the ordeal, the character now possesses the Truth. They\'ve earned new understanding through suffering.<br><br><strong>Ask yourself:</strong> What does my character now understand that they didn\'t before? What Truth have they earned?',
+      
+      'The Road Back': '<strong>Integration begins:</strong> The character must bring their new understanding back to their "ordinary world." The old world may resist their change.<br><br><strong>Ask yourself:</strong> How does my character begin to live from the Truth? What challenges arise from their transformation?',
+      
+      'Resurrection': '<strong>Final test of transformation:</strong> A last challenge where everything is at stake. The character must prove their transformation is real and permanent.<br><br><strong>Ask yourself:</strong> What final test proves my character has truly changed? How do they demonstrate the Truth under pressure?',
+      
+      'Return with Elixir': '<strong>Living the Truth:</strong> The character returns transformed, bearing wisdom that can benefit others. The arc is complete; they are who they needed to become.<br><br><strong>Ask yourself:</strong> How does my character\'s transformation benefit others? What do they bring back from their journey?'
+    },
+    byArcType: {
+      'negative': {
+        'Ordinary World': '<strong>Before the fall:</strong> The hero in their virtue or stability. What they\'ll lose is visible; what will destroy them is a seed.',
+        'Call to Adventure': '<strong>Temptation calls:</strong> An opportunity that appeals to their flaw. Power, revenge, shortcuts.',
+        'Refusal of the Call': '<strong>Conscience whispers:</strong> They hesitate—something feels wrong. This is their last easy chance to refuse.',
+        'Meeting the Mentor': '<strong>Warning offered:</strong> Someone sees the danger. Their advice is dismissed or ignored.',
+        'Crossing the Threshold': '<strong>First compromise:</strong> They cross a line, entering the path of descent.',
+        'Tests, Allies, Enemies': '<strong>The Lie validated:</strong> Their compromised approach works. Success justifies the cost.',
+        'Approach to Inmost Cave': '<strong>Deeper in:</strong> Each step takes them further from who they were.',
+        'Ordeal': '<strong>Point of no return:</strong> They do something that cannot be undone. The old self is truly dead.',
+        'Reward': '<strong>Hollow victory:</strong> They get what they wanted—and it\'s not what they needed.',
+        'The Road Back': '<strong>Consequences follow:</strong> What they\'ve done catches up with them.',
+        'Resurrection': '<strong>Truth offered, refused:</strong> A final chance at redemption. They reject it.',
+        'Return with Elixir': '<strong>Tragedy complete:</strong> They return changed—for the worse. What elixir they carry is poison.'
+      },
+      'flat': {
+        'Ordinary World': '<strong>Truth already held:</strong> The hero begins with the Truth others lack. They\'re at odds with a Lie-believing world.',
+        'Call to Adventure': '<strong>Confrontation beckons:</strong> A situation demands they stand for their Truth against a system of Lies.',
+        'Refusal of the Call': '<strong>Counting the cost:</strong> They consider what standing firm will cost. But they\'ll stand.',
+        'Meeting the Mentor': '<strong>Kindred spirit:</strong> Someone who shares or validates their Truth. Rare in the Lie-world.',
+        'Crossing the Threshold': '<strong>Entering the Lie-world:</strong> They commit to challenging the system.',
+        'Tests, Allies, Enemies': '<strong>Truth tested:</strong> Pressure to compromise. Meanwhile, they begin to affect others.',
+        'Approach to Inmost Cave': '<strong>Core confrontation nears:</strong> They approach the heart of the Lie-system.',
+        'Ordeal': '<strong>Standing alone:</strong> It seems the Truth has failed. Everyone abandons it. They hold.',
+        'Reward': '<strong>First converts:</strong> Others begin to embrace the Truth because of their example.',
+        'The Road Back': '<strong>Spreading change:</strong> The transformation of others accelerates.',
+        'Resurrection': '<strong>Truth vindicated:</strong> Final proof that their conviction was right.',
+        'Return with Elixir': '<strong>World changed:</strong> They\'re the same—but they\'ve transformed others.'
+      }
+    }
+  },
+  'story-circle': {
+    overview: 'Dan Harmon\'s Story Circle for character arcs: a simplified journey of psychological descent and return. Characters must GO somewhere uncomfortable (internally) and CHANGE because of it.',
+    beats: {
+      '1. You (Comfort Zone)': '<strong>Established identity:</strong> The character in their psychological comfort zone. Who they believe themselves to be. The Lie feels like truth.<br><br><strong>Ask yourself:</strong> Who does my character think they are? What belief or identity defines them at the start?',
+      
+      '2. Need (Something Ain\'t Right)': '<strong>The lack:</strong> Something is missing or wrong, even if the character doesn\'t consciously know it. The Want (conscious) masks the Need (unconscious).<br><br><strong>Ask yourself:</strong> What does my character want that\'s really a symptom? What do they actually need that they can\'t see?',
+      
+      '3. Go (Crossing Threshold)': '<strong>Leaving comfort:</strong> The character enters an unfamiliar psychological space. They leave the comfort of the Lie and enter uncertainty.<br><br><strong>Ask yourself:</strong> What pushes my character out of their internal comfort zone? What familiar belief can they no longer rely on?',
+      
+      '4. Search (Road of Trials)': '<strong>Struggling to adapt:</strong> Old ways of thinking don\'t work here. The character struggles, fails, learns. The Lie keeps failing them.<br><br><strong>Ask yourself:</strong> How does my character try to apply old thinking to new situations? How does it fail them?',
+      
+      '5. Find (Meeting Goddess)': '<strong>Getting what they wanted:</strong> The character achieves their conscious Want—but it\'s not what they Need. Often a false victory.<br><br><strong>Ask yourself:</strong> Does my character get what they wanted? Why doesn\'t it satisfy them? What\'s still missing?',
+      
+      '6. Take (Meet Your Maker)': '<strong>The price of growth:</strong> Getting what they wanted has a cost. The character must pay for their transformation with something they valued.<br><br><strong>Ask yourself:</strong> What does my character have to give up or sacrifice? What price does growth demand?',
+      
+      '7. Return (Bringing It Home)': '<strong>Changed but displaced:</strong> The character returns to familiar territory but they\'re different now. The old world may not fit anymore.<br><br><strong>Ask yourself:</strong> How does my character\'s transformation affect their return to "normal"? What no longer fits?',
+      
+      '8. Change (Master of Both Worlds)': '<strong>Integration complete:</strong> The character has genuinely changed. They can now handle what they couldn\'t before. The Need has been met.<br><br><strong>Ask yourself:</strong> How is my character demonstrably different? What can they do now that they couldn\'t at the start?'
+    },
+    byArcType: {
+      'negative': {
+        '1. You (Comfort Zone)': '<strong>Before descent:</strong> The character in stability or virtue. The flaw exists but seems manageable.',
+        '2. Need (Something Ain\'t Right)': '<strong>The Want corrupts:</strong> They want something badly enough to compromise for it.',
+        '3. Go (Crossing Threshold)': '<strong>First compromise:</strong> They leave their moral comfort zone, crossing a line.',
+        '4. Search (Road of Trials)': '<strong>The Lie works:</strong> Their compromised approach brings success. They\'re validated.',
+        '5. Find (Meeting Goddess)': '<strong>Hollow achievement:</strong> They get what they wanted—but the cost is becoming visible.',
+        '6. Take (Meet Your Maker)': '<strong>Truth rejected:</strong> Someone offers a way back. They refuse.',
+        '7. Return (Bringing It Home)': '<strong>Consequences arrive:</strong> What they\'ve built on lies begins to crumble.',
+        '8. Change (Master of Both Worlds)': '<strong>Tragedy complete:</strong> They\'ve changed—for the worse. Or they haven\'t changed enough to save themselves.'
+      },
+      'flat': {
+        '1. You (Comfort Zone)': '<strong>Truth held:</strong> The character knows something the world around them denies.',
+        '2. Need (Something Ain\'t Right)': '<strong>The world needs changing:</strong> It\'s not the character who lacks—it\'s the Lie-system around them.',
+        '3. Go (Crossing Threshold)': '<strong>Confronting the Lie:</strong> They enter conflict with the system, standing firm.',
+        '4. Search (Road of Trials)': '<strong>Steadfastness tested:</strong> Pressure to compromise. They hold while beginning to affect others.',
+        '5. Find (Meeting Goddess)': '<strong>Impact visible:</strong> Others start changing because of their example.',
+        '6. Take (Meet Your Maker)': '<strong>Standing alone:</strong> The cost is paid—isolation, loss—but the Truth survives.',
+        '7. Return (Bringing It Home)': '<strong>World shifting:</strong> The transformation spreads outward.',
+        '8. Change (Master of Both Worlds)': '<strong>World changed:</strong> They\'re the same. Everything around them is different.'
+      }
+    }
+  },
+  'five-act': {
+    overview: 'Five-act structure for character arcs places the internal CLIMAX (the moment of transformation) in the middle, then traces the consequences. Often used for tragedy.',
+    beats: {
+      'Exposition': '<strong>Character established:</strong> Introduce the character\'s psychology—their beliefs, flaws, strengths, and blind spots. Plant the seeds of what will grow or destroy them.<br><br><strong>Ask yourself:</strong> What internal qualities define my character? What flaw or false belief will drive their arc?',
+      
+      'Rising Action': '<strong>Internal pressure builds:</strong> Events force the character to confront their flaw or Lie. Internal tension escalates. They may resist change or begin to crack.<br><br><strong>Ask yourself:</strong> How does each event increase internal pressure? What forces my character toward their breaking point?',
+      
+      'Climax (Turning Point)': '<strong>Transformation or commitment:</strong> The decisive internal moment. The character either transforms (positive arc) or commits fully to their flaw (negative arc). Everything after flows from this choice.<br><br><strong>Ask yourself:</strong> What is the exact moment of internal change or commitment? What does my character decide or realize?',
+      
+      'Falling Action': '<strong>Living the consequences:</strong> The character acts from their new state (transformed or committed to flaw). Events unfold as a result of who they\'ve become.<br><br><strong>Ask yourself:</strong> How does my character\'s internal change manifest in their actions? What consequences follow?',
+      
+      'Catastrophe / Denouement': '<strong>Final state:</strong> The arc completes. In tragedy, the flaw destroys them. In other arcs, the transformation is proven and settled.<br><br><strong>Ask yourself:</strong> What is my character\'s final internal state? Has the arc delivered on its premise?'
+    }
+  },
+  'kishotenketsu': {
+    overview: 'Kishōtenketsu for character arcs: transformation through recontextualization rather than conflict. The character doesn\'t fight their way to change—they see themselves differently through the "twist."',
+    beats: {
+      'Ki (起) — Introduction': '<strong>Character as they are:</strong> Establish the character\'s internal state without judgment. Who they are, how they see themselves, what they believe. No conflict yet.<br><br><strong>Ask yourself:</strong> Who is my character, simply stated? What do they believe about themselves and the world?',
+      
+      'Shō (承) — Development': '<strong>Deepening understanding:</strong> Develop the character\'s psychology further. Build nuance and context. The audience (and character) understand more, but nothing has challenged the core yet.<br><br><strong>Ask yourself:</strong> What additional layers does my character have? What complexity emerges as we know them better?',
+      
+      'Ten (転) — Twist': '<strong>Recontextualization:</strong> Something shifts perspective. The character (or audience) sees everything that came before in a new light. Not a crisis—a revelation that changes meaning.<br><br><strong>Ask yourself:</strong> What new context makes my character see themselves differently? What truth reframes their understanding?',
+      
+      'Ketsu (結) — Conclusion': '<strong>Integration:</strong> The character reconciles the twist with who they were. The old and new understanding merge into a more complete sense of self.<br><br><strong>Ask yourself:</strong> How does my character integrate this new understanding? How are they both the same and different?'
+    }
+  },
+  'seven-point': {
+    overview: 'Seven-point structure for character arcs works BACKWARD from the Resolution. The Hook (starting state) must be the opposite of the Resolution (ending state). Design the transformation first, then build toward it.',
+    beats: {
+      'Hook': '<strong>The opposite state:</strong> The character\'s starting psychology should be the OPPOSITE of where they\'ll end. If they\'ll end confident, start insecure. If they\'ll end connected, start isolated.<br><br><strong>Ask yourself:</strong> What is the opposite of my character\'s ending state? How do I establish that clearly at the start?',
+      
+      'Plot Turn 1': '<strong>World expands:</strong> The character encounters something that will eventually change them. New information, new people, new situations that their current worldview can\'t fully handle.<br><br><strong>Ask yourself:</strong> What introduces my character to the possibility of change? What new element enters their world?',
+      
+      'Pinch Point 1': '<strong>Pressure applied:</strong> The character is forced to confront their flaw or Lie. Something goes wrong because of who they currently are.<br><br><strong>Ask yourself:</strong> What puts pressure on my character\'s false belief? How does their current state cause problems?',
+      
+      'Midpoint': '<strong>Shift from reaction to action:</strong> The character moves from passive to active in their own transformation. They start trying to change, even if they don\'t fully understand how.<br><br><strong>Ask yourself:</strong> What makes my character decide to change rather than just react? What shifts from defense to growth?',
+      
+      'Pinch Point 2': '<strong>Transformation tested:</strong> The character\'s attempt at change is challenged. They might regress or doubt. The old way tempts them back.<br><br><strong>Ask yourself:</strong> What tests my character\'s growth? What makes them consider returning to the Lie?',
+      
+      'Plot Turn 2': '<strong>Final piece:</strong> The character gets the last thing they need to complete their transformation. Often a realization, a choice, or an acceptance.<br><br><strong>Ask yourself:</strong> What final element enables my character\'s complete transformation? What last piece falls into place?',
+      
+      'Resolution': '<strong>Transformation complete:</strong> The character is now the opposite of who they were at the Hook. The arc has delivered on its promise.<br><br><strong>Ask yourself:</strong> Is my character demonstrably the opposite of who they were? Does the arc feel complete?'
+    }
+  }
+};
+
+// Guidance for arc type fields (the Lie/Truth/Want/Need fields)
+const ARC_TYPE_FIELD_GUIDANCE = {
+  'positive': {
+    'lie': '<strong>The Lie is their armor:</strong> This isn\'t just a wrong belief—it\'s a belief that once PROTECTED them. "I can\'t trust anyone" might stem from betrayal. "I\'m not good enough" might prevent risking failure. Find the wound that made the Lie feel necessary.<br><br><strong>Make it specific:</strong> Not "they\'re insecure" but "they believe asking for help means they\'re weak."',
+    'truth': '<strong>The Truth terrifies them:</strong> The Truth should be something your character would RESIST, not welcome. If the Lie is "I must control everything," the Truth might be "Letting go doesn\'t mean losing." The Truth costs them their defense mechanism.<br><br><strong>Ask yourself:</strong> Why would my character fight against this Truth? What does accepting it require them to give up?',
+    'want': '<strong>The Want is the symptom:</strong> What your character consciously pursues—often something they think will fix them. The detective wants to solve the case (external) but really needs to forgive themselves (internal). The Want should be achievable; the Need is harder.<br><br><strong>Ask yourself:</strong> What does my character believe will make them whole? Why won\'t it actually work?',
+    'need': '<strong>The Need is invisible to them:</strong> What they actually require to be whole—but can\'t see or won\'t admit. The Need often requires accepting the Truth they\'re avoiding. Fulfilling the Need usually means letting go of the Want, or discovering the Want was pointing at the Need all along.<br><br><strong>Ask yourself:</strong> What would a wise friend say my character ACTUALLY needs?'
+  },
+  'negative': {
+    'lie': '<strong>The Lie seduces:</strong> In a negative arc, the Lie isn\'t just believed—it\'s EMBRACED. It offers power, protection, or justification. "The ends justify the means." "Only the strong survive." "Everyone is out for themselves." The Lie should feel TRUE to the character, even as we see its poison.<br><br><strong>Ask yourself:</strong> What makes this Lie appealing? Why does my character choose it?',
+    'truth': '<strong>The Truth they reject:</strong> This is the lifeline they refuse. Someone offers it—a friend, a mentor, their own conscience. They see it and turn away because accepting it would mean admitting they were wrong, or giving up what they\'ve gained.<br><br><strong>Ask yourself:</strong> What truth could save my character? Why do they refuse it?',
+    'want': '<strong>The Want corrupts:</strong> Their goal becomes their prison. They want power, revenge, control, validation—and pursuing it transforms them. Each step toward the Want takes them further from who they were.<br><br><strong>Ask yourself:</strong> What does my character want so badly they\'ll destroy themselves for it?',
+    'downfall': '<strong>Make it tragic, not just bad:</strong> The best negative arcs make us mourn who the character could have been. We should see the good person they were, watch them choose poorly at each fork, and feel the inevitability of where it leads.<br><br><strong>Ask yourself:</strong> What is lost that can never be recovered? Does the character realize what they\'ve become?'
+  },
+  'flat': {
+    'truth': '<strong>The Truth they embody:</strong> Your flat-arc character doesn\'t need to learn—they need to HOLD. They enter the story already knowing something the world around them denies. Their arc is about maintaining conviction under pressure while changing others.<br><br><strong>Ask yourself:</strong> What truth does my character hold that others don\'t? What makes them certain when everyone else doubts?',
+    'test': '<strong>Make the pressure real:</strong> A flat arc only works if we genuinely believe the character MIGHT break. Test them with consequences, isolation, apparent failure. Everyone tells them they\'re wrong. The world punishes their conviction. They hold anyway.<br><br><strong>Ask yourself:</strong> What does my character risk by maintaining their Truth? What would they lose if they compromised?',
+    'impact': '<strong>Change flows outward:</strong> The flat-arc character doesn\'t transform—they transform OTHERS. Track who changes because of their example. These secondary arcs are where the transformation lives.<br><br><strong>Ask yourself:</strong> Who in my story changes because of my character\'s steadfastness? How does the world shift around them?'
   }
 };
 
@@ -4642,7 +5281,8 @@ let state = {
   currentTab: 'plot',
   currentOrganizerId: null,
   cardsFocusIndex: 0,
-  pendingCharacterId: null // For arc modal
+  pendingCharacterId: null, // For arc modal
+  guidanceMode: false // Show guidance for frameworks and arc types (default OFF)
 };
 
 const STORAGE_KEY = 'narrative_architect_v4_data';
@@ -5384,6 +6024,9 @@ function renderBeats() {
   document.getElementById('frameworkSelect').value = currentFramework;
   document.getElementById('frameworkBanner').textContent = FRAMEWORKS[currentFramework]?.description || '';
   
+  // Update guidance toggle button state
+  updateGuidanceButton();
+  
   const framework = FRAMEWORKS[currentFramework];
   const hasBeats = (scopeData.beats && scopeData.beats.length > 0) || 
                    (scopeData.framework && scopeData.framework !== 'custom');
@@ -5421,6 +6064,16 @@ function renderBeats() {
       </div>
     </div>
   `;
+  
+  // Framework guidance overview (when guidance mode is on and using a framework)
+  if (state.guidanceMode && currentFramework !== 'custom' && FRAMEWORK_GUIDANCE[currentFramework]) {
+    html += `
+      <div class="framework-guidance">
+        <div class="framework-guidance-title">? Understanding ${framework.name}</div>
+        <div class="framework-guidance-text">${FRAMEWORK_GUIDANCE[currentFramework].overview}</div>
+      </div>
+    `;
+  }
   
   // Section: This level's beats
   if (!isDeepestLevel) {
@@ -5714,12 +6367,14 @@ function renderTimelineView(story, framework, container) {
   } else {
     beats.forEach((beat, i) => {
       const content = story.beatContent[i] || '';
+      const beatGuidance = state.guidanceMode ? getFrameworkGuidance(story.framework, beat.name) : null;
       html += `<div class="beat-card" data-beat-index="${i}">
         <div class="beat-header">
           <span class="beat-number">${i + 1}</span>
           <span class="beat-title">${escapeHtml(beat.name)}</span>
         </div>
         <div class="beat-description">${escapeHtml(beat.desc)}</div>
+        ${beatGuidance ? `<div class="guidance-hint">${beatGuidance}</div>` : ''}
         <textarea class="beat-textarea" placeholder="What happens in your story..." onchange="updateBeatContent(${i}, this.value)">${escapeHtml(content)}</textarea>
         ${renderBeatExtras(i, content)}
       </div>`;
@@ -5756,6 +6411,8 @@ function renderColumnsView(story, framework, container) {
     
     actGroups[act].forEach(beat => {
       const themeHtml = renderThemeSelector('plot', [beat.index]);
+      const beatGuidance = state.guidanceMode && !beat.isCustom ? getFrameworkGuidance(story.framework, beat.name) : null;
+      
       if (beat.isCustom) {
         html += `<div class="beat-card" data-beat-index="${beat.index}">
           <div class="beat-header">
@@ -5772,6 +6429,7 @@ function renderColumnsView(story, framework, container) {
             <span class="beat-title">${escapeHtml(beat.name)}</span>
           </div>
           <div class="beat-description">${escapeHtml(beat.desc)}</div>
+          ${beatGuidance ? `<div class="guidance-hint">${beatGuidance}</div>` : ''}
           <textarea class="beat-textarea" placeholder="What happens..." onchange="updateBeatContent(${beat.index}, this.value)">${escapeHtml(beat.content)}</textarea>
           ${themeHtml}
         </div>`;
@@ -6686,6 +7344,11 @@ function renderCharacterArcsScoped(char, charIdx) {
     const arcType = ARC_TYPES[arc.type] || ARC_TYPES.positive;
     const beatCount = (arc.beats || []).length;
     const arcColor = arc.color || ARC_COLORS[arcIdx % ARC_COLORS.length];
+    const arcStructure = arc.structure || 'custom';
+    const activeSubTab = arc.activeSubTab || 'structure'; // 'type' or 'structure'
+    
+    // Get arc type description for guidance
+    const arcTypeDesc = state.guidanceMode ? arcType.description : null;
     
     return `
       <div class="arc-card ${arc.expanded ? 'expanded' : ''}" data-type="${arc.type}" style="--arc-color: ${arcColor}">
@@ -6698,21 +7361,77 @@ function renderCharacterArcsScoped(char, charIdx) {
           <span class="arc-toggle">${arc.expanded ? '-' : '+'}</span>
         </div>
         <div class="arc-body">
-          <div class="arc-beats-section">
-            <div class="arc-beats-header">
-              <span class="arc-beats-title">Arc Beats</span>
-              <button class="btn btn-xs" onclick="addArcBeatScoped(${charIdx}, ${arcIdx})">+ Beat</button>
-            </div>
-            <div class="arc-beats-container">
-              ${renderArcBeatsScoped(arc, charIdx, arcIdx)}
-            </div>
+          <div class="arc-subtabs">
+            <button class="arc-subtab ${activeSubTab === 'type' ? 'active' : ''}" onclick="event.stopPropagation(); setArcSubTab(${charIdx}, ${arcIdx}, 'type')">Type</button>
+            <button class="arc-subtab ${activeSubTab === 'structure' ? 'active' : ''}" onclick="event.stopPropagation(); setArcSubTab(${charIdx}, ${arcIdx}, 'structure')">Structure</button>
           </div>
+          
+          ${activeSubTab === 'type' ? `
+            <div class="arc-subtab-content arc-type-content">
+              ${arcTypeDesc ? `<div class="guidance-hint" style="margin-bottom: 0.75rem;">${arcTypeDesc}</div>` : ''}
+              
+              <div class="arc-type-selector">
+                <label class="arc-field-label">Arc Type</label>
+                <select class="arc-type-select" onchange="changeArcTypeScoped(${charIdx}, ${arcIdx}, this.value)">
+                  ${Object.entries(ARC_TYPES).map(([key, type]) => `
+                    <option value="${key}" ${arc.type === key ? 'selected' : ''}>${type.name}</option>
+                  `).join('')}
+                </select>
+              </div>
+              
+              <div class="arc-type-fields">
+                ${arcType.fields.map(field => {
+                  const fieldGuidance = state.guidanceMode ? getArcTypeFieldGuidance(arc.type, field.key) : null;
+                  return `
+                  <div class="arc-field">
+                    <label class="arc-field-label">${field.label}</label>
+                    ${fieldGuidance ? `<div class="guidance-hint" style="margin-bottom: 0.35rem; font-size: 0.75rem;">${fieldGuidance}</div>` : ''}
+                    <textarea class="arc-field-input arc-field-textarea" 
+                              placeholder="${field.placeholder}" 
+                              onchange="updateArcFieldScoped(${charIdx}, ${arcIdx}, '${field.key}', this.value)">${escapeHtml((arc.fields || {})[field.key] || '')}</textarea>
+                  </div>
+                `}).join('')}
+              </div>
+              
+              <div class="arc-field" style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+                <label class="arc-field-label">Arc Notes</label>
+                <textarea class="arc-field-input arc-field-textarea" 
+                          placeholder="Private notes about this arc..." 
+                          onchange="updateArcFieldScoped(${charIdx}, ${arcIdx}, 'notes', this.value)" 
+                          style="min-height: 60px;">${escapeHtml((arc.fields || {}).notes || '')}</textarea>
+              </div>
+            </div>
+          ` : `
+            <div class="arc-subtab-content arc-structure-content">
+              <div class="arc-structure-selector">
+                <label class="arc-field-label">Structure Framework</label>
+                <select class="arc-structure-select" onchange="changeArcStructureScoped(${charIdx}, ${arcIdx}, this.value)">
+                  <option value="custom" ${arcStructure === 'custom' ? 'selected' : ''}>Custom Beats</option>
+                  ${Object.entries(FRAMEWORKS).filter(([k]) => k !== 'custom').map(([key, fw]) => `
+                    <option value="${key}" ${arcStructure === key ? 'selected' : ''}>${fw.name}</option>
+                  `).join('')}
+                </select>
+              </div>
+              
+              ${arcStructure !== 'custom' && FRAMEWORKS[arcStructure] ? `
+                <div class="arc-structure-info">
+                  <span class="arc-structure-desc">${FRAMEWORKS[arcStructure].description}</span>
+                </div>
+              ` : ''}
+              
+              <div class="arc-beats-section">
+                <div class="arc-beats-header">
+                  <span class="arc-beats-title">Arc Beats</span>
+                  ${arcStructure === 'custom' ? `<button class="btn btn-xs" onclick="addArcBeatScoped(${charIdx}, ${arcIdx})">+ Beat</button>` : ''}
+                </div>
+                <div class="arc-beats-container">
+                  ${renderArcBeatsScoped(arc, charIdx, arcIdx)}
+                </div>
+              </div>
+            </div>
+          `}
+          
           <div class="arc-actions">
-            <select class="arc-type-select" style="margin-right: 0.5rem;" onchange="changeArcTypeScoped(${charIdx}, ${arcIdx}, this.value)">
-              ${Object.entries(ARC_TYPES).map(([key, type]) => `
-                <option value="${key}" ${arc.type === key ? 'selected' : ''}>${type.symbol} ${type.name}</option>
-              `).join('')}
-            </select>
             <button class="arc-delete-btn" onclick="deleteArcScoped(${charIdx}, ${arcIdx})">Delete Arc</button>
           </div>
         </div>
@@ -6722,6 +7441,32 @@ function renderCharacterArcsScoped(char, charIdx) {
 }
 
 function renderArcBeatsScoped(arc, charIdx, arcIdx) {
+  const arcStructure = arc.structure || 'custom';
+  const arcType = arc.type || 'positive';
+  const framework = FRAMEWORKS[arcStructure];
+  
+  // If using a structure framework, render those beats
+  if (arcStructure !== 'custom' && framework) {
+    return framework.beats.map((fwBeat, beatIdx) => {
+      const userBeat = (arc.beats || [])[beatIdx] || { title: '', content: '' };
+      const guidance = state.guidanceMode ? getArcStructureGuidance(arcStructure, fwBeat.name, arcType) : null;
+      
+      return `
+        <div class="arc-beat" data-beat-index="${beatIdx}">
+          <div class="arc-beat-header-row">
+            <span class="arc-beat-number">${beatIdx + 1}</span>
+            <span class="arc-beat-fw-title">${escapeHtml(fwBeat.name)}</span>
+          </div>
+          <div class="arc-beat-desc">${escapeHtml(fwBeat.desc)}</div>
+          ${guidance ? `<div class="guidance-hint" style="margin: 0.25rem 0 0.5rem 0; font-size: 0.75rem;">${guidance}</div>` : ''}
+          <textarea class="arc-beat-content" placeholder="How does this beat manifest in your character's internal journey..." 
+                    onchange="updateArcBeatScoped(${charIdx}, ${arcIdx}, ${beatIdx}, 'content', this.value)">${escapeHtml(userBeat.content || '')}</textarea>
+        </div>
+      `;
+    }).join('');
+  }
+  
+  // Custom beats
   const beats = arc.beats || [];
   
   if (beats.length === 0) {
@@ -6880,6 +7625,8 @@ function confirmAddArcScoped() {
   char.arcs.push({
     name: name,
     type: 'positive',
+    structure: 'custom',
+    activeSubTab: 'structure',
     expanded: true,
     beats: [],
     fields: {}
@@ -6901,6 +7648,15 @@ function cancelAddArcScoped() {
     if (addBtn) addBtn.style.display = '';
   }
   pendingArcCharIdx = null;
+}
+
+function setArcSubTab(charIdx, arcIdx, tab) {
+  const scopeData = getCurrentScopeData();
+  const arc = scopeData.characters?.[charIdx]?.arcs?.[arcIdx];
+  if (arc) {
+    arc.activeSubTab = tab;
+    renderArcs();
+  }
 }
 
 function deleteArcScoped(charIdx, arcIdx) {
@@ -6925,6 +7681,85 @@ function changeArcTypeScoped(charIdx, arcIdx, type) {
     saveState();
     renderArcs();
   }
+}
+
+function changeArcStructureScoped(charIdx, arcIdx, structure) {
+  const scopeData = getCurrentScopeData();
+  const arc = scopeData.characters?.[charIdx]?.arcs?.[arcIdx];
+  if (!arc) return;
+  
+  const oldStructure = arc.structure;
+  arc.structure = structure;
+  
+  // If switching to a framework, initialize beats array to match framework length
+  if (structure !== 'custom' && FRAMEWORKS[structure]) {
+    const frameworkBeats = FRAMEWORKS[structure].beats;
+    const existingBeats = arc.beats || [];
+    arc.beats = frameworkBeats.map((fb, i) => ({
+      title: fb.name,
+      content: existingBeats[i]?.content || ''
+    }));
+  }
+  
+  const story = getCurrentStory();
+  story.updatedAt = Date.now();
+  saveState();
+  renderArcs();
+}
+
+function updateArcFieldScoped(charIdx, arcIdx, field, value) {
+  const scopeData = getCurrentScopeData();
+  const arc = scopeData.characters?.[charIdx]?.arcs?.[arcIdx];
+  if (arc) {
+    if (!arc.fields) arc.fields = {};
+    arc.fields[field] = value;
+    const story = getCurrentStory();
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+function getArcStructureGuidance(structureKey, beatName, arcType) {
+  const guidance = ARC_STRUCTURE_GUIDANCE[structureKey];
+  if (!guidance) return null;
+  
+  // Check for arc-type-specific guidance first
+  const typeSpecific = guidance.byArcType?.[arcType]?.[beatName];
+  if (typeSpecific) return typeSpecific;
+  
+  // Fall back to generic guidance
+  return guidance.beats?.[beatName] || null;
+}
+
+function getArcTypeFieldGuidance(arcType, fieldKey) {
+  return ARC_TYPE_FIELD_GUIDANCE[arcType]?.[fieldKey] || null;
+}
+
+function changeArcFrameworkScoped(charIdx, arcIdx, frameworkKey) {
+  const scopeData = getCurrentScopeData();
+  const arc = scopeData.characters?.[charIdx]?.arcs?.[arcIdx];
+  if (!arc) return;
+  
+  const oldFramework = arc.framework;
+  arc.framework = frameworkKey || null;
+  
+  // If switching to a framework, initialize beats array to match framework length
+  if (frameworkKey) {
+    const arcType = ARC_TYPES[arc.type] || ARC_TYPES.positive;
+    const frameworkBeats = arcType.frameworks?.[frameworkKey]?.beats || [];
+    
+    // Preserve existing beat content if possible
+    const existingBeats = arc.beats || [];
+    arc.beats = frameworkBeats.map((fb, i) => ({
+      title: fb.name,
+      content: existingBeats[i]?.content || ''
+    }));
+  }
+  
+  const story = getCurrentStory();
+  story.updatedAt = Date.now();
+  saveState();
+  renderArcs();
 }
 
 function addArcBeatScoped(charIdx, arcIdx) {
@@ -6981,7 +7816,7 @@ function renderCharacterArcs(char, charIdx) {
   }
   
   return arcs.map((arc, arcIdx) => {
-    const arcType = ARC_TYPES[arc.type];
+    const arcType = ARC_TYPES[arc.type] || ARC_TYPES.positive;
     const beatCount = (arc.beats || []).length;
     const arcColor = arc.color || ARC_COLORS[arcIdx % ARC_COLORS.length];
     
@@ -7012,12 +7847,12 @@ function renderCharacterArcs(char, charIdx) {
               ${arcType.fields.map(field => `
                 <div class="arc-field">
                   <label class="arc-field-label">${field.label}</label>
-                  <textarea class="arc-field-input arc-field-textarea" placeholder="${field.placeholder}" onchange="updateArcField(${charIdx}, ${arcIdx}, '${field.key}', this.value)">${escapeHtml(arc.fields[field.key] || '')}</textarea>
+                  <textarea class="arc-field-input arc-field-textarea" placeholder="${field.placeholder}" onchange="updateArcField(${charIdx}, ${arcIdx}, '${field.key}', this.value)">${escapeHtml((arc.fields || {})[field.key] || '')}</textarea>
                 </div>
               `).join('')}
               <div class="arc-field" style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
                 <label class="arc-field-label">Arc Notes</label>
-                <textarea class="arc-field-input arc-field-textarea" placeholder="Private notes about this arc - themes, ideas, reminders..." onchange="updateArcField(${charIdx}, ${arcIdx}, 'notes', this.value)" style="min-height: 60px;">${escapeHtml(arc.fields.notes || '')}</textarea>
+                <textarea class="arc-field-input arc-field-textarea" placeholder="Private notes about this arc - themes, ideas, reminders..." onchange="updateArcField(${charIdx}, ${arcIdx}, 'notes', this.value)" style="min-height: 60px;">${escapeHtml((arc.fields || {}).notes || '')}</textarea>
               </div>
             </div>
           </div>
@@ -7209,6 +8044,40 @@ function toggleStoryMenu() {
 
 function closeStoryMenu() {
   document.getElementById('storyMenuDropdown').classList.remove('open');
+}
+
+function toggleGuidanceMode() {
+  state.guidanceMode = !state.guidanceMode;
+  const btn = document.getElementById('guidanceToggle');
+  if (btn) {
+    btn.classList.toggle('active', state.guidanceMode);
+  }
+  // Re-render to show/hide guidance
+  if (state.currentTab === 'plot') {
+    renderBeats();
+  } else {
+    renderArcs();
+  }
+}
+
+function updateGuidanceButton() {
+  const btn = document.getElementById('guidanceToggle');
+  if (btn) {
+    btn.classList.toggle('active', state.guidanceMode);
+  }
+}
+
+function getFrameworkGuidance(frameworkKey, beatName) {
+  const guidance = FRAMEWORK_GUIDANCE[frameworkKey];
+  if (!guidance) return null;
+  return guidance.beats?.[beatName] || null;
+}
+
+function getArcGuidance(arcType, frameworkKey, beatIndex) {
+  const arcTypeData = ARC_TYPES[arcType];
+  if (!arcTypeData?.frameworks?.[frameworkKey]) return null;
+  const beat = arcTypeData.frameworks[frameworkKey].beats[beatIndex];
+  return beat?.guidance || null;
 }
 
 // Color palette for arcs
@@ -8432,8 +9301,8 @@ function renderTimelines() {
       <div class="timeline-track-body">
         ${(timeline.events || []).map((event, ei) => `
           <div class="timeline-event" draggable="true" ondragstart="dragTimelineEvent(event, ${ti}, ${ei})" ondragover="event.preventDefault()" ondrop="dropTimelineEvent(event, ${ti}, ${ei})">
-            <div class="timeline-event-title">${escapeHtml(event.title)}</div>
-            <div class="timeline-event-desc">${escapeHtml(event.description || '')}</div>
+            <div class="timeline-event-title" onclick="editTimelineEventTitle(${ti}, ${ei}, this)">${escapeHtml(event.title)}</div>
+            <div class="timeline-event-desc" onclick="editTimelineEventDesc(${ti}, ${ei}, this)">${escapeHtml(event.description || '') || '<span style="color: var(--text-muted); font-style: italic;">Click to add description</span>'}</div>
             <button class="timeline-event-delete" onclick="deleteTimelineEvent(${ti}, ${ei})">&times;</button>
           </div>
         `).join('')}
@@ -8554,6 +9423,39 @@ function makeTimelineEventEditable(timelineIndex, eventIndex, element) {
   element.appendChild(input);
   input.focus();
   input.select();
+}
+
+function editTimelineEventTitle(timelineIndex, eventIndex, element) {
+  makeTimelineEventEditable(timelineIndex, eventIndex, element);
+}
+
+function editTimelineEventDesc(timelineIndex, eventIndex, element) {
+  const story = getCurrentStory();
+  const event = story.timelines[timelineIndex].events[eventIndex];
+  
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.value = event.description || '';
+  input.className = 'modal-input';
+  input.style.cssText = 'width: 100%; padding: 0.25rem; font-size: 0.8rem;';
+  input.placeholder = 'Event description...';
+  
+  const saveEdit = () => {
+    story.timelines[timelineIndex].events[eventIndex].description = input.value.trim();
+    story.updatedAt = Date.now();
+    saveState();
+    renderTimelines();
+  };
+  
+  input.addEventListener('blur', saveEdit);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') saveEdit();
+    if (e.key === 'Escape') renderTimelines();
+  });
+  
+  element.innerHTML = '';
+  element.appendChild(input);
+  input.focus();
 }
 
 function deleteTimelineEvent(timelineIndex, eventIndex) {
@@ -9815,6 +10717,8 @@ function openStory(storyId) {
   document.getElementById('storyWorkspace').classList.add('active');
   document.getElementById('headerTabs').style.display = 'flex';
   document.getElementById('viewToggle').style.display = 'flex';
+  document.getElementById('guidanceToggle').style.display = 'flex';
+  updateGuidanceButton();
   
   renderDropdown();
   renderWorkspace();
@@ -9830,6 +10734,7 @@ function deleteStory(storyId) {
     document.getElementById('storyWorkspace').classList.remove('active');
     document.getElementById('headerTabs').style.display = 'none';
     document.getElementById('viewToggle').style.display = 'none';
+    document.getElementById('guidanceToggle').style.display = 'none';
     document.getElementById('storyDropdownBtn').textContent = 'Select a story...';
   }
   
@@ -10288,7 +11193,10 @@ function switchTab(tab) {
   document.getElementById('splitTab').classList.toggle('active', tab === 'split');
   document.getElementById('allTab').classList.toggle('active', tab === 'all');
   document.getElementById('infoTab').classList.toggle('active', tab === 'info');
-  document.getElementById('viewToggle').style.display = (tab === 'all' || tab === 'info' || tab === 'split') ? 'none' : 'flex';
+  
+  const showViewControls = (tab === 'plot' || tab === 'arcs');
+  document.getElementById('viewToggle').style.display = showViewControls ? 'flex' : 'none';
+  document.getElementById('guidanceToggle').style.display = showViewControls ? 'flex' : 'none';
   document.getElementById('frameworkWrapper').style.display = tab === 'plot' ? 'flex' : 'none';
   
   if (tab === 'all') {
