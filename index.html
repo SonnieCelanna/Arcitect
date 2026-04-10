@@ -219,6 +219,747 @@ body {
 .workspace-tab[data-tab="all"].active { background: var(--accent-glow); color: var(--bg-base); }
 .workspace-tab[data-tab="info"].active { background: var(--accent-arc-flat); color: var(--bg-base); }
 .workspace-tab[data-tab="split"].active { background: #50b0b0; color: var(--bg-base); }
+.workspace-tab[data-tab="planning"].active { background: #9b59b6; color: var(--bg-base); }
+
+/* Planning Tab Sub-tabs */
+.planning-subtabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.planning-subtab {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.planning-subtab:hover {
+  color: var(--text-secondary);
+  border-color: var(--border-focus);
+}
+
+.planning-subtab.active {
+  background: #9b59b6;
+  border-color: #9b59b6;
+  color: #fff;
+}
+
+.planning-content {
+  padding: 1.5rem;
+}
+
+.planning-placeholder {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-muted);
+}
+
+.planning-placeholder h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+/* Brainstorm Subtab */
+.brainstorm-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.brainstorm-title {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1.25rem;
+  font-family: 'Playfair Display', serif;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.brainstorm-title:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.brainstorm-title::placeholder {
+  color: var(--text-muted);
+}
+
+.brainstorm-beats {
+  margin-bottom: 1rem;
+}
+
+.brainstorm-beat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  transition: all 0.15s;
+}
+
+.brainstorm-beat:hover {
+  border-color: var(--border-focus);
+}
+
+.brainstorm-beat.dragging {
+  opacity: 0.5;
+}
+
+.brainstorm-beat.drag-above {
+  border-top: 2px solid #9b59b6;
+}
+
+.brainstorm-beat.drag-below {
+  border-bottom: 2px solid #9b59b6;
+}
+
+.brainstorm-beat-handle {
+  cursor: grab;
+  color: var(--text-muted);
+  padding: 0 0.25rem;
+  user-select: none;
+}
+
+.brainstorm-beat-handle:active {
+  cursor: grabbing;
+}
+
+.brainstorm-beat-input {
+  flex: 1;
+  padding: 0.4rem 0.6rem;
+  background: var(--bg-base);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.brainstorm-beat-input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.brainstorm-beat-delete {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.brainstorm-beat-delete:hover {
+  color: var(--accent-red, #e74c3c);
+  background: rgba(231, 76, 60, 0.1);
+}
+
+.brainstorm-add-single {
+  margin-bottom: 1.5rem;
+}
+
+.brainstorm-draft-section {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+
+.brainstorm-draft {
+  width: 100%;
+  min-height: 200px;
+  padding: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.brainstorm-draft:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.brainstorm-draft::placeholder {
+  color: var(--text-muted);
+}
+
+.brainstorm-convert {
+  background: #9b59b6;
+  border-color: #9b59b6;
+}
+
+.brainstorm-convert:hover {
+  background: #8e44ad;
+  border-color: #8e44ad;
+}
+
+/* Premise Subtab */
+.premise-container {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.premise-intro {
+  margin-bottom: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.premise-field {
+  margin-bottom: 1.5rem;
+}
+
+.premise-label {
+  display: block;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.premise-input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.premise-input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.premise-textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.premise-textarea.small {
+  min-height: 50px;
+}
+
+.premise-textarea:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.premise-summary {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Idea Bank Subtab */
+.ideabank-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.ideabank-section {
+  margin-bottom: 2rem;
+}
+
+.ideabank-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.ideabank-section-desc {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.ideabank-items {
+  margin-bottom: 0.75rem;
+}
+
+.ideabank-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ideabank-item-input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.ideabank-item-input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.ideabank-item-delete {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.ideabank-item-delete:hover {
+  color: var(--accent-red, #e74c3c);
+}
+
+.ideabank-add-single {
+  margin-bottom: 1rem;
+}
+
+.ideabank-draft-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ideabank-draft {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.ideabank-draft:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.ideabank-convert {
+  align-self: flex-start;
+  background: #9b59b6;
+  border-color: #9b59b6;
+}
+
+.ideabank-convert:hover {
+  background: #8e44ad;
+}
+
+.ideabank-music-list {
+  margin-bottom: 1rem;
+}
+
+.ideabank-music-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.ideabank-music-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.ideabank-music-link a {
+  color: #9b59b6;
+  text-decoration: none;
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+
+.ideabank-music-link a:hover {
+  text-decoration: underline;
+}
+
+.ideabank-music-notes {
+  width: 100%;
+  min-height: 50px;
+  padding: 0.5rem;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.ideabank-music-notes:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.ideabank-music-add {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.ideabank-music-url {
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.ideabank-music-url:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.ideabank-music-add-notes {
+  min-height: 60px;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.ideabank-music-add-notes:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+/* Questions Subtab */
+.questions-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.questions-intro {
+  margin-bottom: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.questions-list {
+  margin-bottom: 1.5rem;
+}
+
+.question-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s;
+}
+
+.question-item.answered {
+  opacity: 0.6;
+  border-left: 3px solid var(--accent-green, #27ae60);
+}
+
+.question-check {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.question-check:hover {
+  background: var(--bg-base);
+  color: var(--accent-green, #27ae60);
+}
+
+.question-item.answered .question-check {
+  color: var(--accent-green, #27ae60);
+}
+
+.question-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.question-text {
+  padding: 0.4rem 0.6rem;
+  background: var(--bg-base);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.question-text:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.question-answer {
+  padding: 0.4rem 0.6rem;
+  background: var(--bg-base);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  min-height: 50px;
+  resize: vertical;
+}
+
+.question-answer:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.question-delete {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+.question-delete:hover {
+  color: var(--accent-red, #e74c3c);
+}
+
+.questions-draft-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.questions-draft {
+  width: 100%;
+  min-height: 120px;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.questions-draft:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.questions-draft-section .btn-primary {
+  align-self: flex-start;
+  background: #9b59b6;
+  border-color: #9b59b6;
+}
+
+.questions-draft-section .btn-primary:hover {
+  background: #8e44ad;
+}
+
+/* Chronology Subtab */
+.chronology-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.chronology-intro {
+  margin-bottom: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.chronology-list {
+  margin-bottom: 0.75rem;
+}
+
+.chronology-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  transition: all 0.15s;
+}
+
+.chronology-item:hover {
+  border-color: var(--border-focus);
+}
+
+.chronology-item.dragging {
+  opacity: 0.5;
+}
+
+.chronology-item.drag-above {
+  border-top: 2px solid #9b59b6;
+}
+
+.chronology-item.drag-below {
+  border-bottom: 2px solid #9b59b6;
+}
+
+.chronology-handle {
+  cursor: grab;
+  color: var(--text-muted);
+  padding: 0 0.25rem;
+  user-select: none;
+}
+
+.chronology-handle:active {
+  cursor: grabbing;
+}
+
+.chronology-when {
+  width: 140px;
+  flex-shrink: 0;
+  padding: 0.4rem 0.6rem;
+  background: var(--bg-base);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.chronology-when:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.chronology-what {
+  flex: 1;
+  padding: 0.4rem 0.6rem;
+  background: var(--bg-base);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.chronology-what:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.chronology-delete {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.chronology-delete:hover {
+  color: var(--accent-red, #e74c3c);
+}
+
+.chronology-add-single {
+  margin-bottom: 1.5rem;
+}
+
+.chronology-draft-section {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.chronology-draft {
+  width: 100%;
+  min-height: 140px;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.chronology-draft:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.chronology-convert {
+  align-self: flex-start;
+  background: #9b59b6;
+  border-color: #9b59b6;
+}
+
+.chronology-convert:hover {
+  background: #8e44ad;
+}
 
 /* Header Right - View Toggle */
 .header-right { display: flex; align-items: center; gap: 0.75rem; }
@@ -270,7 +1011,45 @@ body {
   color: var(--text-primary);
 }
 
-.welcome-text { color: var(--text-secondary); max-width: 450px; margin-bottom: 2rem; line-height: 1.7; }
+.welcome-text { color: var(--text-secondary); max-width: 450px; margin-bottom: 1.5rem; line-height: 1.7; }
+
+.welcome-explanation {
+  max-width: 550px;
+  text-align: left;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.welcome-explanation h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.welcome-explanation p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+
+.welcome-explanation p:last-child {
+  margin-bottom: 0;
+}
+
+.welcome-explanation strong {
+  color: var(--text-primary);
+}
+
+.welcome-explanation em {
+  color: var(--text-primary);
+  font-style: italic;
+}
+
 .welcome-actions { display: flex; gap: 1rem; }
 
 .btn {
@@ -1491,7 +2270,8 @@ body {
   border-radius: 3px;
 }
 
-.arc-beat-title-input {
+.arc-beat-title-input,
+.arc-beat-title {
   flex: 1;
   background: transparent;
   border: none;
@@ -1501,10 +2281,14 @@ body {
   font-weight: 600;
   padding: 0.2rem 0;
   outline: none;
+  font-family: inherit;
 }
 
-.arc-beat-title-input:focus { border-bottom-color: var(--accent-arc-positive); }
-.arc-beat-title-input::placeholder { color: var(--text-muted); }
+.arc-beat-title-input:focus,
+.arc-beat-title:focus { border-bottom-color: var(--accent-arc-positive); }
+
+.arc-beat-title-input::placeholder,
+.arc-beat-title::placeholder { color: var(--text-muted); }
 
 .arc-beat-delete {
   background: transparent;
@@ -3716,30 +4500,39 @@ body {
   font-size: 0.85rem;
 }
 
-.scope-crumb {
+.scope-crumb,
+.scope-breadcrumb-btn {
+  background: transparent;
+  border: none;
   color: var(--text-muted);
   cursor: pointer;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
   transition: all 0.15s;
+  font-family: inherit;
+  font-size: 0.85rem;
 }
 
-.scope-crumb:hover {
+.scope-crumb:hover,
+.scope-breadcrumb-btn:hover {
   color: var(--text-primary);
   background: var(--bg-card);
 }
 
-.scope-crumb.current {
+.scope-crumb.current,
+.scope-breadcrumb-current {
   color: var(--text-primary);
   font-weight: 600;
   cursor: default;
+  padding: 0.2rem 0.4rem;
 }
 
 .scope-crumb.current:hover {
   background: transparent;
 }
 
-.scope-separator {
+.scope-separator,
+.scope-breadcrumb-sep {
   color: var(--text-muted);
   font-size: 0.75rem;
 }
@@ -4268,6 +5061,7 @@ body {
   </div>
   
   <div class="header-center" id="headerTabs" style="display: none;">
+    <button class="workspace-tab" data-tab="planning">Planning</button>
     <button class="workspace-tab active" data-tab="plot">Plot</button>
     <button class="workspace-tab" data-tab="arcs">Arcs</button>
     <button class="workspace-tab" data-tab="split">Split</button>
@@ -4295,7 +5089,21 @@ body {
   <div class="welcome-screen" id="welcomeScreen">
     <div class="welcome-icon">•</div>
     <h2 class="welcome-title">Arc-itect</h2>
-    <p class="welcome-text">Build story structures with clarity. Map your plot beats and track how your characters transform through their arcs.</p>
+    <p class="welcome-text">Map your plot beats and track how your characters transform through their arcs.</p>
+    
+    <div class="welcome-explanation">
+      <h3>Planning tools vs. diagnostic tools</h3>
+      <p>Arc-itect has two kinds of tools, and knowing the difference matters.</p>
+      
+      <p><strong>Planning tools</strong> (the Planning tab) are for before and during writing. Brainstorm your beats. Work out your premise. Dump scene ideas. Track questions you need to answer. These are freeform and don't impose structure on you.</p>
+      
+      <p><strong>Diagnostic tools</strong> (Plot and Arcs tabs) are frameworks like Save the Cat, the Hero's Journey, and Story Circle. These weren't invented as writing instructions. They're reverse-engineered from stories that worked. Campbell didn't create the Hero's Journey; he noticed it kept appearing in myths. Snyder didn't invent Save the Cat; he analyzed why certain films succeeded.</p>
+      
+      <p>The traditional use for diagnostic tools: write your story first, feel dissatisfied or sense a problem you can't identify, then apply the framework to diagnose what's off. "My second act drags?" Check your midpoint. "The ending feels unearned?" Examine your character's arc beats.</p>
+      
+      <p>You <em>can</em> use diagnostic frameworks for planning. But if you do, write your story ideas first, then see which beats they naturally fit into. Don't start with an empty "Midpoint" box and try to invent something to fill it. That approach produces stories that hit all the marks but feel hollow because the beats exist to satisfy the framework rather than to serve your actual story.</p>
+    </div>
+    
     <div class="welcome-actions">
       <button class="btn btn-primary" id="welcomeNewStory"><span>+</span> New Story</button>
     </div>
@@ -4344,6 +5152,23 @@ body {
     </div>
 
     <div class="workspace-body" id="workspaceBody">
+      <!-- Planning Tab -->
+      <div class="tab-content" id="planningTab">
+        <div class="scope-nav" id="planningScopeNav">
+          <!-- Scope breadcrumb populated by JS -->
+        </div>
+        <div class="planning-subtabs" id="planningSubtabs">
+          <button class="planning-subtab active" data-subtab="a">Brainstorm</button>
+          <button class="planning-subtab" data-subtab="b">Premise</button>
+          <button class="planning-subtab" data-subtab="c">Idea Bank</button>
+          <button class="planning-subtab" data-subtab="d">Questions</button>
+          <button class="planning-subtab" data-subtab="e">Chronology</button>
+        </div>
+        <div class="planning-content" id="planningContent">
+          <!-- Planning content populated by JS -->
+        </div>
+      </div>
+      
       <!-- Plot Tab -->
       <div class="tab-content active" id="plotTab">
         <div class="scope-nav" id="scopeNav">
@@ -5495,13 +6320,13 @@ const ARC_STRUCTURE_GUIDANCE = {
   'kishotenketsu': {
     overview: 'Kishōtenketsu for character arcs: transformation through recontextualization rather than conflict. The character doesn\'t fight their way to change—they see themselves differently through the "twist."',
     beats: {
-      'Ki (起) — Introduction': '<strong>Character as they are:</strong> Establish the character\'s internal state without judgment. Who they are, how they see themselves, what they believe. No conflict yet.<br><br><strong>Ask yourself:</strong> Who is my character, simply stated? What do they believe about themselves and the world?',
+      'Ki (起) — Introduction': '<strong>What this beat does:</strong> Establish the character as they are—their internal state, how they see themselves, what they believe. Present them without judgment, without conflict. This is simply who they are at the start. The goal is understanding, not tension.<br><br><strong>Why it matters:</strong> Kishōtenketsu doesn\'t rely on conflict to drive transformation. Instead, it relies on UNDERSTANDING—we need to know the character deeply before the Twist can reframe them. Ki establishes the baseline that Ten will recontextualize.<br><br><strong>What Kishōtenketsu does differently:</strong> Unlike conflict-driven structures, Ki doesn\'t need to establish a problem. The character might be happy, stable, functional. We\'re not looking for what\'s WRONG—we\'re building understanding that will shift in Ten.<br><br><strong>What to include:</strong> The character\'s psychology and self-image. How they see the world. Their relationships and daily existence. The texture of their internal life. Who they believe themselves to be.<br><br><strong>Ask yourself:</strong> Who is my character, simply stated? What do they believe about themselves and the world? How do they understand their own life? What would they say about themselves?<br><br><strong>Common mistakes:</strong> Introducing conflict or problems (save that for conflict-driven structures). Presenting the character as "broken" from the start. Rushing past the establishment.',
       
-      'Shō (承) — Development': '<strong>Deepening understanding:</strong> Develop the character\'s psychology further. Build nuance and context. The audience (and character) understand more, but nothing has challenged the core yet.<br><br><strong>Ask yourself:</strong> What additional layers does my character have? What complexity emerges as we know them better?',
+      'Shō (承) — Development': '<strong>What this beat does:</strong> Deepen our understanding of the character without challenging their core yet. Build nuance, context, complexity. We learn more about who they are, how they operate, what matters to them. The audience (and character) understand more fully.<br><br><strong>Why it matters:</strong> Shō extends Ki—adding layers that will become meaningful when Ten reframes everything. The development should feel like natural exploration, not building toward crisis. We\'re not escalating tension; we\'re deepening understanding.<br><br><strong>What Kishōtenketsu does differently:</strong> Unlike Rising Action in Western structures, Shō isn\'t about increasing pressure. It\'s about revealing depth. Each new detail enriches our picture without pushing toward a breaking point.<br><br><strong>What to include:</strong> Additional layers of the character\'s psychology. Complexity that emerges through exploration. Relationships developed further. The world around them taking shape. Details that will matter when the Twist arrives.<br><br><strong>Ask yourself:</strong> What additional layers does my character have? What complexity emerges as we know them better? What details will become significant when seen differently?<br><br><strong>Common mistakes:</strong> Creating conflict or escalation (that\'s a different structure). Introducing a problem to solve. Development that doesn\'t connect to what Ten will reveal.',
       
-      'Ten (転) — Twist': '<strong>Recontextualization:</strong> Something shifts perspective. The character (or audience) sees everything that came before in a new light. Not a crisis—a revelation that changes meaning.<br><br><strong>Ask yourself:</strong> What new context makes my character see themselves differently? What truth reframes their understanding?',
+      'Ten (転) — Twist': '<strong>What this beat does:</strong> Shift perspective so everything from Ki and Shō is seen in a new light. This isn\'t a plot twist—it\'s a RECONTEXTUALIZATION. The character (or audience) sees the same information differently. The facts haven\'t changed, but their meaning has.<br><br><strong>Why it matters:</strong> Ten is the heart of Kishōtenketsu. Instead of transformation through conflict, we get transformation through SEEING. The character doesn\'t fight their way to change—they perceive differently. This is a completely different mechanism than Western story structures.<br><br><strong>What makes a good Ten:</strong> It doesn\'t add new problems—it adds new perspective. What we thought was one thing is actually another. The character who seemed [X] is actually [Y], or their situation that seemed [A] is actually [B]. The shift is in understanding, not circumstances.<br><br><strong>What to include:</strong> The revelation or shift in perspective. How Ki and Shō look different now. The character\'s (or audience\'s) changed understanding. The realization that reframes everything. A sense of "oh—so THAT\'S what this is."<br><br><strong>Ask yourself:</strong> What new context makes my character see themselves differently? What truth reframes their understanding? How does everything before this look different now? What stays the same while meaning changes?<br><br><strong>Common mistakes:</strong> Making Ten a crisis or conflict (that\'s Western structure). Adding new problems instead of new perspective. Twist that doesn\'t connect to Ki and Shō. External event that changes circumstances instead of understanding.',
       
-      'Ketsu (結) — Conclusion': '<strong>Integration:</strong> The character reconciles the twist with who they were. The old and new understanding merge into a more complete sense of self.<br><br><strong>Ask yourself:</strong> How does my character integrate this new understanding? How are they both the same and different?'
+      'Ketsu (結) — Conclusion': '<strong>What this beat does:</strong> The character reconciles the Twist with who they were. The old self and new understanding merge into something more complete—not through struggle, but through integration. They are both the same and different: the same facts, understood more fully.<br><br><strong>Why it matters:</strong> Ketsu completes the arc by showing integration rather than victory. The character doesn\'t defeat anything—they become more whole. The transformation is one of understanding, and Ketsu shows that understanding settling into a new way of being.<br><br><strong>What makes a good Ketsu:</strong> It feels like completion, not resolution. The character has integrated the new understanding without dramatic conflict. There\'s a sense of wholeness that wasn\'t there before—not because something was fixed, but because something was understood.<br><br><strong>What to include:</strong> The character living with their new understanding. Integration of old and new perspectives. A sense of greater wholeness or completeness. How they carry forward both what they were and what they\'ve learned. Peace or acceptance rather than triumph.<br><br><strong>Ask yourself:</strong> How does my character integrate this new understanding? How are they both the same and different? What does wholeness look like for them? How do they carry forward what they\'ve learned?<br><br><strong>Common mistakes:</strong> Turning Ketsu into a final battle or climax. Character rejecting their past self. Resolution through conflict instead of integration. Ending that feels like Western denouement instead of Eastern harmony.'
     },
     byArcType: {
       'positive': {
@@ -5527,19 +6352,19 @@ const ARC_STRUCTURE_GUIDANCE = {
   'seven-point': {
     overview: 'Seven-point structure for character arcs works BACKWARD from the Resolution. The Hook (starting state) must be the opposite of the Resolution (ending state). Design the transformation first, then build toward it.',
     beats: {
-      'Hook': '<strong>The opposite state:</strong> The character\'s starting psychology should be the OPPOSITE of where they\'ll end. If they\'ll end confident, start insecure. If they\'ll end connected, start isolated.<br><br><strong>Ask yourself:</strong> What is the opposite of my character\'s ending state? How do I establish that clearly at the start?',
+      'Hook': '<strong>What this beat does:</strong> Establish the character in their OPPOSITE state from where they\'ll end. This is the defining principle of Seven-Point: design backward from the Resolution. If they\'ll end confident, start them insecure. If they\'ll end connected, start them isolated. The contrast must be clear and stark.<br><br><strong>Why it matters:</strong> Seven-Point structure is built on opposites. The Hook and Resolution are mirror images, and everything between them traces the journey from one to the other. A weak Hook (not clearly opposite the Resolution) undermines the entire arc.<br><br><strong>How to design it:</strong> Start with the Resolution—who will your character BE at the end? Then flip it completely for the Hook. Don\'t be subtle; make the contrast obvious. The transformation should be visible from a mile away when you look at Hook and Resolution side by side.<br><br><strong>What to include:</strong> The character\'s starting psychology in clear terms. Visible behavior that demonstrates their state. Why this state makes sense for them (it shouldn\'t feel arbitrary). The clear opposite of their ending state.<br><br><strong>Ask yourself:</strong> What is the opposite of my character\'s ending state? How do I establish that clearly at the start? What specific behaviors show this starting psychology? Why is this starting state believable for them?<br><br><strong>Common mistakes:</strong> Hook that\'s too similar to Resolution (no clear transformation). Starting state that\'s unclear or vague. No visible opposite relationship to the ending.',
       
-      'Plot Turn 1': '<strong>World expands:</strong> The character encounters something that will eventually change them. New information, new people, new situations that their current worldview can\'t fully handle.<br><br><strong>Ask yourself:</strong> What introduces my character to the possibility of change? What new element enters their world?',
+      'Plot Turn 1': '<strong>What this beat does:</strong> Introduce the element that will eventually change the character. Something new enters their world—a person, situation, information, or perspective—that their current psychology can\'t fully handle. This plants the seed; it doesn\'t force immediate change.<br><br><strong>Why it matters:</strong> Plot Turn 1 begins the journey from Hook to Resolution. Without something new entering the world, there\'s no reason for the character to change. This beat provides the catalyst—not the change itself, but the possibility of change.<br><br><strong>What to include:</strong> The new element entering the character\'s world. How their current psychology receives it (probably with resistance or misunderstanding). The seed being planted. The sense that something has shifted, even if the character doesn\'t recognize it yet.<br><br><strong>Ask yourself:</strong> What introduces my character to the possibility of change? What new element enters their world? How does their current state prevent them from fully receiving it? What seed is planted here?<br><br><strong>Common mistakes:</strong> Character changing too quickly. New element that doesn\'t connect to the transformation. No visible impact from the introduction.',
       
-      'Pinch Point 1': '<strong>Pressure applied:</strong> The character is forced to confront their flaw or Lie. Something goes wrong because of who they currently are.<br><br><strong>Ask yourself:</strong> What puts pressure on my character\'s false belief? How does their current state cause problems?',
+      'Pinch Point 1': '<strong>What this beat does:</strong> Apply pressure by showing the cost of the character\'s current state. Something goes wrong BECAUSE of who they currently are. The flaw or Lie causes pain. This isn\'t external bad luck—it\'s a direct consequence of their Hook psychology.<br><br><strong>Why it matters:</strong> Pinch Point 1 creates the first real pressure toward change. The character experiences consequences from their starting state. This should make them (and the audience) question whether the Hook psychology is sustainable.<br><br><strong>What to include:</strong> A failure or loss caused by the character\'s current psychology. The connection between who they are and what went wrong. Pressure that makes the status quo uncomfortable. Perhaps the first cracks in their certainty.<br><br><strong>Ask yourself:</strong> What puts pressure on my character\'s false belief? How does their current state cause problems? What goes wrong BECAUSE of who they are? What cracks start to form?<br><br><strong>Common mistakes:</strong> Pain that\'s external bad luck (not caused by their psychology). No clear connection between flaw and consequence. Pressure that\'s too subtle to matter.',
       
-      'Midpoint': '<strong>Shift from reaction to action:</strong> The character moves from passive to active in their own transformation. They start trying to change, even if they don\'t fully understand how.<br><br><strong>Ask yourself:</strong> What makes my character decide to change rather than just react? What shifts from defense to growth?',
+      'Midpoint': '<strong>What this beat does:</strong> Mark the shift from passive to active. Before the Midpoint, the character reacts to pressure. After it, they actively work toward change. They decide to grow, even if they don\'t fully understand how. This is the psychological turning point.<br><br><strong>Why it matters:</strong> The Midpoint separates the first half (defensive, reactive) from the second half (pursuing change). The character stops just trying to cope and starts trying to transform. This agency makes the eventual Resolution feel earned.<br><br><strong>What to include:</strong> The moment of decision or shift. Moving from defense to growth. The character choosing to change rather than just reacting. Active steps toward transformation (even if clumsy). A visible difference in approach.<br><br><strong>Ask yourself:</strong> What makes my character decide to change rather than just react? What shifts from defense to growth? What active step do they take? How is the second half different from the first?<br><br><strong>Common mistakes:</strong> No visible shift from reactive to active. Continuing to just cope instead of pursuing change. Midpoint that doesn\'t feel like a turning point.',
       
-      'Pinch Point 2': '<strong>Transformation tested:</strong> The character\'s attempt at change is challenged. They might regress or doubt. The old way tempts them back.<br><br><strong>Ask yourself:</strong> What tests my character\'s growth? What makes them consider returning to the Lie?',
+      'Pinch Point 2': '<strong>What this beat does:</strong> Test the character\'s attempt at change. The old psychology tempts them back. They might regress, doubt their progress, or face a situation where the Hook-state seems like the easier answer. This proves the transformation isn\'t complete yet.<br><br><strong>Why it matters:</strong> Pinch Point 2 ensures the transformation is tested before the Resolution. Growth isn\'t linear; there should be moments of regression or temptation. This makes the eventual transformation feel real rather than automatic.<br><br><strong>What to include:</strong> A challenge to the growth so far. The old way tempting them back. Regression, doubt, or near-failure. The sense that transformation isn\'t guaranteed. A test that proves change must be chosen again.<br><br><strong>Ask yourself:</strong> What tests my character\'s growth? What makes them consider returning to the Hook-state? How do they struggle here? What proves the transformation isn\'t automatic?<br><br><strong>Common mistakes:</strong> Smooth progress with no setbacks. Old psychology that doesn\'t tempt them. Test that\'s too easy to overcome.',
       
-      'Plot Turn 2': '<strong>Final piece:</strong> The character gets the last thing they need to complete their transformation. Often a realization, a choice, or an acceptance.<br><br><strong>Ask yourself:</strong> What final element enables my character\'s complete transformation? What last piece falls into place?',
+      'Plot Turn 2': '<strong>What this beat does:</strong> Provide the final piece needed for complete transformation. Often a realization, a choice, or an acceptance. Whatever was missing that prevented full transformation—the character gets it here. This enables the Resolution.<br><br><strong>Why it matters:</strong> Plot Turn 2 completes what Plot Turn 1 started. If Plot Turn 1 introduced the possibility of change, Plot Turn 2 provides what\'s needed to fully realize it. This is the last piece of the puzzle before the Resolution.<br><br><strong>What to include:</strong> The final element that enables complete transformation. A realization that\'s been building. A choice that commits them. An acceptance they\'ve been resisting. The sense that everything is finally in place.<br><br><strong>Ask yourself:</strong> What final element enables my character\'s complete transformation? What last piece falls into place? What have they been resisting that they finally accept? What makes the Resolution possible?<br><br><strong>Common mistakes:</strong> Resolution that happens without Plot Turn 2 providing something specific. Final piece that feels arbitrary. No clear difference from previous growth.',
       
-      'Resolution': '<strong>Transformation complete:</strong> The character is now the opposite of who they were at the Hook. The arc has delivered on its promise.<br><br><strong>Ask yourself:</strong> Is my character demonstrably the opposite of who they were? Does the arc feel complete?'
+      'Resolution': '<strong>What this beat does:</strong> Show the character as the OPPOSITE of who they were at the Hook. The transformation is complete; the arc has delivered on its promise. They are now who they needed to become. The contrast with the Hook should be stark and visible.<br><br><strong>Why it matters:</strong> The Resolution is where Seven-Point pays off. Everything from Hook through Plot Turn 2 has been building to this moment. The character is demonstrably, visibly the opposite of who they were—not just different, but transformed in the specific way the arc promised.<br><br><strong>What to include:</strong> The character in their opposite state from Hook. Visible transformation in behavior, relationships, choices. The arc\'s promise fulfilled. A sense of completion and earned change. Clear contrast with the opening.<br><br><strong>Ask yourself:</strong> Is my character demonstrably the opposite of who they were? Does the arc feel complete? What proves the transformation? What\'s the visible contrast with the Hook?<br><br><strong>Common mistakes:</strong> Resolution that\'s too similar to Hook (transformation unclear). Change that doesn\'t match the promised opposite. Ending that doesn\'t feel earned by the journey.'
     },
     byArcType: {
       'positive': {
@@ -5909,6 +6734,81 @@ function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
 }
 
+// ===== TOAST & CONFIRMATION UI =====
+function showToast(message, type = 'info') {
+  // Remove existing toast
+  const existing = document.querySelector('.toast-notification');
+  if (existing) existing.remove();
+  
+  const toast = document.createElement('div');
+  toast.className = `toast-notification toast-${type}`;
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    background: ${type === 'error' ? 'var(--accent-red, #e74c3c)' : type === 'success' ? 'var(--accent-green, #27ae60)' : 'var(--bg-card)'};
+    color: ${type === 'error' || type === 'success' ? '#fff' : 'var(--text-primary)'};
+    border: 1px solid ${type === 'error' ? 'var(--accent-red, #e74c3c)' : type === 'success' ? 'var(--accent-green, #27ae60)' : 'var(--border)'};
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 10000;
+    font-size: 0.9rem;
+    max-width: 90vw;
+    text-align: center;
+    transition: transform 0.3s ease;
+  `;
+  
+  document.body.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+  });
+  
+  setTimeout(() => {
+    toast.style.transform = 'translateX(-50%) translateY(100px)';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+function showConfirmModal(title, message, onConfirm, confirmText = 'Confirm', isDangerous = false) {
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.id = 'genericConfirmModal';
+  modal.innerHTML = `
+    <div class="modal" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3>${title}</h3>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-secondary);">${message}</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="confirmModalCancel">Cancel</button>
+        <button class="btn btn-primary" id="confirmModalOk" style="${isDangerous ? 'background: var(--accent-red, #e74c3c);' : ''}">${confirmText}</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  requestAnimationFrame(() => modal.classList.add('active'));
+  
+  const closeModal = () => {
+    modal.classList.remove('active');
+    setTimeout(() => modal.remove(), 200);
+  };
+  
+  modal.querySelector('#confirmModalCancel').onclick = closeModal;
+  modal.querySelector('#confirmModalOk').onclick = () => {
+    closeModal();
+    onConfirm();
+  };
+  modal.onclick = (e) => {
+    if (e.target === modal) closeModal();
+  };
+}
+
 function getCurrentStory() {
   return state.stories.find(s => s.id === state.currentStoryId);
 }
@@ -6062,7 +6962,26 @@ function getScopeData(story, path) {
       beatNotes: {},
       beatTags: {},
       beatLinks: {},
-      beatThemes: {}
+      beatThemes: {},
+      planning: {
+        activeSubtab: 'a',
+        brainstorm: { title: '', beats: [], draft: '' },
+        premise: { character: '', characterDesc: '', want: '', obstacle: '', stakes: '', incitingEvent: '', summary: '' },
+        ideaBank: { ideas: [], draft: '', music: [], musicDraft: { url: '', notes: '' } },
+        questions: { items: [], draft: '' },
+        chronology: { events: [], draft: '' }
+      }
+    };
+  }
+  // Ensure planning exists for older scope data
+  if (!story.scopeData[key].planning) {
+    story.scopeData[key].planning = {
+      activeSubtab: 'a',
+      brainstorm: { title: '', beats: [], draft: '' },
+      premise: { character: '', characterDesc: '', want: '', obstacle: '', stakes: '', incitingEvent: '', summary: '' },
+      ideaBank: { ideas: [], draft: '', music: [], musicDraft: { url: '', notes: '' } },
+      questions: { items: [], draft: '' },
+      chronology: { events: [], draft: '' }
     };
   }
   return story.scopeData[key];
@@ -6138,17 +7057,28 @@ function deleteScopeItem(itemId) {
   const story = getCurrentStory();
   const scopeData = getCurrentScopeData();
   if (scopeData.items) {
-    scopeData.items = scopeData.items.filter(it => it.id !== itemId);
-    // Also delete child data
-    const childPath = [...story.currentScopePath, itemId].join('/');
-    Object.keys(story.scopeData).forEach(key => {
-      if (key.startsWith(childPath)) {
-        delete story.scopeData[key];
-      }
-    });
-    story.updatedAt = Date.now();
-    saveState();
-    renderBeats();
+    const item = scopeData.items.find(it => it.id === itemId);
+    const itemName = item ? item.name : 'this item';
+    
+    showConfirmModal(
+      'Delete Item',
+      `Are you sure you want to delete "${itemName}"? All nested content will also be deleted.`,
+      () => {
+        scopeData.items = scopeData.items.filter(it => it.id !== itemId);
+        // Also delete child data
+        const childPath = [...story.currentScopePath, itemId].join('/');
+        Object.keys(story.scopeData).forEach(key => {
+          if (key.startsWith(childPath)) {
+            delete story.scopeData[key];
+          }
+        });
+        story.updatedAt = Date.now();
+        saveState();
+        renderBeats();
+      },
+      'Delete',
+      true
+    );
   }
 }
 
@@ -6303,7 +7233,7 @@ function saveScopeSetup() {
   const levels = state.scopeSetupLevels.filter(l => l.trim());
   
   if (levels.length === 0) {
-    alert('Need at least one level');
+    showToast('Need at least one level', 'error');
     return;
   }
   
@@ -7332,7 +8262,7 @@ function exportTimeline() {
   const items = buildTimelineItems(story, plotBeats, organizers);
   
   if (items.length === 0) {
-    alert('No items in timeline to export.');
+    showToast('No items in timeline to export', 'error');
     return;
   }
   
@@ -7734,15 +8664,15 @@ function renderCharacterArcsScoped(char, charIdx) {
                 <label class="arc-field-label">Structure Framework</label>
                 <select class="arc-structure-select" onchange="changeArcStructureScoped(${charIdx}, ${arcIdx}, this.value)">
                   <option value="custom" ${arcStructure === 'custom' ? 'selected' : ''}>Custom Beats</option>
-                  ${Object.entries(FRAMEWORKS).filter(([k]) => k !== 'custom').map(([key, fw]) => `
+                  ${ARC_TYPES[arc.type]?.frameworks ? Object.entries(ARC_TYPES[arc.type].frameworks).map(([key, fw]) => `
                     <option value="${key}" ${arcStructure === key ? 'selected' : ''}>${fw.name}</option>
-                  `).join('')}
+                  `).join('') : ''}
                 </select>
               </div>
               
-              ${arcStructure !== 'custom' && FRAMEWORKS[arcStructure] ? `
+              ${arcStructure !== 'custom' && ARC_TYPES[arc.type]?.frameworks?.[arcStructure] ? `
                 <div class="arc-structure-info">
-                  <span class="arc-structure-desc">${FRAMEWORKS[arcStructure].description}</span>
+                  <span class="arc-structure-desc">${ARC_TYPES[arc.type].frameworks[arcStructure].name}</span>
                 </div>
               ` : ''}
               
@@ -7770,13 +8700,13 @@ function renderCharacterArcsScoped(char, charIdx) {
 function renderArcBeatsScoped(arc, charIdx, arcIdx) {
   const arcStructure = arc.structure || 'custom';
   const arcType = arc.type || 'positive';
-  const framework = FRAMEWORKS[arcStructure];
+  const framework = ARC_TYPES[arcType]?.frameworks?.[arcStructure];
   
   // If using a structure framework, render those beats
   if (arcStructure !== 'custom' && framework) {
     return framework.beats.map((fwBeat, beatIdx) => {
       const userBeat = (arc.beats || [])[beatIdx] || { title: '', content: '' };
-      const guidance = state.guidanceMode ? getArcStructureGuidance(arcStructure, fwBeat.name, arcType) : null;
+      const guidance = state.guidanceMode ? (fwBeat.guidance || null) : null;
       
       return `
         <div class="arc-beat" data-beat-index="${beatIdx}">
@@ -7893,11 +8823,24 @@ function cancelAddCharacterScoped() {
 function removeCharacterScoped(charIdx) {
   const scopeData = getCurrentScopeData();
   if (scopeData.characters) {
-    scopeData.characters.splice(charIdx, 1);
-    const story = getCurrentStory();
-    story.updatedAt = Date.now();
-    saveState();
-    renderArcs();
+    const char = scopeData.characters[charIdx];
+    const charName = char ? char.name : 'this character';
+    const arcCount = char && char.arcs ? char.arcs.length : 0;
+    const warning = arcCount > 0 ? ` This will also delete ${arcCount} arc(s).` : '';
+    
+    showConfirmModal(
+      'Remove Character',
+      `Remove "${charName}" from this section?${warning}`,
+      () => {
+        scopeData.characters.splice(charIdx, 1);
+        const story = getCurrentStory();
+        story.updatedAt = Date.now();
+        saveState();
+        renderArcs();
+      },
+      'Remove',
+      true
+    );
   }
 }
 
@@ -7990,11 +8933,22 @@ function deleteArcScoped(charIdx, arcIdx) {
   const scopeData = getCurrentScopeData();
   const char = scopeData.characters?.[charIdx];
   if (char?.arcs) {
-    char.arcs.splice(arcIdx, 1);
-    const story = getCurrentStory();
-    story.updatedAt = Date.now();
-    saveState();
-    renderArcs();
+    const arc = char.arcs[arcIdx];
+    const arcName = arc ? arc.name : 'this arc';
+    
+    showConfirmModal(
+      'Delete Arc',
+      `Are you sure you want to delete "${arcName}"? All beats and content will be lost.`,
+      () => {
+        char.arcs.splice(arcIdx, 1);
+        const story = getCurrentStory();
+        story.updatedAt = Date.now();
+        saveState();
+        renderArcs();
+      },
+      'Delete',
+      true
+    );
   }
 }
 
@@ -8018,14 +8972,21 @@ function changeArcStructureScoped(charIdx, arcIdx, structure) {
   const oldStructure = arc.structure;
   arc.structure = structure;
   
-  // If switching to a framework, initialize beats array to match framework length
-  if (structure !== 'custom' && FRAMEWORKS[structure]) {
-    const frameworkBeats = FRAMEWORKS[structure].beats;
-    const existingBeats = arc.beats || [];
-    arc.beats = frameworkBeats.map((fb, i) => ({
-      title: fb.name,
-      content: existingBeats[i]?.content || ''
-    }));
+  // If switching to custom, clear beats (start fresh)
+  if (structure === 'custom') {
+    arc.beats = [];
+  } else {
+    // If switching to a framework, initialize beats array to match framework length
+    const arcType = arc.type || 'positive';
+    const framework = ARC_TYPES[arcType]?.frameworks?.[structure];
+    if (framework) {
+      const frameworkBeats = framework.beats;
+      const existingBeats = arc.beats || [];
+      arc.beats = frameworkBeats.map((fb, i) => ({
+        title: fb.name,
+        content: existingBeats[i]?.content || ''
+      }));
+    }
   }
   
   const story = getCurrentStory();
@@ -8118,11 +9079,22 @@ function deleteArcBeatScoped(charIdx, arcIdx, beatIdx) {
   const scopeData = getCurrentScopeData();
   const arc = scopeData.characters?.[charIdx]?.arcs?.[arcIdx];
   if (arc?.beats) {
-    arc.beats.splice(beatIdx, 1);
-    const story = getCurrentStory();
-    story.updatedAt = Date.now();
-    saveState();
-    renderArcs();
+    const beat = arc.beats[beatIdx];
+    const beatName = beat && beat.title ? beat.title : 'this beat';
+    
+    showConfirmModal(
+      'Delete Beat',
+      `Are you sure you want to delete "${beatName}"?`,
+      () => {
+        arc.beats.splice(beatIdx, 1);
+        const story = getCurrentStory();
+        story.updatedAt = Date.now();
+        saveState();
+        renderArcs();
+      },
+      'Delete',
+      true
+    );
   }
 }
 
@@ -8823,7 +9795,7 @@ function stopRelNodeDrag() {
 function openRelAddPanel() {
   const story = getCurrentStory();
   if (!story || !story.relationshipMap || story.relationshipMap.characters.length < 2) {
-    alert('Add at least 2 characters to the map first (click them in the sidebar)');
+    showToast('Add at least 2 characters to the map first', 'error');
     return;
   }
   document.getElementById('relationshipAddPanel').classList.add('active');
@@ -8862,7 +9834,7 @@ function confirmAddRelationship() {
   const label = document.getElementById('relLabel').value.trim();
   
   if (!from || !to || from === to) {
-    alert('Please select two different characters');
+    showToast('Please select two different characters', 'error');
     return;
   }
   
@@ -8876,7 +9848,7 @@ function confirmAddRelationship() {
   );
   
   if (exists) {
-    alert('A relationship between these characters already exists');
+    showToast('A relationship between these characters already exists', 'error');
     return;
   }
   
@@ -8912,15 +9884,19 @@ function editRelationship(index) {
   const saveEdit = () => {
     const newLabel = input.value.trim();
     if (newLabel === '') {
-      // Delete relationship
-      if (confirm('Remove this relationship?')) {
-        story.relationshipMap.relationships.splice(index, 1);
-        story.updatedAt = Date.now();
-        saveState();
-        renderRelationshipMap();
-      } else {
-        renderRelationshipMap();
-      }
+      // Delete relationship - show inline confirm
+      showConfirmModal(
+        'Remove Relationship',
+        'Remove this relationship from the map?',
+        () => {
+          story.relationshipMap.relationships.splice(index, 1);
+          story.updatedAt = Date.now();
+          saveState();
+          renderRelationshipMap();
+        },
+        'Remove',
+        true
+      );
     } else {
       rel.label = newLabel;
       story.updatedAt = Date.now();
@@ -8967,15 +9943,21 @@ function autoLayoutRelationships() {
 }
 
 function clearRelationships() {
-  if (!confirm('Clear all relationships? Characters will remain on the map.')) return;
-  
-  const story = getCurrentStory();
-  if (story.relationshipMap) {
-    story.relationshipMap.relationships = [];
-    story.updatedAt = Date.now();
-    saveState();
-    renderRelationshipMap();
-  }
+  showConfirmModal(
+    'Clear Relationships',
+    'Clear all relationships? Characters will remain on the map.',
+    () => {
+      const story = getCurrentStory();
+      if (story.relationshipMap) {
+        story.relationshipMap.relationships = [];
+        story.updatedAt = Date.now();
+        saveState();
+        renderRelationshipMap();
+      }
+    },
+    'Clear All',
+    true
+  );
 }
 
 // ===== SPLIT VIEW =====
@@ -9384,7 +10366,7 @@ function confirmAddTheme() {
   if (!story.themes) story.themes = [];
   
   if (story.themes.some(t => t.name.toLowerCase() === name.toLowerCase())) {
-    alert('Theme already exists');
+    showToast('Theme already exists', 'error');
     input.focus();
     return;
   }
@@ -9409,34 +10391,44 @@ function cancelAddTheme() {
 
 function deleteTheme(themeIndex) {
   const story = getCurrentStory();
+  const theme = story.themes[themeIndex];
+  const themeName = theme ? theme.name : 'this theme';
   
-  // Remove theme
-  story.themes.splice(themeIndex, 1);
-  
-  // Update beatThemes - remove this theme and adjust indices
-  if (story.beatThemes) {
-    Object.keys(story.beatThemes).forEach(beatIdx => {
-      story.beatThemes[beatIdx] = story.beatThemes[beatIdx]
-        .filter(ti => ti !== themeIndex)
-        .map(ti => ti > themeIndex ? ti - 1 : ti);
-    });
-  }
-  
-  // Update arc beat themes too
-  if (story.arcBeatThemes) {
-    Object.keys(story.arcBeatThemes).forEach(key => {
-      story.arcBeatThemes[key] = story.arcBeatThemes[key]
-        .filter(ti => ti !== themeIndex)
-        .map(ti => ti > themeIndex ? ti - 1 : ti);
-    });
-  }
-  
-  if (selectedThemeIndex === themeIndex) selectedThemeIndex = null;
-  else if (selectedThemeIndex > themeIndex) selectedThemeIndex--;
-  
-  story.updatedAt = Date.now();
-  saveState();
-  renderThemeTracker();
+  showConfirmModal(
+    'Delete Theme',
+    `Are you sure you want to delete "${themeName}"? It will be removed from all beats.`,
+    () => {
+      // Remove theme
+      story.themes.splice(themeIndex, 1);
+      
+      // Update beatThemes - remove this theme and adjust indices
+      if (story.beatThemes) {
+        Object.keys(story.beatThemes).forEach(beatIdx => {
+          story.beatThemes[beatIdx] = story.beatThemes[beatIdx]
+            .filter(ti => ti !== themeIndex)
+            .map(ti => ti > themeIndex ? ti - 1 : ti);
+        });
+      }
+      
+      // Update arc beat themes too
+      if (story.arcBeatThemes) {
+        Object.keys(story.arcBeatThemes).forEach(key => {
+          story.arcBeatThemes[key] = story.arcBeatThemes[key]
+            .filter(ti => ti !== themeIndex)
+            .map(ti => ti > themeIndex ? ti - 1 : ti);
+        });
+      }
+      
+      if (selectedThemeIndex === themeIndex) selectedThemeIndex = null;
+      else if (selectedThemeIndex > themeIndex) selectedThemeIndex--;
+      
+      story.updatedAt = Date.now();
+      saveState();
+      renderThemeTracker();
+    },
+    'Delete',
+    true
+  );
 }
 
 // Helper to render theme chips and selector for any beat (plot or arc)
@@ -9683,10 +10675,23 @@ function updateTimelineName(timelineIndex, name) {
 
 function deleteTimeline(timelineIndex) {
   const story = getCurrentStory();
-  story.timelines.splice(timelineIndex, 1);
-  story.updatedAt = Date.now();
-  saveState();
-  renderTimelines();
+  const timeline = story.timelines[timelineIndex];
+  const timelineName = timeline ? timeline.name : 'this timeline';
+  const eventCount = timeline && timeline.events ? timeline.events.length : 0;
+  const warning = eventCount > 0 ? ` This will also delete ${eventCount} event(s).` : '';
+  
+  showConfirmModal(
+    'Delete Timeline',
+    `Are you sure you want to delete "${timelineName}"?${warning}`,
+    () => {
+      story.timelines.splice(timelineIndex, 1);
+      story.updatedAt = Date.now();
+      saveState();
+      renderTimelines();
+    },
+    'Delete',
+    true
+  );
 }
 
 function addTimelineEvent(timelineIndex) {
@@ -9787,10 +10792,21 @@ function editTimelineEventDesc(timelineIndex, eventIndex, element) {
 
 function deleteTimelineEvent(timelineIndex, eventIndex) {
   const story = getCurrentStory();
-  story.timelines[timelineIndex].events.splice(eventIndex, 1);
-  story.updatedAt = Date.now();
-  saveState();
-  renderTimelines();
+  const event = story.timelines[timelineIndex].events[eventIndex];
+  const eventName = event ? event.title : 'this event';
+  
+  showConfirmModal(
+    'Delete Event',
+    `Are you sure you want to delete "${eventName}"?`,
+    () => {
+      story.timelines[timelineIndex].events.splice(eventIndex, 1);
+      story.updatedAt = Date.now();
+      saveState();
+      renderTimelines();
+    },
+    'Delete',
+    true
+  );
 }
 
 let draggedTimelineEvent = null;
@@ -10288,7 +11304,7 @@ function confirmAddScreentimeChar() {
   
   // Check for duplicate
   if (story.screentimeChars.some(c => c.name.toLowerCase() === name.toLowerCase())) {
-    alert('Character already being tracked');
+    showToast('Character already being tracked', 'error');
     input.focus();
     return;
   }
@@ -10313,24 +11329,35 @@ function cancelAddScreentimeChar() {
 
 function removeScreentimeChar(charIndex) {
   const story = getCurrentStory();
-  story.screentimeChars.splice(charIndex, 1);
+  const char = story.screentimeChars[charIndex];
+  const charName = char ? char.name : 'this character';
   
-  // Adjust screentime data indices
-  const newData = {};
-  Object.keys(story.screentimeData || {}).forEach(key => {
-    const idx = parseInt(key);
-    if (idx < charIndex) {
-      newData[idx] = story.screentimeData[idx];
-    } else if (idx > charIndex) {
-      newData[idx - 1] = story.screentimeData[idx];
-    }
-    // idx === charIndex is removed
-  });
-  story.screentimeData = newData;
-  
-  story.updatedAt = Date.now();
-  saveState();
-  renderScreentimeTracker();
+  showConfirmModal(
+    'Remove Character',
+    `Remove "${charName}" from screentime tracking?`,
+    () => {
+      story.screentimeChars.splice(charIndex, 1);
+      
+      // Adjust screentime data indices
+      const newData = {};
+      Object.keys(story.screentimeData || {}).forEach(key => {
+        const idx = parseInt(key);
+        if (idx < charIndex) {
+          newData[idx] = story.screentimeData[idx];
+        } else if (idx > charIndex) {
+          newData[idx - 1] = story.screentimeData[idx];
+        }
+        // idx === charIndex is removed
+      });
+      story.screentimeData = newData;
+      
+      story.updatedAt = Date.now();
+      saveState();
+      renderScreentimeTracker();
+    },
+    'Remove',
+    true
+  );
 }
 
 function toggleScreentime(charIndex, beatIndex) {
@@ -10915,11 +11942,22 @@ function restoreSnapshot(index) {
 
 function deleteSnapshot(index) {
   const story = getCurrentStory();
-  if (story.snapshots) {
-    story.snapshots.splice(index, 1);
-    story.updatedAt = Date.now();
-    saveState();
-    renderSnapshotsList();
+  if (story.snapshots && story.snapshots[index]) {
+    const snapshot = story.snapshots[index];
+    const snapshotName = snapshot.name || 'this snapshot';
+    
+    showConfirmModal(
+      'Delete Snapshot',
+      `Are you sure you want to delete "${snapshotName}"?`,
+      () => {
+        story.snapshots.splice(index, 1);
+        story.updatedAt = Date.now();
+        saveState();
+        renderSnapshotsList();
+      },
+      'Delete',
+      true
+    );
   }
 }
 
@@ -10972,31 +12010,77 @@ function importAllData(event) {
       
       // Check if it's a full backup vs single story
       if (backup.version && backup.stories) {
-        // Full backup - ask for confirmation
+        // Full backup - show inline confirmation modal
         const storyCount = backup.stories.length;
-        const msg = `This will replace ALL your data with ${storyCount} story/stories from the backup. Continue?`;
-        
-        if (confirm(msg)) {
-          state.stories = backup.stories || [];
-          state.globalRoster = backup.globalRoster || [];
-          state.currentStoryId = null;
-          saveState();
-          
-          // Reset UI
-          document.getElementById('storyWorkspace').classList.remove('active');
-          document.getElementById('welcomeScreen').style.display = 'block';
-          document.getElementById('headerTabs').style.display = 'none';
-          renderDropdown();
-        }
+        showRestoreConfirmModal(backup, storyCount);
       } else {
-        alert('This doesn\'t look like a full backup file. Use "Import Story" for single story files.');
+        showToast('This doesn\'t look like a full backup file. Use "Import Story" for single story files.', 'error');
       }
     } catch (err) {
-      alert('Failed to parse backup file.');
+      showToast('Failed to parse backup file.', 'error');
     }
   };
   reader.readAsText(file);
   event.target.value = '';
+}
+
+function showRestoreConfirmModal(backup, storyCount) {
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.id = 'restoreConfirmModal';
+  modal.innerHTML = `
+    <div class="modal" style="max-width: 450px;">
+      <div class="modal-header">
+        <h3>Restore from Backup</h3>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 1rem; color: var(--text-secondary);">
+          This will <strong>replace all your current data</strong> with ${storyCount} ${storyCount === 1 ? 'story' : 'stories'} from the backup.
+        </p>
+        <p style="color: var(--accent-red, #e74c3c); font-weight: 500;">
+          This action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeRestoreConfirmModal()">Cancel</button>
+        <button class="btn btn-primary" style="background: var(--accent-red, #e74c3c);" onclick="executeRestore()">Replace All Data</button>
+      </div>
+    </div>
+  `;
+  
+  // Store backup data for when user confirms
+  window._pendingRestore = backup;
+  
+  document.body.appendChild(modal);
+  requestAnimationFrame(() => modal.classList.add('active'));
+}
+
+function closeRestoreConfirmModal() {
+  const modal = document.getElementById('restoreConfirmModal');
+  if (modal) {
+    modal.classList.remove('active');
+    setTimeout(() => modal.remove(), 200);
+  }
+  window._pendingRestore = null;
+}
+
+function executeRestore() {
+  const backup = window._pendingRestore;
+  if (!backup) return;
+  
+  state.stories = backup.stories || [];
+  state.globalRoster = backup.globalRoster || [];
+  state.currentStoryId = null;
+  saveState();
+  
+  // Reset UI
+  document.getElementById('storyWorkspace').classList.remove('active');
+  document.getElementById('welcomeScreen').style.display = 'block';
+  document.getElementById('headerTabs').style.display = 'none';
+  renderDropdown();
+  
+  closeRestoreConfirmModal();
+  showToast(`Restored ${backup.stories.length} ${backup.stories.length === 1 ? 'story' : 'stories'} from backup.`, 'success');
 }
 
 function importStoryJSON(event) {
@@ -11011,7 +12095,7 @@ function importStoryJSON(event) {
       
       // Validate it has required fields
       if (!imported.title || !imported.framework) {
-        alert('Invalid story file format.');
+        showToast('Invalid story file format', 'error');
         return;
       }
       
@@ -11024,8 +12108,9 @@ function importStoryJSON(event) {
       state.stories.push(imported);
       saveState();
       openStory(imported.id);
+      showToast('Story imported successfully', 'success');
     } catch (err) {
-      alert('Failed to parse JSON file.');
+      showToast('Failed to parse JSON file', 'error');
     }
   };
   reader.readAsText(file);
@@ -11052,21 +12137,33 @@ function openStory(storyId) {
 }
 
 function deleteStory(storyId) {
-  state.stories = state.stories.filter(s => s.id !== storyId);
+  const story = state.stories.find(s => s.id === storyId);
+  const storyName = story ? story.title : 'this story';
   
-  // If we deleted the current story, go back to welcome
-  if (state.currentStoryId === storyId) {
-    state.currentStoryId = null;
-    document.getElementById('welcomeScreen').style.display = 'flex';
-    document.getElementById('storyWorkspace').classList.remove('active');
-    document.getElementById('headerTabs').style.display = 'none';
-    document.getElementById('viewToggle').style.display = 'none';
-    document.getElementById('guidanceToggle').style.display = 'none';
-    document.getElementById('storyDropdownBtn').textContent = 'Select a story...';
-  }
-  
-  saveState();
-  renderDropdown();
+  showConfirmModal(
+    'Delete Story',
+    `Are you sure you want to delete "${storyName}"? This cannot be undone.`,
+    () => {
+      state.stories = state.stories.filter(s => s.id !== storyId);
+      
+      // If we deleted the current story, go back to welcome
+      if (state.currentStoryId === storyId) {
+        state.currentStoryId = null;
+        document.getElementById('welcomeScreen').style.display = 'flex';
+        document.getElementById('storyWorkspace').classList.remove('active');
+        document.getElementById('headerTabs').style.display = 'none';
+        document.getElementById('viewToggle').style.display = 'none';
+        document.getElementById('guidanceToggle').style.display = 'none';
+        document.getElementById('storyDropdownBtn').textContent = 'Select a story...';
+      }
+      
+      saveState();
+      renderDropdown();
+      closeStoryMenu();
+    },
+    'Delete',
+    true
+  );
 }
 
 function createStory(title, frameworkKey) {
@@ -11105,27 +12202,38 @@ function changeFramework(frameworkKey) {
     (Object.keys(scopeData.beatContent || {}).length > 0 || (scopeData.beats && scopeData.beats.some(b => b.content))) :
     (Object.keys(story.beatContent).length > 0 || (story.customBeats && story.customBeats.some(b => b.content)));
   
-  if (hasContent && !confirm('Changing framework will clear beat content. Continue?')) {
+  const doChange = () => {
+    if (scopeData) {
+      scopeData.framework = frameworkKey;
+      scopeData.beatContent = {};
+      scopeData.beats = frameworkKey === 'custom' ? [] : null;
+    } else {
+      story.framework = frameworkKey;
+      story.beatContent = {};
+      story.customBeats = frameworkKey === 'custom' ? [] : null;
+    }
+    
+    story.updatedAt = Date.now();
+    state.cardsFocusIndex = 0;
+    
+    document.getElementById('frameworkBanner').textContent = FRAMEWORKS[frameworkKey].description;
+    renderBeats();
+    saveState();
+  };
+  
+  if (hasContent) {
+    showConfirmModal(
+      'Change Framework',
+      'Changing framework will clear all beat content. This cannot be undone.',
+      doChange,
+      'Clear and Change',
+      true
+    );
+    // Reset select to current value in case user cancels
     document.getElementById('frameworkSelect').value = scopeData?.framework || story.framework;
-    return;
-  }
-  
-  if (scopeData) {
-    scopeData.framework = frameworkKey;
-    scopeData.beatContent = {};
-    scopeData.beats = frameworkKey === 'custom' ? [] : null;
   } else {
-    story.framework = frameworkKey;
-    story.beatContent = {};
-    story.customBeats = frameworkKey === 'custom' ? [] : null;
+    doChange();
   }
-  
-  story.updatedAt = Date.now();
-  state.cardsFocusIndex = 0;
-  
-  document.getElementById('frameworkBanner').textContent = FRAMEWORKS[frameworkKey].description;
-  renderBeats();
-  saveState();
 }
 
 function updateBeatContent(index, content) {
@@ -11190,14 +12298,26 @@ function deleteCustomBeat(index) {
   const story = getCurrentStory();
   if (story) {
     const scopeData = getCurrentScopeData();
-    if (scopeData && scopeData.beats) {
-      scopeData.beats.splice(index, 1);
-    } else if (story.customBeats) {
-      story.customBeats.splice(index, 1);
-    }
-    story.updatedAt = Date.now();
-    saveState();
-    renderBeats();
+    const beats = scopeData?.beats || story.customBeats;
+    const beat = beats ? beats[index] : null;
+    const beatName = beat && beat.name ? beat.name : 'this beat';
+    
+    showConfirmModal(
+      'Delete Beat',
+      `Are you sure you want to delete "${beatName}"?`,
+      () => {
+        if (scopeData && scopeData.beats) {
+          scopeData.beats.splice(index, 1);
+        } else if (story.customBeats) {
+          story.customBeats.splice(index, 1);
+        }
+        story.updatedAt = Date.now();
+        saveState();
+        renderBeats();
+      },
+      'Delete',
+      true
+    );
   }
 }
 
@@ -11284,7 +12404,7 @@ function addCharacterFromRoster(rosterId) {
   
   // Check if already in organizer
   if (organizer.characters.some(c => c.rosterId === rosterId)) {
-    alert('Character already in this section.');
+    showToast('Character already in this section', 'error');
     return;
   }
   
@@ -11330,11 +12450,24 @@ function removeCharacterFromOrganizer(charIdx) {
   const story = getCurrentStory();
   const organizer = story.organizers.find(o => o.id === state.currentOrganizerId);
   
-  if (organizer) {
-    organizer.characters.splice(charIdx, 1);
-    story.updatedAt = Date.now();
-    saveState();
-    renderOrganizerContent();
+  if (organizer && organizer.characters[charIdx]) {
+    const char = organizer.characters[charIdx];
+    const charName = char.name || 'this character';
+    const arcCount = char.arcs ? char.arcs.length : 0;
+    const warning = arcCount > 0 ? ` This will also delete ${arcCount} arc(s).` : '';
+    
+    showConfirmModal(
+      'Remove Character',
+      `Remove "${charName}" from this section?${warning}`,
+      () => {
+        organizer.characters.splice(charIdx, 1);
+        story.updatedAt = Date.now();
+        saveState();
+        renderOrganizerContent();
+      },
+      'Remove',
+      true
+    );
   }
 }
 
@@ -11401,10 +12534,21 @@ function deleteArc(charIdx, arcIdx) {
   const organizer = story.organizers.find(o => o.id === state.currentOrganizerId);
   
   if (organizer && organizer.characters[charIdx]) {
-    organizer.characters[charIdx].arcs.splice(arcIdx, 1);
-    story.updatedAt = Date.now();
-    saveState();
-    renderOrganizerContent();
+    const arc = organizer.characters[charIdx].arcs[arcIdx];
+    const arcName = arc ? arc.name : 'this arc';
+    
+    showConfirmModal(
+      'Delete Arc',
+      `Are you sure you want to delete "${arcName}"? All beats and content will be lost.`,
+      () => {
+        organizer.characters[charIdx].arcs.splice(arcIdx, 1);
+        story.updatedAt = Date.now();
+        saveState();
+        renderOrganizerContent();
+      },
+      'Delete',
+      true
+    );
   }
 }
 
@@ -11437,10 +12581,21 @@ function deleteArcBeat(charIdx, arcIdx, beatIdx) {
   const organizer = story.organizers.find(o => o.id === state.currentOrganizerId);
   
   if (organizer && organizer.characters[charIdx] && organizer.characters[charIdx].arcs[arcIdx]) {
-    organizer.characters[charIdx].arcs[arcIdx].beats.splice(beatIdx, 1);
-    story.updatedAt = Date.now();
-    saveState();
-    renderOrganizerContent();
+    const beat = organizer.characters[charIdx].arcs[arcIdx].beats[beatIdx];
+    const beatName = beat && beat.title ? beat.title : 'this beat';
+    
+    showConfirmModal(
+      'Delete Beat',
+      `Are you sure you want to delete "${beatName}"?`,
+      () => {
+        organizer.characters[charIdx].arcs[arcIdx].beats.splice(beatIdx, 1);
+        story.updatedAt = Date.now();
+        saveState();
+        renderOrganizerContent();
+      },
+      'Delete',
+      true
+    );
   }
 }
 
@@ -11507,14 +12662,26 @@ function addToRoster() {
 }
 
 function deleteFromRoster(index) {
-  state.globalRoster.splice(index, 1);
-  saveState();
-  openRosterModal(); // Refresh
+  const char = state.globalRoster[index];
+  const charName = char ? char.name : 'this character';
+  
+  showConfirmModal(
+    'Delete from Roster',
+    `Are you sure you want to delete "${charName}" from the global roster?`,
+    () => {
+      state.globalRoster.splice(index, 1);
+      saveState();
+      openRosterModal(); // Refresh
+    },
+    'Delete',
+    true
+  );
 }
 
 function switchTab(tab) {
   state.currentTab = tab;
   document.querySelectorAll('.workspace-tab').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
+  document.getElementById('planningTab').classList.toggle('active', tab === 'planning');
   document.getElementById('plotTab').classList.toggle('active', tab === 'plot');
   document.getElementById('arcsTab').classList.toggle('active', tab === 'arcs');
   document.getElementById('splitTab').classList.toggle('active', tab === 'split');
@@ -11526,13 +12693,980 @@ function switchTab(tab) {
   document.getElementById('guidanceToggle').style.display = showViewControls ? 'flex' : 'none';
   document.getElementById('frameworkWrapper').style.display = tab === 'plot' ? 'flex' : 'none';
   
-  if (tab === 'all') {
+  if (tab === 'planning') {
+    renderPlanningTab();
+  } else if (tab === 'all') {
     renderUnifiedCanvas();
   } else if (tab === 'info') {
     renderInfoTab();
   } else if (tab === 'split') {
     renderSplitView();
   }
+}
+
+// ===== PLANNING TAB =====
+function renderPlanningTab() {
+  const story = getCurrentStory();
+  if (!story) return;
+  
+  // Initialize scope system and render scope nav for planning tab
+  initializeScopeSystem(story);
+  renderPlanningScopeNav();
+  
+  // Get planning data from current scope
+  const scopeData = getCurrentScopeData();
+  if (!scopeData) return;
+  
+  // Ensure planning exists
+  if (!scopeData.planning) {
+    scopeData.planning = {
+      activeSubtab: 'a',
+      brainstorm: { title: '', beats: [], draft: '' },
+      premise: { character: '', characterDesc: '', want: '', obstacle: '', stakes: '', incitingEvent: '', summary: '' },
+      ideaBank: { ideas: [], draft: '', music: [], musicDraft: { url: '', notes: '' } },
+      questions: { items: [], draft: '' },
+      chronology: { events: [], draft: '' }
+    };
+  }
+  
+  const container = document.getElementById('planningContent');
+  const subtab = scopeData.planning.activeSubtab || 'a';
+  
+  // Update subtab buttons
+  document.querySelectorAll('.planning-subtab').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.subtab === subtab);
+  });
+  
+  // Render content based on active subtab
+  switch (subtab) {
+    case 'a':
+      renderBrainstormSubtab(container, scopeData);
+      break;
+    case 'b':
+      renderPremiseSubtab(container, scopeData);
+      break;
+    case 'c':
+      renderIdeaBankSubtab(container, scopeData);
+      break;
+    case 'd':
+      renderQuestionsSubtab(container, scopeData);
+      break;
+    case 'e':
+      renderChronologySubtab(container, scopeData);
+      break;
+  }
+}
+
+function renderPlanningScopeNav() {
+  const story = getCurrentStory();
+  if (!story) return;
+  
+  const nav = document.getElementById('planningScopeNav');
+  if (!nav) return;
+  
+  const path = story.currentScopePath || ['root'];
+  const levels = story.scopeLevels || ['Story'];
+  
+  // Build breadcrumb
+  let breadcrumbHtml = '<div class="scope-breadcrumb">';
+  path.forEach((segment, i) => {
+    const isLast = i === path.length - 1;
+    const levelName = i === 0 ? (levels[0] || 'Story') : 
+      (story.scopeData[path.slice(0, i).join('/')]?.items?.find(it => it.id === segment)?.name || segment);
+    
+    if (isLast) {
+      breadcrumbHtml += `<span class="scope-breadcrumb-current">${escapeHtml(levelName)}</span>`;
+    } else {
+      breadcrumbHtml += `<button class="scope-breadcrumb-btn" onclick="navigateToScopePlanning(${i})">${escapeHtml(levelName)}</button>`;
+      breadcrumbHtml += `<span class="scope-breadcrumb-sep">›</span>`;
+    }
+  });
+  breadcrumbHtml += '</div>';
+  
+  // Build actions (add item at current level)
+  let actionsHtml = '<div class="scope-actions">';
+  const currentLevelIndex = path.length - 1;
+  const nextLevelName = levels[currentLevelIndex + 1];
+  
+  if (nextLevelName) {
+    actionsHtml += `<button class="scope-add-btn" onclick="addScopeItemPlanning()">+ Add ${escapeHtml(nextLevelName)}</button>`;
+  }
+  
+  // Show items at current level
+  const scopeData = getCurrentScopeData();
+  if (scopeData && scopeData.items && scopeData.items.length > 0 && nextLevelName) {
+    actionsHtml += `<div class="scope-items">`;
+    scopeData.items.forEach(item => {
+      actionsHtml += `<button class="scope-item-btn" onclick="enterScopeItemPlanning('${item.id}')">${escapeHtml(item.name)}</button>`;
+    });
+    actionsHtml += `</div>`;
+  }
+  
+  // Show configure button if at root with no items
+  const rootData = getScopeData(story, ['root']);
+  if (path.length === 1 && (!rootData.items || rootData.items.length === 0) && levels.length === 1) {
+    actionsHtml += `<button class="scope-setup-btn" onclick="openScopeSetup()">Configure Levels</button>`;
+  }
+  
+  actionsHtml += '</div>';
+  
+  nav.innerHTML = breadcrumbHtml + actionsHtml;
+}
+
+function navigateToScopePlanning(level) {
+  const story = getCurrentStory();
+  if (!story) return;
+  story.currentScopePath = story.currentScopePath.slice(0, level + 1);
+  saveState();
+  renderPlanningTab();
+}
+
+function addScopeItemPlanning() {
+  const story = getCurrentStory();
+  if (!story) return;
+  
+  const levels = story.scopeLevels || ['Story'];
+  const currentLevelIndex = story.currentScopePath.length - 1;
+  const nextLevelName = levels[currentLevelIndex + 1];
+  
+  if (!nextLevelName) return;
+  
+  const scopeData = getCurrentScopeData();
+  if (!scopeData.items) scopeData.items = [];
+  
+  const newItem = {
+    id: generateId(),
+    name: `New ${nextLevelName}`
+  };
+  
+  scopeData.items.push(newItem);
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+}
+
+function enterScopeItemPlanning(itemId) {
+  const story = getCurrentStory();
+  if (!story) return;
+  story.currentScopePath = [...story.currentScopePath, itemId];
+  saveState();
+  renderPlanningTab();
+}
+
+function renderBrainstormSubtab(container, scopeData) {
+  const bs = scopeData.planning.brainstorm;
+  if (!bs) return;
+  const hasBeats = bs.beats && bs.beats.length > 0;
+  
+  let beatsHtml = '';
+  if (hasBeats) {
+    beatsHtml = `
+      <div class="brainstorm-beats">
+        ${bs.beats.map((beat, i) => `
+          <div class="brainstorm-beat" draggable="true" data-index="${i}">
+            <span class="brainstorm-beat-handle">⋮⋮</span>
+            <input type="text" class="brainstorm-beat-input" value="${escapeHtml(beat)}" 
+              onchange="updateBrainstormBeat(${i}, this.value)" 
+              placeholder="Beat ${i + 1}...">
+            <button class="brainstorm-beat-delete" onclick="deleteBrainstormBeat(${i})">&times;</button>
+          </div>
+        `).join('')}
+      </div>
+      <button class="btn btn-sm brainstorm-add-single" onclick="addSingleBrainstormBeat()">+ Add Beat</button>
+    `;
+  }
+  
+  container.innerHTML = `
+    <div class="brainstorm-container">
+      <input type="text" class="brainstorm-title" 
+        value="${escapeHtml(bs.title)}" 
+        onchange="updateBrainstormTitle(this.value)"
+        placeholder="Working title (e.g., 'Book 1', 'The Heist Arc', 'Season 2')...">
+      
+      ${beatsHtml}
+      
+      <div class="brainstorm-draft-section">
+        <textarea class="brainstorm-draft" 
+          placeholder="Write your beats as a simple list, one per line...
+
+- Hero discovers the map
+- Meets the old mentor  
+- First attempt fails
+- Training montage
+- Real confrontation
+- Victory but at a cost"
+          onchange="updateBrainstormDraft(this.value)">${escapeHtml(bs.draft)}</textarea>
+        <button class="btn btn-primary brainstorm-convert" onclick="convertBrainstormDraft()">Convert to Beats</button>
+      </div>
+    </div>
+  `;
+  
+  // Setup drag and drop for beats
+  if (hasBeats) {
+    setupBrainstormDrag();
+  }
+}
+
+function updateBrainstormTitle(value) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.brainstorm) {
+    scopeData.planning.brainstorm.title = value;
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+function updateBrainstormDraft(value) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.brainstorm) {
+    scopeData.planning.brainstorm.draft = value;
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+function convertBrainstormDraft() {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.brainstorm) return;
+  
+  const draft = scopeData.planning.brainstorm.draft.trim();
+  if (!draft) return;
+  
+  // Split by newlines, clean up each line
+  const lines = draft.split('\n')
+    .map(line => line.trim())
+    .map(line => line.replace(/^[-*•]\s*/, '')) // Remove bullet prefixes
+    .filter(line => line.length > 0);
+  
+  if (lines.length === 0) return;
+  
+  // Add to existing beats
+  scopeData.planning.brainstorm.beats = [...(scopeData.planning.brainstorm.beats || []), ...lines];
+  scopeData.planning.brainstorm.draft = ''; // Clear the draft
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+}
+
+function updateBrainstormBeat(index, value) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.brainstorm?.beats) {
+    scopeData.planning.brainstorm.beats[index] = value;
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+function deleteBrainstormBeat(index) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.brainstorm) return;
+  
+  const beat = scopeData.planning.brainstorm.beats[index];
+  const beatPreview = beat && beat.length > 30 ? beat.substring(0, 30) + '...' : beat;
+  
+  showConfirmModal(
+    'Delete Beat',
+    `Delete "${beatPreview}"?`,
+    () => {
+      scopeData.planning.brainstorm.beats.splice(index, 1);
+      story.updatedAt = Date.now();
+      saveState();
+      renderPlanningTab();
+    },
+    'Delete',
+    true
+  );
+}
+
+function addSingleBrainstormBeat() {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.brainstorm) return;
+  
+  scopeData.planning.brainstorm.beats.push('');
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+  
+  // Focus the new beat
+  setTimeout(() => {
+    const inputs = document.querySelectorAll('.brainstorm-beat-input');
+    if (inputs.length > 0) {
+      inputs[inputs.length - 1].focus();
+    }
+  }, 50);
+}
+
+function setupBrainstormDrag() {
+  const container = document.querySelector('.brainstorm-beats');
+  if (!container) return;
+  
+  let draggedItem = null;
+  let draggedIndex = null;
+  
+  container.querySelectorAll('.brainstorm-beat').forEach(item => {
+    item.addEventListener('dragstart', (e) => {
+      draggedItem = item;
+      draggedIndex = parseInt(item.dataset.index);
+      item.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    
+    item.addEventListener('dragend', () => {
+      item.classList.remove('dragging');
+      draggedItem = null;
+      draggedIndex = null;
+    });
+    
+    item.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (!draggedItem || draggedItem === item) return;
+      
+      const rect = item.getBoundingClientRect();
+      const midY = rect.top + rect.height / 2;
+      
+      if (e.clientY < midY) {
+        item.classList.add('drag-above');
+        item.classList.remove('drag-below');
+      } else {
+        item.classList.add('drag-below');
+        item.classList.remove('drag-above');
+      }
+    });
+    
+    item.addEventListener('dragleave', () => {
+      item.classList.remove('drag-above', 'drag-below');
+    });
+    
+    item.addEventListener('drop', (e) => {
+      e.preventDefault();
+      item.classList.remove('drag-above', 'drag-below');
+      
+      if (!draggedItem || draggedItem === item) return;
+      
+      const targetIndex = parseInt(item.dataset.index);
+      const story = getCurrentStory();
+      if (!story || !story.planning || !story.planning.brainstorm) return;
+      
+      // Reorder
+      const beats = story.planning.brainstorm.beats;
+      const [removed] = beats.splice(draggedIndex, 1);
+      beats.splice(targetIndex, 0, removed);
+      
+      story.updatedAt = Date.now();
+      saveState();
+      renderPlanningTab();
+    });
+  });
+}
+
+// ===== PREMISE SUBTAB =====
+function renderPremiseSubtab(container, scopeData) {
+  if (!scopeData.planning.premise) {
+    scopeData.planning.premise = {
+      character: '',
+      characterDesc: '',
+      want: '',
+      obstacle: '',
+      stakes: '',
+      incitingEvent: '',
+      summary: ''
+    };
+  }
+  const p = scopeData.planning.premise;
+  
+  container.innerHTML = `
+    <div class="premise-container">
+      <div class="premise-intro">
+        <p>Answer these core questions to find your story's engine. You don't need to fill everything in, and answers can change as you discover more.</p>
+      </div>
+      
+      <div class="premise-field">
+        <label class="premise-label">Who is the main character?</label>
+        <input type="text" class="premise-input" placeholder="Name" 
+          value="${escapeHtml(p.character)}" onchange="updatePremise('character', this.value)">
+        <textarea class="premise-textarea small" placeholder="Brief description (who are they when the story starts?)"
+          onchange="updatePremise('characterDesc', this.value)">${escapeHtml(p.characterDesc)}</textarea>
+      </div>
+      
+      <div class="premise-field">
+        <label class="premise-label">What do they want?</label>
+        <textarea class="premise-textarea" placeholder="The goal they're consciously pursuing..."
+          onchange="updatePremise('want', this.value)">${escapeHtml(p.want)}</textarea>
+      </div>
+      
+      <div class="premise-field">
+        <label class="premise-label">What's stopping them?</label>
+        <textarea class="premise-textarea" placeholder="The obstacle, antagonist, or central conflict..."
+          onchange="updatePremise('obstacle', this.value)">${escapeHtml(p.obstacle)}</textarea>
+      </div>
+      
+      <div class="premise-field">
+        <label class="premise-label">What's at stake?</label>
+        <textarea class="premise-textarea" placeholder="What happens if they fail? What do they stand to lose?"
+          onchange="updatePremise('stakes', this.value)">${escapeHtml(p.stakes)}</textarea>
+      </div>
+      
+      <div class="premise-field">
+        <label class="premise-label">What triggers the story?</label>
+        <textarea class="premise-textarea" placeholder="The inciting event that makes this story start NOW..."
+          onchange="updatePremise('incitingEvent', this.value)">${escapeHtml(p.incitingEvent)}</textarea>
+      </div>
+      
+      <div class="premise-field premise-summary">
+        <label class="premise-label">In one or two sentences, what is this story about?</label>
+        <textarea class="premise-textarea" placeholder="Try to synthesize the above into a brief summary..."
+          onchange="updatePremise('summary', this.value)">${escapeHtml(p.summary)}</textarea>
+      </div>
+    </div>
+  `;
+}
+
+function updatePremise(field, value) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.premise) {
+    scopeData.planning.premise[field] = value;
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+// ===== IDEA BANK SUBTAB =====
+function renderIdeaBankSubtab(container, scopeData) {
+  if (!scopeData.planning.ideaBank) {
+    scopeData.planning.ideaBank = { ideas: [], draft: '', music: [], musicDraft: { url: '', notes: '' } };
+  }
+  const ib = scopeData.planning.ideaBank;
+  
+  let ideasHtml = '';
+  if (ib.ideas && ib.ideas.length > 0) {
+    ideasHtml = `
+      <div class="ideabank-items">
+        ${ib.ideas.map((idea, i) => `
+          <div class="ideabank-item">
+            <input type="text" class="ideabank-item-input" value="${escapeHtml(idea)}" 
+              onchange="updateIdeaBankIdea(${i}, this.value)" placeholder="Idea...">
+            <button class="ideabank-item-delete" onclick="deleteIdeaBankIdea(${i})">&times;</button>
+          </div>
+        `).join('')}
+      </div>
+      <button class="btn btn-sm ideabank-add-single" onclick="addSingleIdea()">+ Add Idea</button>
+    `;
+  }
+  
+  let musicHtml = '';
+  if (ib.music && ib.music.length > 0) {
+    musicHtml = ib.music.map((m, i) => `
+      <div class="ideabank-music-item">
+        <div class="ideabank-music-link">
+          <a href="${escapeHtml(m.url)}" target="_blank" rel="noopener">${escapeHtml(m.url)}</a>
+          <button class="ideabank-item-delete" onclick="deleteIdeaBankMusic(${i})">&times;</button>
+        </div>
+        <textarea class="ideabank-music-notes" placeholder="Notes about this track..."
+          onchange="updateIdeaBankMusicNotes(${i}, this.value)">${escapeHtml(m.notes)}</textarea>
+      </div>
+    `).join('');
+  }
+  
+  container.innerHTML = `
+    <div class="ideabank-container">
+      <div class="ideabank-section">
+        <h3 class="ideabank-section-title">Ideas</h3>
+        <p class="ideabank-section-desc">Scenes, moments, images, vibes. Stuff without a home yet.</p>
+        
+        ${ideasHtml}
+        
+        <div class="ideabank-draft-section">
+          <textarea class="ideabank-draft" placeholder="Dump ideas here, one per line..."
+            onchange="updateIdeaBankDraft(this.value)">${escapeHtml(ib.draft)}</textarea>
+          <button class="btn btn-primary ideabank-convert" onclick="convertIdeaBankDraft()">Add Ideas</button>
+        </div>
+      </div>
+      
+      <div class="ideabank-section">
+        <h3 class="ideabank-section-title">Music</h3>
+        <p class="ideabank-section-desc">Songs that capture a vibe, scene, or character.</p>
+        
+        <div class="ideabank-music-list">
+          ${musicHtml}
+        </div>
+        
+        <div class="ideabank-music-add">
+          <input type="url" class="ideabank-music-url" placeholder="Paste a YouTube or Spotify link..."
+            value="${escapeHtml(ib.musicDraft?.url || '')}" onchange="updateMusicDraftUrl(this.value)">
+          <textarea class="ideabank-music-add-notes" placeholder="What's this track for? What scene or vibe?"
+            onchange="updateMusicDraftNotes(this.value)">${escapeHtml(ib.musicDraft?.notes || '')}</textarea>
+          <button class="btn btn-primary" onclick="addIdeaBankMusic()">Add Music</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function updateIdeaBankDraft(value) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.ideaBank) {
+    scopeData.planning.ideaBank.draft = value;
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+function convertIdeaBankDraft() {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.ideaBank) return;
+  
+  const draft = scopeData.planning.ideaBank.draft.trim();
+  if (!draft) return;
+  
+  const lines = draft.split('\n')
+    .map(line => line.trim())
+    .map(line => line.replace(/^[-*•]\s*/, ''))
+    .filter(line => line.length > 0);
+  
+  if (lines.length === 0) return;
+  
+  scopeData.planning.ideaBank.ideas = [...(scopeData.planning.ideaBank.ideas || []), ...lines];
+  scopeData.planning.ideaBank.draft = '';
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+}
+
+function updateIdeaBankIdea(index, value) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.ideaBank?.ideas) {
+    scopeData.planning.ideaBank.ideas[index] = value;
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+function deleteIdeaBankIdea(index) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.ideaBank) return;
+  
+  showConfirmModal('Delete Idea', 'Delete this idea?', () => {
+    scopeData.planning.ideaBank.ideas.splice(index, 1);
+    story.updatedAt = Date.now();
+    saveState();
+    renderPlanningTab();
+  }, 'Delete', true);
+}
+
+function addSingleIdea() {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.ideaBank) return;
+  
+  scopeData.planning.ideaBank.ideas.push('');
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+  
+  setTimeout(() => {
+    const inputs = document.querySelectorAll('.ideabank-item-input');
+    if (inputs.length > 0) inputs[inputs.length - 1].focus();
+  }, 50);
+}
+
+function updateMusicDraftUrl(value) {
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.ideaBank) {
+    if (!scopeData.planning.ideaBank.musicDraft) scopeData.planning.ideaBank.musicDraft = { url: '', notes: '' };
+    scopeData.planning.ideaBank.musicDraft.url = value;
+    saveState();
+  }
+}
+
+function updateMusicDraftNotes(value) {
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.ideaBank) {
+    if (!scopeData.planning.ideaBank.musicDraft) scopeData.planning.ideaBank.musicDraft = { url: '', notes: '' };
+    scopeData.planning.ideaBank.musicDraft.notes = value;
+    saveState();
+  }
+}
+
+function addIdeaBankMusic() {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.ideaBank) return;
+  
+  const url = scopeData.planning.ideaBank.musicDraft?.url?.trim();
+  if (!url) {
+    showToast('Please enter a URL', 'error');
+    return;
+  }
+  
+  if (!scopeData.planning.ideaBank.music) scopeData.planning.ideaBank.music = [];
+  scopeData.planning.ideaBank.music.push({
+    url: url,
+    notes: scopeData.planning.ideaBank.musicDraft?.notes || ''
+  });
+  scopeData.planning.ideaBank.musicDraft = { url: '', notes: '' };
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+}
+
+function updateIdeaBankMusicNotes(index, value) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.ideaBank?.music?.[index]) {
+    scopeData.planning.ideaBank.music[index].notes = value;
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+function deleteIdeaBankMusic(index) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.ideaBank) return;
+  
+  showConfirmModal('Delete Music', 'Remove this music link?', () => {
+    scopeData.planning.ideaBank.music.splice(index, 1);
+    story.updatedAt = Date.now();
+    saveState();
+    renderPlanningTab();
+  }, 'Delete', true);
+}
+
+// ===== QUESTIONS SUBTAB =====
+function renderQuestionsSubtab(container, scopeData) {
+  if (!scopeData.planning.questions) {
+    scopeData.planning.questions = { items: [], draft: '' };
+  }
+  const q = scopeData.planning.questions;
+  
+  let questionsHtml = '';
+  if (q.items && q.items.length > 0) {
+    questionsHtml = `
+      <div class="questions-list">
+        ${q.items.map((item, i) => `
+          <div class="question-item ${item.answered ? 'answered' : ''}">
+            <button class="question-check" onclick="toggleQuestionAnswered(${i})" title="${item.answered ? 'Mark unanswered' : 'Mark answered'}">
+              ${item.answered ? '✓' : '○'}
+            </button>
+            <div class="question-content">
+              <input type="text" class="question-text" value="${escapeHtml(item.question)}" 
+                onchange="updateQuestion(${i}, 'question', this.value)" placeholder="Question...">
+              <textarea class="question-answer" placeholder="Answer or notes..."
+                onchange="updateQuestion(${i}, 'answer', this.value)">${escapeHtml(item.answer || '')}</textarea>
+            </div>
+            <button class="question-delete" onclick="deleteQuestion(${i})">&times;</button>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+  
+  container.innerHTML = `
+    <div class="questions-container">
+      <div class="questions-intro">
+        <p>Things you need to figure out. "How does she escape?" "Why does he betray them?" Park your unsolved problems here.</p>
+      </div>
+      
+      ${questionsHtml}
+      
+      <div class="questions-draft-section">
+        <textarea class="questions-draft" placeholder="Add questions, one per line...
+
+How does the magic system work?
+Why didn't the king just send his army?
+What's the villain's actual motivation?"
+          onchange="updateQuestionsDraft(this.value)">${escapeHtml(q.draft)}</textarea>
+        <button class="btn btn-primary" onclick="convertQuestionsDraft()">Add Questions</button>
+      </div>
+    </div>
+  `;
+}
+
+function updateQuestionsDraft(value) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.questions) {
+    scopeData.planning.questions.draft = value;
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+function convertQuestionsDraft() {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.questions) return;
+  
+  const draft = scopeData.planning.questions.draft.trim();
+  if (!draft) return;
+  
+  const lines = draft.split('\n')
+    .map(line => line.trim())
+    .map(line => line.replace(/^[-*•?]\s*/, ''))
+    .filter(line => line.length > 0);
+  
+  if (lines.length === 0) return;
+  
+  const newQuestions = lines.map(q => ({ question: q, answer: '', answered: false }));
+  scopeData.planning.questions.items = [...(scopeData.planning.questions.items || []), ...newQuestions];
+  scopeData.planning.questions.draft = '';
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+}
+
+function updateQuestion(index, field, value) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.questions?.items?.[index]) {
+    scopeData.planning.questions.items[index][field] = value;
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+function toggleQuestionAnswered(index) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.questions?.items?.[index]) {
+    scopeData.planning.questions.items[index].answered = !scopeData.planning.questions.items[index].answered;
+    story.updatedAt = Date.now();
+    saveState();
+    renderPlanningTab();
+  }
+}
+
+function deleteQuestion(index) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.questions) return;
+  
+  showConfirmModal('Delete Question', 'Delete this question?', () => {
+    scopeData.planning.questions.items.splice(index, 1);
+    story.updatedAt = Date.now();
+    saveState();
+    renderPlanningTab();
+  }, 'Delete', true);
+}
+
+// ===== CHRONOLOGY SUBTAB =====
+function renderChronologySubtab(container, scopeData) {
+  if (!scopeData.planning.chronology) {
+    scopeData.planning.chronology = { events: [], draft: '' };
+  }
+  const c = scopeData.planning.chronology;
+  
+  let eventsHtml = '';
+  if (c.events && c.events.length > 0) {
+    eventsHtml = `
+      <div class="chronology-list">
+        ${c.events.map((event, i) => `
+          <div class="chronology-item" draggable="true" data-index="${i}">
+            <span class="chronology-handle">⋮⋮</span>
+            <input type="text" class="chronology-when" value="${escapeHtml(event.when)}" 
+              onchange="updateChronologyEvent(${i}, 'when', this.value)" placeholder="When...">
+            <input type="text" class="chronology-what" value="${escapeHtml(event.what)}" 
+              onchange="updateChronologyEvent(${i}, 'what', this.value)" placeholder="What happened...">
+            <button class="chronology-delete" onclick="deleteChronologyEvent(${i})">&times;</button>
+          </div>
+        `).join('')}
+      </div>
+      <button class="btn btn-sm chronology-add-single" onclick="addSingleChronologyEvent()">+ Add Event</button>
+    `;
+  }
+  
+  container.innerHTML = `
+    <div class="chronology-container">
+      <div class="chronology-intro">
+        <p>Worldbuilding events in chronological order. "The war ended 50 years ago. The king was crowned 12 years ago." A quick reference for backstory, not plot structure.</p>
+      </div>
+      
+      ${eventsHtml}
+      
+      <div class="chronology-draft-section">
+        <textarea class="chronology-draft" placeholder="Add events, one per line. Optionally use a separator like | or : between when and what.
+
+50 years ago | The Great War ended
+30 years ago | The protagonist's parents met
+12 years ago | King Aldric took the throne
+3 years ago | The mentor disappeared"
+          onchange="updateChronologyDraft(this.value)">${escapeHtml(c.draft)}</textarea>
+        <button class="btn btn-primary chronology-convert" onclick="convertChronologyDraft()">Add Events</button>
+      </div>
+    </div>
+  `;
+  
+  if (c.events && c.events.length > 0) {
+    setupChronologyDrag();
+  }
+}
+
+function updateChronologyDraft(value) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.chronology) {
+    scopeData.planning.chronology.draft = value;
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+function convertChronologyDraft() {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.chronology) return;
+  
+  const draft = scopeData.planning.chronology.draft.trim();
+  if (!draft) return;
+  
+  const lines = draft.split('\n')
+    .map(line => line.trim())
+    .filter(line => line.length > 0);
+  
+  if (lines.length === 0) return;
+  
+  const newEvents = lines.map(line => {
+    // Try to split on common separators
+    const separators = [' | ', ' : ', ' - ', '|', ':', ' — '];
+    for (const sep of separators) {
+      if (line.includes(sep)) {
+        const parts = line.split(sep);
+        return { when: parts[0].trim(), what: parts.slice(1).join(sep).trim() };
+      }
+    }
+    // No separator found, put it all in "what"
+    return { when: '', what: line };
+  });
+  
+  scopeData.planning.chronology.events = [...(scopeData.planning.chronology.events || []), ...newEvents];
+  scopeData.planning.chronology.draft = '';
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+}
+
+function updateChronologyEvent(index, field, value) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (scopeData?.planning?.chronology?.events?.[index]) {
+    scopeData.planning.chronology.events[index][field] = value;
+    story.updatedAt = Date.now();
+    saveState();
+  }
+}
+
+function deleteChronologyEvent(index) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.chronology) return;
+  
+  showConfirmModal('Delete Event', 'Delete this event?', () => {
+    scopeData.planning.chronology.events.splice(index, 1);
+    story.updatedAt = Date.now();
+    saveState();
+    renderPlanningTab();
+  }, 'Delete', true);
+}
+
+function addSingleChronologyEvent() {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.chronology) return;
+  
+  scopeData.planning.chronology.events.push({ when: '', what: '' });
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+  
+  setTimeout(() => {
+    const inputs = document.querySelectorAll('.chronology-when');
+    if (inputs.length > 0) inputs[inputs.length - 1].focus();
+  }, 50);
+}
+
+function setupChronologyDrag() {
+  const container = document.querySelector('.chronology-list');
+  if (!container) return;
+  
+  let draggedItem = null;
+  let draggedIndex = null;
+  
+  container.querySelectorAll('.chronology-item').forEach(item => {
+    item.addEventListener('dragstart', (e) => {
+      draggedItem = item;
+      draggedIndex = parseInt(item.dataset.index);
+      item.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    
+    item.addEventListener('dragend', () => {
+      item.classList.remove('dragging');
+      draggedItem = null;
+      draggedIndex = null;
+    });
+    
+    item.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (!draggedItem || draggedItem === item) return;
+      
+      const rect = item.getBoundingClientRect();
+      const midY = rect.top + rect.height / 2;
+      
+      if (e.clientY < midY) {
+        item.classList.add('drag-above');
+        item.classList.remove('drag-below');
+      } else {
+        item.classList.add('drag-below');
+        item.classList.remove('drag-above');
+      }
+    });
+    
+    item.addEventListener('dragleave', () => {
+      item.classList.remove('drag-above', 'drag-below');
+    });
+    
+    item.addEventListener('drop', (e) => {
+      e.preventDefault();
+      item.classList.remove('drag-above', 'drag-below');
+      
+      if (!draggedItem || draggedItem === item) return;
+      
+      const targetIndex = parseInt(item.dataset.index);
+      const story = getCurrentStory();
+      const scopeData = getCurrentScopeData();
+      if (!scopeData?.planning?.chronology) return;
+      
+      const events = scopeData.planning.chronology.events;
+      const [removed] = events.splice(draggedIndex, 1);
+      events.splice(targetIndex, 0, removed);
+      
+      story.updatedAt = Date.now();
+      saveState();
+      renderPlanningTab();
+    });
+  });
+}
+
+function switchPlanningSubtab(subtab) {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData) return;
+  
+  if (!scopeData.planning) scopeData.planning = {};
+  scopeData.planning.activeSubtab = subtab;
+  saveState();
+  renderPlanningTab();
 }
 
 function renderInfoTab() {
@@ -12094,6 +14228,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   document.querySelectorAll('.view-btn').forEach(btn => btn.addEventListener('click', () => switchView(btn.dataset.view)));
   document.querySelectorAll('.workspace-tab').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+  document.querySelectorAll('.planning-subtab').forEach(btn => btn.addEventListener('click', () => switchPlanningSubtab(btn.dataset.subtab)));
   
   document.getElementById('storyTitleInput').addEventListener('change', (e) => updateStoryTitle(e.target.value));
   document.getElementById('frameworkSelect').addEventListener('change', (e) => changeFramework(e.target.value));
