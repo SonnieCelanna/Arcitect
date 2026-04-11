@@ -6,7 +6,7 @@
 <title>Arc-itect</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
+:root, [data-theme="dark"] {
   --bg-base: #0f1114;
   --bg-elevated: #161a1e;
   --bg-card: #1c2127;
@@ -33,6 +33,64 @@
   --scrollbar-thumb: #3a4048;
   --shadow: 0 4px 20px rgba(0,0,0,0.5);
   --shadow-lg: 0 8px 40px rgba(0,0,0,0.6);
+}
+
+[data-theme="dim"] {
+  --bg-base: #1e2128;
+  --bg-elevated: #262a33;
+  --bg-card: #2d323d;
+  --bg-card-hover: #363c48;
+  --bg-input: #22262e;
+  --border: #3d4452;
+  --border-focus: #5a6578;
+  --text-primary: #e8eaed;
+  --text-secondary: #a8adb5;
+  --text-muted: #6e7580;
+  --accent-main: #7c9cb8;
+  --accent-dim: #5a7a98;
+  --accent-bright: #9cb8d4;
+  --accent-glow: #a8c8e8;
+  --accent-arc-positive: #5a9a6a;
+  --accent-arc-negative: #b85a5a;
+  --accent-arc-flat: #6a8ab0;
+  --act1-color: #6a8ab0;
+  --act2-color: #7c9cb8;
+  --act3-color: #b07a7a;
+  --act4-color: #b0a060;
+  --act5-color: #5a9090;
+  --scrollbar-track: #1e2128;
+  --scrollbar-thumb: #4a5260;
+  --shadow: 0 4px 20px rgba(0,0,0,0.35);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.45);
+}
+
+[data-theme="light"] {
+  --bg-base: #f5f6f8;
+  --bg-elevated: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f1f3;
+  --bg-input: #f8f9fa;
+  --border: #d8dce2;
+  --border-focus: #a0a8b0;
+  --text-primary: #1a1e24;
+  --text-secondary: #4a5260;
+  --text-muted: #7a8290;
+  --accent-main: #4a7a9c;
+  --accent-dim: #3a6080;
+  --accent-bright: #5a8ab0;
+  --accent-glow: #6a9ac0;
+  --accent-arc-positive: #2e7d46;
+  --accent-arc-negative: #c0392b;
+  --accent-arc-flat: #4a6a8a;
+  --act1-color: #4a6a8a;
+  --act2-color: #5a7a9a;
+  --act3-color: #9a5a5a;
+  --act4-color: #8a7a40;
+  --act5-color: #3a7070;
+  --scrollbar-track: #f0f1f3;
+  --scrollbar-thumb: #c0c4ca;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -595,17 +653,44 @@ body {
   margin-bottom: 0.75rem;
 }
 
-.ideabank-music-link {
+.ideabank-music-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+}
+
+.ideabank-music-title {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.2rem 0;
+  font-family: inherit;
+}
+
+.ideabank-music-title:focus {
+  outline: none;
+  border-bottom-color: var(--accent-planning);
+}
+
+.ideabank-music-title::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.ideabank-music-link {
   margin-bottom: 0.5rem;
 }
 
 .ideabank-music-link a {
   color: #9b59b6;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   word-break: break-all;
 }
 
@@ -639,6 +724,21 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 8px;
+}
+
+.ideabank-music-add-title {
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.ideabank-music-add-title:focus {
+  outline: none;
+  border-color: var(--border-focus);
 }
 
 .ideabank-music-url {
@@ -690,14 +790,30 @@ body {
 
 .question-item {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.4rem;
   padding: 0.75rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 8px;
   margin-bottom: 0.75rem;
   transition: all 0.2s;
+  align-items: flex-start;
 }
+
+.question-item.dragging { opacity: 0.5; }
+.question-item.drag-above { border-top: 2px solid var(--accent-planning); }
+.question-item.drag-below { border-bottom: 2px solid var(--accent-planning); }
+
+.question-handle {
+  cursor: grab;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  padding: 0.15rem;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.question-handle:active { cursor: grabbing; }
 
 .question-item.answered {
   opacity: 0.6;
@@ -707,12 +823,12 @@ body {
 .question-check {
   background: transparent;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
   color: var(--text-muted);
   padding: 0;
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -963,6 +1079,30 @@ body {
 
 /* Header Right - View Toggle */
 .header-right { display: flex; align-items: center; gap: 0.75rem; }
+
+.theme-toggle {
+  display: flex;
+  background: var(--bg-input);
+  border-radius: 6px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.theme-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.theme-btn:hover { color: var(--text-secondary); }
+.theme-btn.active { background: var(--accent-main); color: var(--bg-base); }
 
 .view-toggle {
   display: flex;
@@ -5070,6 +5210,11 @@ body {
   </div>
   
   <div class="header-right">
+    <div class="theme-toggle" id="themeToggle">
+      <button class="theme-btn" data-theme="dark" title="Dark">Dark</button>
+      <button class="theme-btn" data-theme="dim" title="Dim">Dim</button>
+      <button class="theme-btn" data-theme="light" title="Light">Light</button>
+    </div>
     <div class="search-container">
       <button class="search-btn" onclick="openSearch()" title="Search (Ctrl+K)">Search</button>
     </div>
@@ -6429,7 +6574,8 @@ let state = {
   currentOrganizerId: null,
   cardsFocusIndex: 0,
   pendingCharacterId: null, // For arc modal
-  guidanceMode: false // Show guidance for frameworks and arc types (default OFF)
+  guidanceMode: false, // Show guidance for frameworks and arc types (default OFF)
+  theme: 'dark' // 'dark', 'dim', or 'light'
 };
 
 const STORAGE_KEY = 'narrative_architect_v4_data';
@@ -6677,6 +6823,7 @@ async function loadState() {
       console.log('loadState - parsed stories:', data.stories?.length || 0);
       state.stories = data.stories || [];
       state.globalRoster = data.globalRoster || [];
+      state.theme = data.theme || 'dark';
     } else if (Storage.mode === 'claude') {
       // In Claude artifacts, empty storage on load likely means new artifact instance
       console.log('loadState - Claude mode with no data (new artifact instance)');
@@ -6687,6 +6834,7 @@ async function loadState() {
   }
   console.log('loadState - final state.stories:', state.stories.length);
   initialLoadComplete = true;
+  initTheme();
   renderDropdown();
 }
 
@@ -6707,7 +6855,8 @@ async function doSave() {
   
   const data = JSON.stringify({
     stories: state.stories,
-    globalRoster: state.globalRoster
+    globalRoster: state.globalRoster,
+    theme: state.theme
   });
   
   try {
@@ -9357,6 +9506,26 @@ function toggleGuidanceMode() {
   } else {
     renderArcs();
   }
+}
+
+function setTheme(theme) {
+  state.theme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  
+  // Update button states
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.theme === theme);
+  });
+  
+  saveState();
+}
+
+function initTheme() {
+  const theme = state.theme || 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.theme === theme);
+  });
 }
 
 function updateGuidanceButton() {
@@ -13051,10 +13220,11 @@ function setupBrainstormDrag() {
       
       const targetIndex = parseInt(item.dataset.index);
       const story = getCurrentStory();
-      if (!story || !story.planning || !story.planning.brainstorm) return;
+      const scopeData = getCurrentScopeData();
+      if (!scopeData?.planning?.brainstorm) return;
       
       // Reorder
-      const beats = story.planning.brainstorm.beats;
+      const beats = scopeData.planning.brainstorm.beats;
       const [removed] = beats.splice(draggedIndex, 1);
       beats.splice(targetIndex, 0, removed);
       
@@ -13164,12 +13334,16 @@ function renderIdeaBankSubtab(container, scopeData) {
   if (ib.music && ib.music.length > 0) {
     musicHtml = ib.music.map((m, i) => `
       <div class="ideabank-music-item">
-        <div class="ideabank-music-link">
-          <a href="${escapeHtml(m.url)}" target="_blank" rel="noopener">${escapeHtml(m.url)}</a>
+        <div class="ideabank-music-header">
+          <input type="text" class="ideabank-music-title" value="${escapeHtml(m.title || '')}" 
+            placeholder="Song title..." onchange="updateIdeaBankMusicField(${i}, 'title', this.value)">
           <button class="ideabank-item-delete" onclick="deleteIdeaBankMusic(${i})">&times;</button>
         </div>
+        <div class="ideabank-music-link">
+          <a href="${escapeHtml(m.url)}" target="_blank" rel="noopener">${escapeHtml(m.url)}</a>
+        </div>
         <textarea class="ideabank-music-notes" placeholder="Notes about this track..."
-          onchange="updateIdeaBankMusicNotes(${i}, this.value)">${escapeHtml(m.notes)}</textarea>
+          onchange="updateIdeaBankMusicField(${i}, 'notes', this.value)">${escapeHtml(m.notes || '')}</textarea>
       </div>
     `).join('');
   }
@@ -13198,10 +13372,12 @@ function renderIdeaBankSubtab(container, scopeData) {
         </div>
         
         <div class="ideabank-music-add">
+          <input type="text" class="ideabank-music-add-title" placeholder="Song title (optional)..."
+            value="${escapeHtml(ib.musicDraft?.title || '')}" onchange="updateMusicDraftField('title', this.value)">
           <input type="url" class="ideabank-music-url" placeholder="Paste a YouTube or Spotify link..."
-            value="${escapeHtml(ib.musicDraft?.url || '')}" onchange="updateMusicDraftUrl(this.value)">
+            value="${escapeHtml(ib.musicDraft?.url || '')}" onchange="updateMusicDraftField('url', this.value)">
           <textarea class="ideabank-music-add-notes" placeholder="What's this track for? What scene or vibe?"
-            onchange="updateMusicDraftNotes(this.value)">${escapeHtml(ib.musicDraft?.notes || '')}</textarea>
+            onchange="updateMusicDraftField('notes', this.value)">${escapeHtml(ib.musicDraft?.notes || '')}</textarea>
           <button class="btn btn-primary" onclick="addIdeaBankMusic()">Add Music</button>
         </div>
       </div>
@@ -13280,20 +13456,11 @@ function addSingleIdea() {
   }, 50);
 }
 
-function updateMusicDraftUrl(value) {
+function updateMusicDraftField(field, value) {
   const scopeData = getCurrentScopeData();
   if (scopeData?.planning?.ideaBank) {
-    if (!scopeData.planning.ideaBank.musicDraft) scopeData.planning.ideaBank.musicDraft = { url: '', notes: '' };
-    scopeData.planning.ideaBank.musicDraft.url = value;
-    saveState();
-  }
-}
-
-function updateMusicDraftNotes(value) {
-  const scopeData = getCurrentScopeData();
-  if (scopeData?.planning?.ideaBank) {
-    if (!scopeData.planning.ideaBank.musicDraft) scopeData.planning.ideaBank.musicDraft = { url: '', notes: '' };
-    scopeData.planning.ideaBank.musicDraft.notes = value;
+    if (!scopeData.planning.ideaBank.musicDraft) scopeData.planning.ideaBank.musicDraft = { title: '', url: '', notes: '' };
+    scopeData.planning.ideaBank.musicDraft[field] = value;
     saveState();
   }
 }
@@ -13311,20 +13478,21 @@ function addIdeaBankMusic() {
   
   if (!scopeData.planning.ideaBank.music) scopeData.planning.ideaBank.music = [];
   scopeData.planning.ideaBank.music.push({
+    title: scopeData.planning.ideaBank.musicDraft?.title || '',
     url: url,
     notes: scopeData.planning.ideaBank.musicDraft?.notes || ''
   });
-  scopeData.planning.ideaBank.musicDraft = { url: '', notes: '' };
+  scopeData.planning.ideaBank.musicDraft = { title: '', url: '', notes: '' };
   story.updatedAt = Date.now();
   saveState();
   renderPlanningTab();
 }
 
-function updateIdeaBankMusicNotes(index, value) {
+function updateIdeaBankMusicField(index, field, value) {
   const story = getCurrentStory();
   const scopeData = getCurrentScopeData();
   if (scopeData?.planning?.ideaBank?.music?.[index]) {
-    scopeData.planning.ideaBank.music[index].notes = value;
+    scopeData.planning.ideaBank.music[index][field] = value;
     story.updatedAt = Date.now();
     saveState();
   }
@@ -13355,7 +13523,8 @@ function renderQuestionsSubtab(container, scopeData) {
     questionsHtml = `
       <div class="questions-list">
         ${q.items.map((item, i) => `
-          <div class="question-item ${item.answered ? 'answered' : ''}">
+          <div class="question-item ${item.answered ? 'answered' : ''}" draggable="true" data-index="${i}">
+            <span class="question-handle">⋮⋮</span>
             <button class="question-check" onclick="toggleQuestionAnswered(${i})" title="${item.answered ? 'Mark unanswered' : 'Mark answered'}">
               ${item.answered ? '✓' : '○'}
             </button>
@@ -13391,6 +13560,10 @@ What's the villain's actual motivation?"
       </div>
     </div>
   `;
+  
+  if (q.items && q.items.length > 0) {
+    setupQuestionsDrag();
+  }
 }
 
 function updateQuestionsDraft(value) {
@@ -13458,6 +13631,69 @@ function deleteQuestion(index) {
     saveState();
     renderPlanningTab();
   }, 'Delete', true);
+}
+
+function setupQuestionsDrag() {
+  const container = document.querySelector('.questions-list');
+  if (!container) return;
+  
+  let draggedItem = null;
+  let draggedIndex = null;
+  
+  container.querySelectorAll('.question-item').forEach(item => {
+    item.addEventListener('dragstart', (e) => {
+      draggedItem = item;
+      draggedIndex = parseInt(item.dataset.index);
+      item.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    
+    item.addEventListener('dragend', () => {
+      item.classList.remove('dragging');
+      draggedItem = null;
+      draggedIndex = null;
+    });
+    
+    item.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (!draggedItem || draggedItem === item) return;
+      
+      const rect = item.getBoundingClientRect();
+      const midY = rect.top + rect.height / 2;
+      
+      if (e.clientY < midY) {
+        item.classList.add('drag-above');
+        item.classList.remove('drag-below');
+      } else {
+        item.classList.add('drag-below');
+        item.classList.remove('drag-above');
+      }
+    });
+    
+    item.addEventListener('dragleave', () => {
+      item.classList.remove('drag-above', 'drag-below');
+    });
+    
+    item.addEventListener('drop', (e) => {
+      e.preventDefault();
+      item.classList.remove('drag-above', 'drag-below');
+      
+      if (!draggedItem || draggedItem === item) return;
+      
+      const targetIndex = parseInt(item.dataset.index);
+      const story = getCurrentStory();
+      const scopeData = getCurrentScopeData();
+      if (!scopeData?.planning?.questions) return;
+      
+      const items = scopeData.planning.questions.items;
+      const [removed] = items.splice(draggedIndex, 1);
+      items.splice(targetIndex, 0, removed);
+      
+      story.updatedAt = Date.now();
+      saveState();
+      renderPlanningTab();
+    });
+  });
 }
 
 // ===== CHRONOLOGY SUBTAB =====
@@ -14229,6 +14465,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.view-btn').forEach(btn => btn.addEventListener('click', () => switchView(btn.dataset.view)));
   document.querySelectorAll('.workspace-tab').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
   document.querySelectorAll('.planning-subtab').forEach(btn => btn.addEventListener('click', () => switchPlanningSubtab(btn.dataset.subtab)));
+  document.querySelectorAll('.theme-btn').forEach(btn => btn.addEventListener('click', () => setTheme(btn.dataset.theme)));
   
   document.getElementById('storyTitleInput').addEventListener('change', (e) => updateStoryTitle(e.target.value));
   document.getElementById('frameworkSelect').addEventListener('change', (e) => changeFramework(e.target.value));
