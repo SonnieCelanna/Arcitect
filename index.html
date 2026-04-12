@@ -790,30 +790,69 @@ body {
 
 .question-item {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.5rem;
   padding: 0.75rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 8px;
   margin-bottom: 0.75rem;
   transition: all 0.2s;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .question-item.dragging { opacity: 0.5; }
 .question-item.drag-above { border-top: 2px solid var(--accent-planning); }
 .question-item.drag-below { border-bottom: 2px solid var(--accent-planning); }
 
+.question-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding-right: 0.4rem;
+  border-right: 1px solid var(--border);
+  min-width: 32px;
+}
+
 .question-handle {
   cursor: grab;
   color: var(--text-muted);
-  font-size: 0.8rem;
-  padding: 0.15rem;
+  font-size: 0.75rem;
   user-select: none;
-  flex-shrink: 0;
 }
 
 .question-handle:active { cursor: grabbing; }
+
+.question-priority {
+  width: 28px;
+  padding: 0.15rem;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.question-priority::-webkit-outer-spin-button,
+.question-priority::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.question-priority:focus {
+  outline: none;
+  border-color: var(--accent-planning);
+}
+
+.question-priority::placeholder {
+  color: var(--text-muted);
+}
+
+.questions-actions {
+  margin-bottom: 1rem;
+}
 
 .question-item.answered {
   opacity: 0.6;
@@ -823,18 +862,17 @@ body {
 .question-check {
   background: transparent;
   border: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   color: var(--text-muted);
   padding: 0;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   transition: all 0.15s;
-  flex-shrink: 0;
 }
 
 .question-check:hover {
@@ -13524,10 +13562,15 @@ function renderQuestionsSubtab(container, scopeData) {
       <div class="questions-list">
         ${q.items.map((item, i) => `
           <div class="question-item ${item.answered ? 'answered' : ''}" draggable="true" data-index="${i}">
-            <span class="question-handle">⋮⋮</span>
-            <button class="question-check" onclick="toggleQuestionAnswered(${i})" title="${item.answered ? 'Mark unanswered' : 'Mark answered'}">
-              ${item.answered ? '✓' : '○'}
-            </button>
+            <div class="question-sidebar">
+              <span class="question-handle">⋮⋮</span>
+              <input type="number" class="question-priority" value="${item.priority || ''}" 
+                onchange="updateQuestion(${i}, 'priority', this.value)" 
+                placeholder="#" title="Priority (lower = earlier)">
+              <button class="question-check" onclick="toggleQuestionAnswered(${i})" title="${item.answered ? 'Mark unanswered' : 'Mark answered'}">
+                ${item.answered ? '✓' : '○'}
+              </button>
+            </div>
             <div class="question-content">
               <input type="text" class="question-text" value="${escapeHtml(item.question)}" 
                 onchange="updateQuestion(${i}, 'question', this.value)" placeholder="Question...">
@@ -13538,13 +13581,16 @@ function renderQuestionsSubtab(container, scopeData) {
           </div>
         `).join('')}
       </div>
+      <div class="questions-actions">
+        <button class="btn btn-sm" onclick="sortQuestionsByPriority()">Sort by Priority</button>
+      </div>
     `;
   }
   
   container.innerHTML = `
     <div class="questions-container">
       <div class="questions-intro">
-        <p>Things you need to figure out. "How does she escape?" "Why does he betray them?" Park your unsolved problems here.</p>
+        <p>Things you need to figure out. Assign numbers to set answering order, then sort.</p>
       </div>
       
       ${questionsHtml}
@@ -13603,10 +13649,41 @@ function updateQuestion(index, field, value) {
   const story = getCurrentStory();
   const scopeData = getCurrentScopeData();
   if (scopeData?.planning?.questions?.items?.[index]) {
-    scopeData.planning.questions.items[index][field] = value;
+    // Convert priority to number or null
+    if (field === 'priority') {
+      const num = parseInt(value);
+      scopeData.planning.questions.items[index][field] = isNaN(num) ? null : num;
+    } else {
+      scopeData.planning.questions.items[index][field] = value;
+    }
     story.updatedAt = Date.now();
     saveState();
   }
+}
+
+function sortQuestionsByPriority() {
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.questions?.items) return;
+  
+  // Sort: numbered items first (by priority), then unnumbered items in current order
+  scopeData.planning.questions.items.sort((a, b) => {
+    const aPri = a.priority;
+    const bPri = b.priority;
+    
+    // Both have priority - sort by number
+    if (aPri != null && bPri != null) return aPri - bPri;
+    // Only a has priority - a comes first
+    if (aPri != null) return -1;
+    // Only b has priority - b comes first
+    if (bPri != null) return 1;
+    // Neither has priority - maintain relative order (stable sort)
+    return 0;
+  });
+  
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
 }
 
 function toggleQuestionAnswered(index) {
