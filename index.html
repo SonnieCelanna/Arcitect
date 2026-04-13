@@ -13648,17 +13648,82 @@ function convertQuestionsDraft() {
 function updateQuestion(index, field, value) {
   const story = getCurrentStory();
   const scopeData = getCurrentScopeData();
-  if (scopeData?.planning?.questions?.items?.[index]) {
-    // Convert priority to number or null
-    if (field === 'priority') {
-      const num = parseInt(value);
-      scopeData.planning.questions.items[index][field] = isNaN(num) ? null : num;
+  if (!scopeData?.planning?.questions?.items?.[index]) return;
+  
+  if (field === 'priority') {
+    const newPriority = parseInt(value);
+    const items = scopeData.planning.questions.items;
+    
+    if (isNaN(newPriority) || value === '') {
+      // Clearing priority
+      items[index].priority = null;
     } else {
-      scopeData.planning.questions.items[index][field] = value;
+      // Get currently prioritized items (excluding the one being changed)
+      const otherPrioritized = items
+        .map((item, i) => ({ item, idx: i }))
+        .filter(x => x.idx !== index && x.item.priority != null)
+        .sort((a, b) => a.item.priority - b.item.priority);
+      
+      // Insert the new priority at the right position
+      // Clamp to valid range: 1 to (count + 1)
+      const maxPriority = otherPrioritized.length + 1;
+      const clampedPriority = Math.max(1, Math.min(newPriority, maxPriority));
+      
+      // Reassign all priorities: insert current item at its new position
+      let pos = 1;
+      let inserted = false;
+      
+      otherPrioritized.forEach(x => {
+        if (!inserted && pos >= clampedPriority) {
+          items[index].priority = pos;
+          pos++;
+          inserted = true;
+        }
+        x.item.priority = pos;
+        pos++;
+      });
+      
+      // If we haven't inserted yet (assigning to end), do it now
+      if (!inserted) {
+        items[index].priority = pos;
+      }
     }
+    
+    // Renumber to ensure sequential 1, 2, 3... then sort
+    renumberQuestionPriorities(items);
+    sortQuestionsArray(items);
+    
+    story.updatedAt = Date.now();
+    saveState();
+    renderPlanningTab();
+  } else {
+    scopeData.planning.questions.items[index][field] = value;
     story.updatedAt = Date.now();
     saveState();
   }
+}
+
+function renumberQuestionPriorities(items) {
+  // Get all items with priorities, sorted by current priority
+  const prioritized = items
+    .map((item, idx) => ({ item, idx }))
+    .filter(x => x.item.priority != null)
+    .sort((a, b) => a.item.priority - b.item.priority);
+  
+  // Reassign sequential numbers starting from 1
+  prioritized.forEach((x, i) => {
+    x.item.priority = i + 1;
+  });
+}
+
+function sortQuestionsArray(items) {
+  // Sort in place: prioritized items first (by priority), then unprioritized
+  items.sort((a, b) => {
+    if (a.priority != null && b.priority != null) return a.priority - b.priority;
+    if (a.priority != null) return -1;
+    if (b.priority != null) return 1;
+    return 0;
+  });
 }
 
 function sortQuestionsByPriority() {
@@ -13666,20 +13731,7 @@ function sortQuestionsByPriority() {
   const scopeData = getCurrentScopeData();
   if (!scopeData?.planning?.questions?.items) return;
   
-  // Sort: numbered items first (by priority), then unnumbered items in current order
-  scopeData.planning.questions.items.sort((a, b) => {
-    const aPri = a.priority;
-    const bPri = b.priority;
-    
-    // Both have priority - sort by number
-    if (aPri != null && bPri != null) return aPri - bPri;
-    // Only a has priority - a comes first
-    if (aPri != null) return -1;
-    // Only b has priority - b comes first
-    if (bPri != null) return 1;
-    // Neither has priority - maintain relative order (stable sort)
-    return 0;
-  });
+  sortQuestionsArray(scopeData.planning.questions.items);
   
   story.updatedAt = Date.now();
   saveState();
@@ -13704,6 +13756,7 @@ function deleteQuestion(index) {
   
   showConfirmModal('Delete Question', 'Delete this question?', () => {
     scopeData.planning.questions.items.splice(index, 1);
+    renumberQuestionPriorities(scopeData.planning.questions.items);
     story.updatedAt = Date.now();
     saveState();
     renderPlanningTab();
