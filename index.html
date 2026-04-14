@@ -412,6 +412,23 @@ body {
   border-color: var(--border-focus);
 }
 
+.brainstorm-to-plot-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.brainstorm-to-plot-btn:hover {
+  color: var(--accent-main);
+  border-color: var(--accent-main);
+  background: rgba(124, 156, 184, 0.1);
+}
+
 .brainstorm-beat-delete {
   background: transparent;
   border: none;
@@ -426,6 +443,98 @@ body {
 .brainstorm-beat-delete:hover {
   color: var(--accent-red, #e74c3c);
   background: rgba(231, 76, 60, 0.1);
+}
+
+/* Move to Plot Menu */
+.move-to-plot-menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  min-width: 300px;
+  max-width: 400px;
+  max-height: 70vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.move-to-plot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+
+.move-to-plot-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+
+.move-to-plot-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+.move-to-plot-options {
+  padding: 0.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.move-to-plot-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.move-to-plot-option:hover:not(:disabled) {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-main);
+}
+
+.move-to-plot-option.filled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.move-to-plot-filled-tag {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--bg-base);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+}
+
+.move-to-plot-empty {
+  padding: 1rem;
+  color: var(--text-muted);
+  text-align: center;
+  font-size: 0.9rem;
 }
 
 .brainstorm-add-single {
@@ -12312,6 +12421,17 @@ function importStoryJSON(event) {
       imported.createdAt = Date.now();
       imported.updatedAt = Date.now();
       
+      // Ensure scope system exists for older exports
+      if (!imported.scopeData) {
+        imported.scopeData = {};
+      }
+      if (!imported.scopeLevels) {
+        imported.scopeLevels = ['Story'];
+      }
+      if (!imported.currentScopePath) {
+        imported.currentScopePath = ['root'];
+      }
+      
       state.stories.push(imported);
       saveState();
       openStory(imported.id);
@@ -13075,6 +13195,7 @@ function renderBrainstormSubtab(container, scopeData) {
             <input type="text" class="brainstorm-beat-input" value="${escapeHtml(beat)}" 
               onchange="updateBrainstormBeat(${i}, this.value)" 
               placeholder="Beat ${i + 1}...">
+            <button class="brainstorm-to-plot-btn" onclick="openMoveToPlotMenu(${i})" title="Move to Plot">&#8594;</button>
             <button class="brainstorm-beat-delete" onclick="deleteBrainstormBeat(${i})">&times;</button>
           </div>
         `).join('')}
@@ -13105,6 +13226,14 @@ function renderBrainstormSubtab(container, scopeData) {
           onchange="updateBrainstormDraft(this.value)">${escapeHtml(bs.draft)}</textarea>
         <button class="btn btn-primary brainstorm-convert" onclick="convertBrainstormDraft()">Convert to Beats</button>
       </div>
+    </div>
+    
+    <div class="move-to-plot-menu" id="moveToPlotMenu" style="display: none;">
+      <div class="move-to-plot-header">
+        <span>Move to Plot Beat</span>
+        <button class="move-to-plot-close" onclick="closeMoveToPlotMenu()">&times;</button>
+      </div>
+      <div class="move-to-plot-options" id="moveToPlotOptions"></div>
     </div>
   `;
   
@@ -13188,6 +13317,93 @@ function deleteBrainstormBeat(index) {
     'Delete',
     true
   );
+}
+
+let pendingMoveToPlotIndex = null;
+
+function openMoveToPlotMenu(beatIndex) {
+  pendingMoveToPlotIndex = beatIndex;
+  const scopeData = getCurrentScopeData();
+  const menu = document.getElementById('moveToPlotMenu');
+  const optionsContainer = document.getElementById('moveToPlotOptions');
+  
+  if (!menu || !optionsContainer || !scopeData) return;
+  
+  // Get the current framework's beats
+  const framework = scopeData.framework || 'custom';
+  const fw = FRAMEWORKS[framework];
+  const beatContent = scopeData.beatContent || {};
+  
+  let optionsHtml = '';
+  
+  if (framework === 'custom') {
+    // Custom beats
+    const customBeats = scopeData.beats || [];
+    if (customBeats.length === 0) {
+      optionsHtml = '<div class="move-to-plot-empty">No plot beats defined. Add beats in the Plot tab first.</div>';
+    } else {
+      optionsHtml = customBeats.map((b, i) => {
+        const hasContent = beatContent[b.id] && beatContent[b.id].trim().length > 0;
+        return `
+          <button class="move-to-plot-option ${hasContent ? 'filled' : ''}" 
+            ${hasContent ? 'disabled' : ''} 
+            onclick="executeMoveToPlot('${b.id}')"
+            title="${hasContent ? 'Already has content' : 'Click to move beat here'}">
+            <span class="move-to-plot-name">${escapeHtml(b.name || 'Beat ' + (i + 1))}</span>
+            ${hasContent ? '<span class="move-to-plot-filled-tag">filled</span>' : ''}
+          </button>
+        `;
+      }).join('');
+    }
+  } else if (fw) {
+    // Framework beats
+    optionsHtml = fw.beats.map(b => {
+      const hasContent = beatContent[b.id] && beatContent[b.id].trim().length > 0;
+      return `
+        <button class="move-to-plot-option ${hasContent ? 'filled' : ''}" 
+          ${hasContent ? 'disabled' : ''} 
+          onclick="executeMoveToPlot('${b.id}')"
+          title="${hasContent ? 'Already has content' : 'Click to move beat here'}">
+          <span class="move-to-plot-name">${escapeHtml(b.name)}</span>
+          ${hasContent ? '<span class="move-to-plot-filled-tag">filled</span>' : ''}
+        </button>
+      `;
+    }).join('');
+  }
+  
+  optionsContainer.innerHTML = optionsHtml;
+  menu.style.display = 'block';
+}
+
+function closeMoveToPlotMenu() {
+  const menu = document.getElementById('moveToPlotMenu');
+  if (menu) menu.style.display = 'none';
+  pendingMoveToPlotIndex = null;
+}
+
+function executeMoveToPlot(plotBeatId) {
+  if (pendingMoveToPlotIndex === null) return;
+  
+  const story = getCurrentStory();
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.brainstorm?.beats) return;
+  
+  const beatText = scopeData.planning.brainstorm.beats[pendingMoveToPlotIndex];
+  if (!beatText) return;
+  
+  // Add to plot beat content
+  if (!scopeData.beatContent) scopeData.beatContent = {};
+  scopeData.beatContent[plotBeatId] = beatText;
+  
+  // Remove from brainstorm
+  scopeData.planning.brainstorm.beats.splice(pendingMoveToPlotIndex, 1);
+  
+  story.updatedAt = Date.now();
+  saveState();
+  
+  closeMoveToPlotMenu();
+  showToast('Beat moved to Plot', 'success');
+  renderPlanningTab();
 }
 
 function addSingleBrainstormBeat() {
@@ -13780,49 +13996,100 @@ function setupQuestionsDrag() {
     
     item.addEventListener('dragend', () => {
       item.classList.remove('dragging');
+      container.querySelectorAll('.question-item').forEach(i => {
+        i.classList.remove('drag-above', 'drag-below');
+      });
       draggedItem = null;
       draggedIndex = null;
     });
+  });
+  
+  // Use container for dragover to make drop zones larger
+  container.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    if (!draggedItem) return;
     
-    item.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      if (!draggedItem || draggedItem === item) return;
-      
+    // Clear all indicators first
+    container.querySelectorAll('.question-item').forEach(i => {
+      i.classList.remove('drag-above', 'drag-below');
+    });
+    
+    // Find which item we're over
+    const items = [...container.querySelectorAll('.question-item:not(.dragging)')];
+    for (const item of items) {
       const rect = item.getBoundingClientRect();
-      const midY = rect.top + rect.height / 2;
-      
-      if (e.clientY < midY) {
-        item.classList.add('drag-above');
-        item.classList.remove('drag-below');
-      } else {
-        item.classList.add('drag-below');
-        item.classList.remove('drag-above');
+      if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+        const midY = rect.top + rect.height / 2;
+        if (e.clientY < midY) {
+          item.classList.add('drag-above');
+        } else {
+          item.classList.add('drag-below');
+        }
+        break;
       }
+    }
+  });
+  
+  container.addEventListener('dragleave', (e) => {
+    // Only clear if actually leaving the container
+    if (!container.contains(e.relatedTarget)) {
+      container.querySelectorAll('.question-item').forEach(i => {
+        i.classList.remove('drag-above', 'drag-below');
+      });
+    }
+  });
+  
+  container.addEventListener('drop', (e) => {
+    e.preventDefault();
+    
+    container.querySelectorAll('.question-item').forEach(i => {
+      i.classList.remove('drag-above', 'drag-below');
     });
     
-    item.addEventListener('dragleave', () => {
-      item.classList.remove('drag-above', 'drag-below');
-    });
+    if (!draggedItem) return;
     
-    item.addEventListener('drop', (e) => {
-      e.preventDefault();
-      item.classList.remove('drag-above', 'drag-below');
+    // Find drop target
+    const items = [...container.querySelectorAll('.question-item')];
+    let targetIndex = draggedIndex;
+    
+    for (const item of items) {
+      if (item === draggedItem) continue;
+      const rect = item.getBoundingClientRect();
+      const itemIndex = parseInt(item.dataset.index);
       
-      if (!draggedItem || draggedItem === item) return;
-      
-      const targetIndex = parseInt(item.dataset.index);
-      const story = getCurrentStory();
-      const scopeData = getCurrentScopeData();
-      if (!scopeData?.planning?.questions) return;
-      
-      const items = scopeData.planning.questions.items;
-      const [removed] = items.splice(draggedIndex, 1);
-      items.splice(targetIndex, 0, removed);
-      
-      story.updatedAt = Date.now();
-      saveState();
-      renderPlanningTab();
-    });
+      if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+        const midY = rect.top + rect.height / 2;
+        if (e.clientY < midY) {
+          targetIndex = itemIndex;
+        } else {
+          targetIndex = itemIndex + 1;
+        }
+        break;
+      } else if (e.clientY < rect.top) {
+        targetIndex = itemIndex;
+        break;
+      } else if (e.clientY > rect.bottom) {
+        targetIndex = itemIndex + 1;
+      }
+    }
+    
+    if (targetIndex === draggedIndex || targetIndex === draggedIndex + 1) return;
+    
+    const story = getCurrentStory();
+    const scopeData = getCurrentScopeData();
+    if (!scopeData?.planning?.questions) return;
+    
+    const questionItems = scopeData.planning.questions.items;
+    const [removed] = questionItems.splice(draggedIndex, 1);
+    
+    // Adjust target index if we removed from before it
+    if (draggedIndex < targetIndex) targetIndex--;
+    
+    questionItems.splice(targetIndex, 0, removed);
+    
+    story.updatedAt = Date.now();
+    saveState();
+    renderPlanningTab();
   });
 }
 
