@@ -1227,6 +1227,39 @@ body {
 /* Header Right - View Toggle */
 .header-right { display: flex; align-items: center; gap: 0.75rem; }
 
+.auto-expand-toggle {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.auto-expand-toggle:hover {
+  color: var(--text-secondary);
+  border-color: var(--border-focus);
+}
+
+.auto-expand-toggle.active {
+  background: var(--accent-main);
+  color: var(--bg-base);
+  border-color: var(--accent-main);
+}
+
+.auto-expand-icon {
+  font-weight: bold;
+}
+
+/* Auto-expand textarea behavior */
+body.auto-expand-textareas textarea {
+  overflow: hidden;
+  resize: none;
+}
+
 .theme-toggle {
   display: flex;
   background: var(--bg-input);
@@ -5357,6 +5390,9 @@ body {
   </div>
   
   <div class="header-right">
+    <button class="auto-expand-toggle" id="autoExpandToggle" onclick="toggleAutoExpand()" title="Auto-expand text boxes to fit content">
+      <span class="auto-expand-icon">↕</span>
+    </button>
     <div class="theme-toggle" id="themeToggle">
       <button class="theme-btn" data-theme="dark" title="Dark">Dark</button>
       <button class="theme-btn" data-theme="dim" title="Dim">Dim</button>
@@ -6722,7 +6758,8 @@ let state = {
   cardsFocusIndex: 0,
   pendingCharacterId: null, // For arc modal
   guidanceMode: false, // Show guidance for frameworks and arc types (default OFF)
-  theme: 'dark' // 'dark', 'dim', or 'light'
+  theme: 'dark', // 'dark', 'dim', or 'light'
+  autoExpandTextareas: false // Auto-expand textareas to fit content
 };
 
 const STORAGE_KEY = 'narrative_architect_v4_data';
@@ -6971,6 +7008,7 @@ async function loadState() {
       state.stories = data.stories || [];
       state.globalRoster = data.globalRoster || [];
       state.theme = data.theme || 'dark';
+      state.autoExpandTextareas = data.autoExpandTextareas || false;
     } else if (Storage.mode === 'claude') {
       // In Claude artifacts, empty storage on load likely means new artifact instance
       console.log('loadState - Claude mode with no data (new artifact instance)');
@@ -6982,6 +7020,7 @@ async function loadState() {
   console.log('loadState - final state.stories:', state.stories.length);
   initialLoadComplete = true;
   initTheme();
+  initAutoExpand();
   renderDropdown();
 }
 
@@ -7003,7 +7042,8 @@ async function doSave() {
   const data = JSON.stringify({
     stories: state.stories,
     globalRoster: state.globalRoster,
-    theme: state.theme
+    theme: state.theme,
+    autoExpandTextareas: state.autoExpandTextareas
   });
   
   try {
@@ -7028,6 +7068,61 @@ async function doSave() {
 
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+}
+
+// ===== AUTO-EXPAND TEXTAREAS =====
+function initAutoExpand() {
+  const btn = document.getElementById('autoExpandToggle');
+  if (btn) {
+    btn.classList.toggle('active', state.autoExpandTextareas);
+  }
+  document.body.classList.toggle('auto-expand-textareas', state.autoExpandTextareas);
+  if (state.autoExpandTextareas) {
+    autoExpandAllTextareas();
+  }
+}
+
+function toggleAutoExpand() {
+  state.autoExpandTextareas = !state.autoExpandTextareas;
+  const btn = document.getElementById('autoExpandToggle');
+  if (btn) {
+    btn.classList.toggle('active', state.autoExpandTextareas);
+  }
+  document.body.classList.toggle('auto-expand-textareas', state.autoExpandTextareas);
+  
+  if (state.autoExpandTextareas) {
+    autoExpandAllTextareas();
+  } else {
+    // Reset textareas to their default/CSS-defined heights
+    document.querySelectorAll('textarea').forEach(ta => {
+      ta.style.height = '';
+    });
+  }
+  saveState();
+}
+
+function autoExpandAllTextareas() {
+  document.querySelectorAll('textarea').forEach(ta => {
+    autoExpandTextarea(ta);
+  });
+}
+
+function autoExpandTextarea(textarea) {
+  if (!state.autoExpandTextareas) return;
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+}
+
+// Call this after rendering content to auto-expand new textareas
+function setupAutoExpandListeners() {
+  if (!state.autoExpandTextareas) return;
+  document.querySelectorAll('textarea').forEach(ta => {
+    if (!ta.dataset.autoExpandBound) {
+      ta.dataset.autoExpandBound = 'true';
+      ta.addEventListener('input', () => autoExpandTextarea(ta));
+      autoExpandTextarea(ta);
+    }
+  });
 }
 
 // ===== TOAST & CONFIRMATION UI =====
@@ -7170,6 +7265,9 @@ function renderWorkspace() {
   
   renderBeats();
   renderArcs();
+  
+  // Auto-expand textareas if enabled
+  setTimeout(setupAutoExpandListeners, 0);
 }
 
 // ===== PLOT SCOPE SYSTEM =====
@@ -13082,6 +13180,9 @@ function renderPlanningTab() {
       renderChronologySubtab(container, scopeData);
       break;
   }
+  
+  // Auto-expand textareas if enabled
+  setTimeout(setupAutoExpandListeners, 0);
 }
 
 function renderPlanningScopeNav() {
