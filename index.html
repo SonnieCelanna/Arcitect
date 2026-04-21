@@ -1137,6 +1137,43 @@ body {
   cursor: grabbing;
 }
 
+.chronology-order-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding-right: 0.3rem;
+  border-right: 1px solid var(--border);
+  margin-right: 0.2rem;
+}
+
+.chronology-order-input {
+  width: 32px;
+  padding: 0.15rem;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.chronology-order-input::-webkit-outer-spin-button,
+.chronology-order-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.chronology-order-input:focus {
+  outline: none;
+  border-color: var(--accent-planning);
+}
+
+.chronology-order-input::placeholder {
+  color: var(--text-muted);
+}
+
 .chronology-when {
   width: 140px;
   flex-shrink: 0;
@@ -1185,6 +1222,66 @@ body {
 
 .chronology-add-single {
   margin-bottom: 1.5rem;
+}
+
+/* Chronology header with toggle */
+.chronology-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.chronology-bubble-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.chronology-bubble-toggle input {
+  cursor: pointer;
+}
+
+.chronology-bubble-toggle:hover {
+  color: var(--text-secondary);
+}
+
+/* Inherited chronology events */
+.chronology-item.inherited {
+  background: var(--bg-base);
+  border-style: dashed;
+  opacity: 0.8;
+}
+
+.chronology-source-tag {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.chronology-when-display {
+  width: 140px;
+  flex-shrink: 0;
+  padding: 0.4rem 0.6rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.chronology-what-display {
+  flex: 1;
+  padding: 0.4rem 0.6rem;
+  color: var(--text-primary);
+  font-size: 0.95rem;
 }
 
 .chronology-draft-section {
@@ -6759,7 +6856,8 @@ let state = {
   pendingCharacterId: null, // For arc modal
   guidanceMode: false, // Show guidance for frameworks and arc types (default OFF)
   theme: 'dark', // 'dark', 'dim', or 'light'
-  autoExpandTextareas: false // Auto-expand textareas to fit content
+  autoExpandTextareas: false, // Auto-expand textareas to fit content
+  chronologyBubbleUp: false // Show child scope chronology events in parent scopes
 };
 
 const STORAGE_KEY = 'narrative_architect_v4_data';
@@ -7009,6 +7107,7 @@ async function loadState() {
       state.globalRoster = data.globalRoster || [];
       state.theme = data.theme || 'dark';
       state.autoExpandTextareas = data.autoExpandTextareas || false;
+      state.chronologyBubbleUp = data.chronologyBubbleUp || false;
     } else if (Storage.mode === 'claude') {
       // In Claude artifacts, empty storage on load likely means new artifact instance
       console.log('loadState - Claude mode with no data (new artifact instance)');
@@ -7043,7 +7142,8 @@ async function doSave() {
     stories: state.stories,
     globalRoster: state.globalRoster,
     theme: state.theme,
-    autoExpandTextareas: state.autoExpandTextareas
+    autoExpandTextareas: state.autoExpandTextareas,
+    chronologyBubbleUp: state.chronologyBubbleUp
   });
   
   try {
@@ -14200,21 +14300,70 @@ function renderChronologySubtab(container, scopeData) {
     scopeData.planning.chronology = { events: [], draft: '' };
   }
   const c = scopeData.planning.chronology;
+  const story = getCurrentStory();
+  
+  // Gather all events: local + inherited from children if bubble-up enabled
+  let allEvents = [];
+  
+  // Local events
+  if (c.events && c.events.length > 0) {
+    c.events.forEach((event, i) => {
+      allEvents.push({ 
+        ...event, 
+        index: i, 
+        isLocal: true, 
+        source: null,
+        sortOrder: event.order ?? (i * 1000) // Use order if set, otherwise space them out
+      });
+    });
+  }
+  
+  // If bubble-up enabled, collect from child scopes
+  if (state.chronologyBubbleUp && story) {
+    const inheritedEvents = collectChildChronologyEvents(story, story.currentScopePath);
+    // Inherited events get order based on their child's position + their own order
+    inheritedEvents.forEach((event, i) => {
+      event.sortOrder = event.inheritedOrder ?? (10000 + i);
+    });
+    allEvents = allEvents.concat(inheritedEvents);
+  }
+  
+  // Sort all events by their order
+  allEvents.sort((a, b) => a.sortOrder - b.sortOrder);
   
   let eventsHtml = '';
-  if (c.events && c.events.length > 0) {
+  if (allEvents.length > 0) {
     eventsHtml = `
       <div class="chronology-list">
-        ${c.events.map((event, i) => `
-          <div class="chronology-item" draggable="true" data-index="${i}">
-            <span class="chronology-handle">⋮⋮</span>
-            <input type="text" class="chronology-when" value="${escapeHtml(event.when)}" 
-              onchange="updateChronologyEvent(${i}, 'when', this.value)" placeholder="When...">
-            <input type="text" class="chronology-what" value="${escapeHtml(event.what)}" 
-              onchange="updateChronologyEvent(${i}, 'what', this.value)" placeholder="What happened...">
-            <button class="chronology-delete" onclick="deleteChronologyEvent(${i})">&times;</button>
-          </div>
-        `).join('')}
+        ${allEvents.map((event, displayIndex) => {
+          if (event.isLocal) {
+            return `
+              <div class="chronology-item" draggable="true" data-index="${event.index}">
+                <div class="chronology-order-controls">
+                  <span class="chronology-handle">⋮⋮</span>
+                  <input type="number" class="chronology-order-input" 
+                    value="${event.order ?? ''}" 
+                    onchange="updateChronologyEvent(${event.index}, 'order', this.value)"
+                    placeholder="#" title="Order (lower = earlier)">
+                </div>
+                <input type="text" class="chronology-when" value="${escapeHtml(event.when)}" 
+                  onchange="updateChronologyEvent(${event.index}, 'when', this.value)" placeholder="When...">
+                <input type="text" class="chronology-what" value="${escapeHtml(event.what)}" 
+                  onchange="updateChronologyEvent(${event.index}, 'what', this.value)" placeholder="What happened...">
+                <button class="chronology-delete" onclick="deleteChronologyEvent(${event.index})">&times;</button>
+              </div>
+            `;
+          } else {
+            // Inherited event - read only with source label and order display
+            return `
+              <div class="chronology-item inherited">
+                <span class="chronology-source-tag">${escapeHtml(event.source)}</span>
+                <span class="chronology-when-display">${escapeHtml(event.when)}</span>
+                <span class="chronology-what-display">${escapeHtml(event.what)}</span>
+              </div>
+            `;
+          }
+        }).join('')}
       </div>
       <button class="btn btn-sm chronology-add-single" onclick="addSingleChronologyEvent()">+ Add Event</button>
     `;
@@ -14222,8 +14371,14 @@ function renderChronologySubtab(container, scopeData) {
   
   container.innerHTML = `
     <div class="chronology-container">
-      <div class="chronology-intro">
-        <p>Worldbuilding events in chronological order. "The war ended 50 years ago. The king was crowned 12 years ago." A quick reference for backstory, not plot structure.</p>
+      <div class="chronology-header">
+        <div class="chronology-intro">
+          <p>Worldbuilding events in chronological order. ${state.chronologyBubbleUp ? 'Use order numbers to position events between child events.' : ''}</p>
+        </div>
+        <label class="chronology-bubble-toggle">
+          <input type="checkbox" ${state.chronologyBubbleUp ? 'checked' : ''} onchange="toggleChronologyBubbleUp()">
+          <span>Show child events</span>
+        </label>
       </div>
       
       ${eventsHtml}
@@ -14244,6 +14399,49 @@ function renderChronologySubtab(container, scopeData) {
   if (c.events && c.events.length > 0) {
     setupChronologyDrag();
   }
+}
+
+function collectChildChronologyEvents(story, currentPath, childIndex = 0) {
+  const events = [];
+  const currentPathStr = currentPath.join('/');
+  const currentScopeData = story.scopeData[currentPathStr];
+  
+  if (!currentScopeData?.items) return events;
+  
+  // Iterate through child items
+  currentScopeData.items.forEach((item, itemIndex) => {
+    const childPath = [...currentPath, item.id];
+    const childPathStr = childPath.join('/');
+    const childScopeData = story.scopeData[childPathStr];
+    
+    // Base order for this child's events (space children apart by 10000)
+    const childBaseOrder = (childIndex + itemIndex) * 10000;
+    
+    if (childScopeData?.planning?.chronology?.events) {
+      // Add events from this child
+      childScopeData.planning.chronology.events.forEach((event, eventIndex) => {
+        events.push({
+          ...event,
+          isLocal: false,
+          source: item.name || item.id,
+          // Use event's own order if set, otherwise position based on array index
+          inheritedOrder: event.order ?? (childBaseOrder + eventIndex * 10)
+        });
+      });
+    }
+    
+    // Recursively collect from grandchildren
+    const grandchildEvents = collectChildChronologyEvents(story, childPath, childBaseOrder);
+    events.push(...grandchildEvents);
+  });
+  
+  return events;
+}
+
+function toggleChronologyBubbleUp() {
+  state.chronologyBubbleUp = !state.chronologyBubbleUp;
+  saveState();
+  renderPlanningTab();
 }
 
 function updateChronologyDraft(value) {
@@ -14294,9 +14492,18 @@ function updateChronologyEvent(index, field, value) {
   const story = getCurrentStory();
   const scopeData = getCurrentScopeData();
   if (scopeData?.planning?.chronology?.events?.[index]) {
-    scopeData.planning.chronology.events[index][field] = value;
-    story.updatedAt = Date.now();
-    saveState();
+    if (field === 'order') {
+      const num = parseInt(value);
+      scopeData.planning.chronology.events[index][field] = isNaN(num) ? null : num;
+      // Re-render to show new sort order
+      story.updatedAt = Date.now();
+      saveState();
+      renderPlanningTab();
+    } else {
+      scopeData.planning.chronology.events[index][field] = value;
+      story.updatedAt = Date.now();
+      saveState();
+    }
   }
 }
 
