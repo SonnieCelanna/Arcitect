@@ -2322,9 +2322,169 @@ body.auto-expand-textareas textarea {
 
 .add-organizer-btn:hover { border-color: var(--accent-arc-positive); color: var(--text-secondary); }
 
-/* Character List within Organizer */
+/* Character Grid Layout */
 .organizer-content { margin-top: 1rem; }
 
+.characters-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.character-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.character-card.collapsed {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  min-width: 140px;
+}
+
+.character-card.collapsed:hover {
+  border-color: var(--accent-main);
+  background: var(--bg-card-hover);
+}
+
+.character-card.expanded {
+  width: 100%;
+  flex-basis: 100%;
+}
+
+.character-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+}
+
+.character-card-header:hover {
+  background: var(--bg-card-hover);
+}
+
+.character-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.character-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--bg-base);
+  flex-shrink: 0;
+}
+
+.character-name { 
+  font-weight: 600; 
+  color: var(--text-primary); 
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.character-arc-count, .character-arc-summary { 
+  font-size: 0.7rem; 
+  color: var(--text-muted); 
+}
+
+.character-toggle { 
+  color: var(--text-muted); 
+  font-size: 1rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.character-card-body { 
+  padding: 0.75rem; 
+}
+
+.character-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.remove-char-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+.remove-char-btn:hover {
+  color: var(--accent-red, #e74c3c);
+}
+
+/* Add Character Wrapper */
+.add-character-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.roster-quick-picks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.roster-quick-pick {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.roster-quick-pick:hover {
+  background: var(--accent-main);
+  color: var(--bg-base);
+  border-color: var(--accent-main);
+}
+
+.add-character-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.add-character-input-row input {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+/* Legacy character-section kept for compatibility */
 .character-section {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -2347,31 +2507,222 @@ body.auto-expand-textareas textarea {
 
 .character-info { display: flex; align-items: center; gap: 0.75rem; }
 
-.character-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--accent-main);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: var(--bg-base);
-}
-
-.character-name { font-weight: 600; color: var(--text-primary); font-size: 1.05rem; }
-.character-arc-count { font-size: 0.8rem; color: var(--text-muted); }
-
-.character-toggle { color: var(--text-muted); font-size: 0.75rem; transition: transform 0.2s; }
-.character-section.expanded .character-toggle { transform: rotate(180deg); }
-
 .character-body { display: none; padding: 0 1.25rem 1.25rem; }
 .character-section.expanded .character-body { display: block; }
 
 /* Arc Cards within Character */
-.arc-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+.arc-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
 
+/* Compact Arc Rows */
+.arc-row {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  border-left: 3px solid var(--arc-color, var(--accent-arc-positive));
+  overflow: hidden;
+}
+
+.arc-row-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.arc-row-summary:hover { background: var(--bg-card); }
+
+.arc-row-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--arc-color, var(--accent-arc-positive));
+  flex-shrink: 0;
+}
+
+.arc-row-type {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.arc-row-type.positive { background: var(--accent-arc-positive); color: var(--bg-base); }
+.arc-row-type.negative { background: var(--accent-arc-negative); color: var(--text-primary); }
+.arc-row-type.flat { background: var(--accent-arc-flat); color: var(--text-primary); }
+
+.arc-row-name {
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.arc-row-structure {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--bg-base);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.arc-row-progress {
+  width: 40px;
+  height: 4px;
+  background: var(--bg-base);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.arc-row-progress-bar {
+  height: 100%;
+  background: var(--arc-color, var(--accent-arc-positive));
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+.arc-row-toggle {
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 600;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.arc-row-body {
+  padding: 0.75rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.arc-subtabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.arc-subtab {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  transition: all 0.15s;
+}
+
+.arc-subtab:hover { color: var(--text-secondary); }
+.arc-subtab.active { 
+  background: var(--accent-main); 
+  color: var(--bg-base); 
+  border-color: var(--accent-main); 
+}
+
+.arc-compact-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.arc-compact-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.arc-compact-row label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  min-width: 60px;
+  flex-shrink: 0;
+}
+
+.arc-compact-row select {
+  flex: 1;
+  padding: 0.3rem 0.5rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.8rem;
+}
+
+.arc-compact-textarea-row {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.arc-compact-textarea-row label {
+  margin-bottom: 0.25rem;
+}
+
+.arc-compact-textarea-row textarea {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.8rem;
+  resize: vertical;
+  min-height: 50px;
+}
+
+.arc-type-select-compact, .arc-structure-select-compact {
+  padding: 0.3rem 0.5rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.8rem;
+}
+
+.arc-beats-compact {
+  margin-top: 0.5rem;
+}
+
+.arc-row-actions {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.arc-delete-btn-compact {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.arc-delete-btn-compact:hover {
+  color: var(--accent-red, #e74c3c);
+  border-color: var(--accent-red, #e74c3c);
+}
+
+/* Legacy arc-card styles kept for compatibility */
 .arc-card {
   background: var(--bg-input);
   border: 1px solid var(--border);
@@ -5301,6 +5652,45 @@ body.auto-expand-textareas textarea {
   max-width: 1400px;
 }
 
+/* Simple theme row for Arcs tab */
+.scope-theme-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.scope-theme-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-main);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.scope-theme-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 0.25rem 0;
+}
+
+.scope-theme-input:focus {
+  outline: none;
+}
+
+.scope-theme-input::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 .view-columns .story-compass,
 .view-columns .scope-level-section,
 .view-columns .scope-children-section,
@@ -5459,6 +5849,171 @@ body.auto-expand-textareas textarea {
 /* Tab Content */
 .tab-content { display: none; }
 .tab-content.active { display: block; }
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .app-header {
+    flex-wrap: wrap;
+    padding: 0.5rem 0.75rem;
+    gap: 0.5rem;
+  }
+  
+  .header-left {
+    flex: 1;
+    min-width: 0;
+    gap: 0.5rem;
+  }
+  
+  .app-title {
+    font-size: 1.1rem;
+  }
+  
+  .story-dropdown-btn {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .header-center {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  
+  .workspace-tab {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+  
+  .header-right {
+    gap: 0.4rem;
+  }
+  
+  .auto-expand-toggle {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.75rem;
+  }
+  
+  .theme-toggle {
+    padding: 2px;
+  }
+  
+  .theme-btn {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.65rem;
+  }
+  
+  .search-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .story-menu-btn {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Planning subtabs */
+  .planning-subtabs {
+    flex-wrap: wrap;
+    padding: 0.5rem;
+    gap: 0.25rem;
+  }
+  
+  .planning-subtab {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  /* View/Guidance toggles */
+  .view-toggle, .guidance-toggle {
+    padding: 2px;
+  }
+  
+  .view-btn, .guidance-btn {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
+  }
+  
+  /* Framework selector */
+  #frameworkWrapper {
+    flex-wrap: wrap;
+  }
+  
+  #frameworkSelect {
+    font-size: 0.8rem;
+    max-width: 150px;
+  }
+  
+  /* Scope nav */
+  .scope-nav {
+    flex-wrap: wrap;
+    padding: 0.5rem;
+  }
+  
+  .scope-breadcrumb {
+    flex-wrap: wrap;
+  }
+  
+  /* Beat cards */
+  .beat-card, .arc-card {
+    padding: 0.75rem;
+  }
+  
+  .beat-card-title, .arc-card-title {
+    font-size: 0.9rem;
+  }
+  
+  /* Modals */
+  .modal-content, .confirm-modal-content {
+    width: 95%;
+    max-width: none;
+    margin: 1rem;
+  }
+  
+  /* Questions/Chronology items */
+  .question-item, .chronology-item {
+    flex-wrap: wrap;
+  }
+  
+  .question-content {
+    width: 100%;
+    order: 2;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    font-size: 1rem;
+  }
+  
+  .app-title::before {
+    display: none;
+  }
+  
+  .story-dropdown-btn {
+    max-width: 80px;
+  }
+  
+  .workspace-tab {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.7rem;
+  }
+  
+  .theme-toggle {
+    display: none; /* Hide on very small screens, can add a menu option instead */
+  }
+  
+  .header-right {
+    gap: 0.25rem;
+  }
+}
 </style>
 </head>
 <body>
@@ -8967,35 +9522,21 @@ function renderArcsContent() {
   // Initialize characters for this scope level
   if (!scopeData.characters) scopeData.characters = [];
   
+  // Migrate characters without rosterId (backwards compatibility)
+  migrateCharactersToRoster(scopeData.characters);
+  
   let html = '';
   
-  // Story Compass - Theme (always visible) + Arc (collapsible)
+  // Theme input only (Arc dropdown not needed in Arcs tab - that's what the whole tab is for)
   const themeLine = scopeData.themeLine || '';
-  const arcSummary = scopeData.arcSummary || '';
-  const arcCollapsed = state.arcSummaryCollapsed ?? true;
   
   html += `
-    <div class="story-compass">
-      <div class="compass-theme">
-        <label class="compass-label">Theme</label>
-        <input type="text" class="compass-theme-input" 
-               placeholder="What is this ${escapeHtml(currentLevelName.toLowerCase())} ABOUT? (e.g., 'The cost of revenge')"
-               value="${escapeHtml(themeLine)}"
-               onchange="updateThemeLine(this.value)">
-      </div>
-      <div class="compass-arc ${arcCollapsed ? 'collapsed' : ''}">
-        <div class="compass-arc-header" onclick="toggleArcSummary()">
-          <span class="compass-arc-toggle">${arcCollapsed ? '+' : '-'}</span>
-          <label class="compass-label">Arc</label>
-          ${arcSummary && arcCollapsed ? `<span class="compass-arc-preview">${escapeHtml(arcSummary.substring(0, 50))}${arcSummary.length > 50 ? '...' : ''}</span>` : ''}
-        </div>
-        <div class="compass-arc-content" style="${arcCollapsed ? 'display: none;' : ''}">
-          <input type="text" class="compass-arc-input" 
-                 placeholder="A becomes B (e.g., 'Coward becomes hero through sacrifice')"
-                 value="${escapeHtml(arcSummary)}"
-                 onchange="updateArcSummary(this.value)">
-        </div>
-      </div>
+    <div class="scope-theme-row">
+      <label class="scope-theme-label">${escapeHtml(currentLevelName)} Theme</label>
+      <input type="text" class="scope-theme-input" 
+             placeholder="What is this ${escapeHtml(currentLevelName.toLowerCase())} about? (e.g., 'Grief', 'The cost of revenge')"
+             value="${escapeHtml(themeLine)}"
+             onchange="updateThemeLine(this.value)">
     </div>
   `;
   
@@ -9004,7 +9545,7 @@ function renderArcsContent() {
     <div class="scope-level-section">
       <div class="scope-level-header">
         <span class="scope-level-title">${escapeHtml(currentLevelName)} Character Arcs</span>
-        <span class="scope-level-hint">Character development at this ${escapeHtml(currentLevelName.toLowerCase())} level</span>
+        <span class="scope-level-hint">Character development at this level</span>
       </div>
     </div>
   `;
@@ -9020,32 +9561,53 @@ function renderArcsContent() {
       </div>
     `;
   } else {
+    // Find which character is expanded (if any)
+    const expandedCharIdx = characters.findIndex(c => c.expanded);
+    
+    html += `<div class="characters-grid">`;
+    
     characters.forEach((char, charIdx) => {
       const arcCount = (char.arcs || []).length;
-      html += `
-        <div class="character-section ${char.expanded ? 'expanded' : ''}" data-char-index="${charIdx}">
-          <div class="character-header" onclick="toggleCharacterScoped(${charIdx})">
-            <div class="character-info">
+      const filledArcs = (char.arcs || []).filter(a => a.beats && a.beats.some(b => b.content)).length;
+      
+      if (char.expanded) {
+        // Expanded character takes full width
+        html += `
+          <div class="character-card expanded" data-char-index="${charIdx}">
+            <div class="character-card-header" onclick="toggleCharacterScoped(${charIdx})">
               <div class="character-avatar">${getInitials(char.name)}</div>
-              <div>
+              <div class="character-card-info">
                 <div class="character-name">${escapeHtml(char.name)}</div>
                 <div class="character-arc-count">${arcCount} arc${arcCount !== 1 ? 's' : ''}</div>
               </div>
+              <span class="character-toggle">−</span>
             </div>
-            <span class="character-toggle">${char.expanded ? '-' : '+'}</span>
+            <div class="character-card-body">
+              <div class="arc-list">
+                ${renderCharacterArcsScoped(char, charIdx)}
+              </div>
+              <div class="character-card-actions">
+                <button class="btn btn-sm" onclick="openNewArcModalScoped(${charIdx})">+ Add Arc</button>
+                <button class="remove-char-btn" onclick="removeCharacterScoped(${charIdx})">Remove</button>
+              </div>
+            </div>
           </div>
-          <div class="character-body">
-            <div class="arc-list">
-              ${renderCharacterArcsScoped(char, charIdx)}
-            </div>
-            <button class="add-arc-to-char-btn" onclick="openNewArcModalScoped(${charIdx})">+ Add Arc</button>
-            <div class="character-actions">
-              <button class="remove-char-btn" onclick="removeCharacterScoped(${charIdx})">Remove Character</button>
+        `;
+      } else {
+        // Collapsed character is compact
+        html += `
+          <div class="character-card collapsed" data-char-index="${charIdx}" onclick="toggleCharacterScoped(${charIdx})">
+            <div class="character-avatar">${getInitials(char.name)}</div>
+            <div class="character-card-info">
+              <div class="character-name">${escapeHtml(char.name)}</div>
+              <div class="character-arc-summary">${arcCount} arc${arcCount !== 1 ? 's' : ''}${filledArcs > 0 ? ` · ${filledArcs} active` : ''}</div>
             </div>
           </div>
-        </div>
-      `;
+        `;
+      }
     });
+    
+    html += `</div>`;
   }
   
   html += `<button class="add-character-btn" onclick="addCharacterScoped()">+ Add Character</button>`;
@@ -9088,107 +9650,107 @@ function renderCharacterArcsScoped(char, charIdx) {
   const arcs = char.arcs || [];
   
   if (arcs.length === 0) {
-    return '<div style="color: var(--text-muted); text-align: center; padding: 1rem; font-size: 0.9rem;">No arcs yet for this character at this level.</div>';
+    return '<div style="color: var(--text-muted); text-align: center; padding: 0.75rem; font-size: 0.85rem;">No arcs yet</div>';
   }
   
   return arcs.map((arc, arcIdx) => {
     const arcType = ARC_TYPES[arc.type] || ARC_TYPES.positive;
     const beatCount = (arc.beats || []).length;
+    const filledBeats = (arc.beats || []).filter(b => b.content && b.content.trim()).length;
     const arcColor = arc.color || ARC_COLORS[arcIdx % ARC_COLORS.length];
     const arcStructure = arc.structure || 'custom';
-    const activeSubTab = arc.activeSubTab || 'structure'; // 'type' or 'structure'
+    const structureName = arcStructure === 'custom' ? 'Custom' : 
+      (ARC_TYPES[arc.type]?.frameworks?.[arcStructure]?.name || arcStructure);
     
-    // Get arc type description for guidance
-    const arcTypeDesc = state.guidanceMode ? arcType.description : null;
+    // Progress indicator
+    const progressPct = beatCount > 0 ? Math.round((filledBeats / beatCount) * 100) : 0;
     
     return `
-      <div class="arc-card ${arc.expanded ? 'expanded' : ''}" data-type="${arc.type}" style="--arc-color: ${arcColor}">
-        <div class="arc-header" onclick="toggleArcScoped(${charIdx}, ${arcIdx})">
-          <div class="arc-info">
-            <span class="arc-type-badge ${arc.type}">${arcType.name}</span>
-            <span class="arc-name">${escapeHtml(arc.name)}</span>
-            <span class="arc-beat-count">(${beatCount} beat${beatCount !== 1 ? 's' : ''})</span>
-          </div>
-          <span class="arc-toggle">${arc.expanded ? '-' : '+'}</span>
+      <div class="arc-row ${arc.expanded ? 'expanded' : ''}" style="--arc-color: ${arcColor}">
+        <div class="arc-row-summary" onclick="toggleArcScoped(${charIdx}, ${arcIdx})">
+          <span class="arc-row-indicator"></span>
+          <span class="arc-row-type ${arc.type}">${arcType.name.charAt(0)}</span>
+          <span class="arc-row-name">${escapeHtml(arc.name) || 'Untitled Arc'}</span>
+          <span class="arc-row-structure">${escapeHtml(structureName)}</span>
+          <span class="arc-row-progress" title="${filledBeats}/${beatCount} beats filled">
+            <span class="arc-row-progress-bar" style="width: ${progressPct}%"></span>
+          </span>
+          <span class="arc-row-toggle">${arc.expanded ? '−' : '+'}</span>
         </div>
-        <div class="arc-body">
-          <div class="arc-subtabs">
-            <button class="arc-subtab ${activeSubTab === 'type' ? 'active' : ''}" onclick="event.stopPropagation(); setArcSubTab(${charIdx}, ${arcIdx}, 'type')">Type</button>
-            <button class="arc-subtab ${activeSubTab === 'structure' ? 'active' : ''}" onclick="event.stopPropagation(); setArcSubTab(${charIdx}, ${arcIdx}, 'structure')">Structure</button>
-          </div>
-          
-          ${activeSubTab === 'type' ? `
-            <div class="arc-subtab-content arc-type-content">
-              ${arcTypeDesc ? `<div class="guidance-hint" style="margin-bottom: 0.75rem;">${arcTypeDesc}</div>` : ''}
-              
-              <div class="arc-type-selector">
-                <label class="arc-field-label">Arc Type</label>
-                <select class="arc-type-select" onchange="changeArcTypeScoped(${charIdx}, ${arcIdx}, this.value)">
-                  ${Object.entries(ARC_TYPES).map(([key, type]) => `
-                    <option value="${key}" ${arc.type === key ? 'selected' : ''}>${type.name}</option>
-                  `).join('')}
-                </select>
-              </div>
-              
-              <div class="arc-type-fields">
-                ${arcType.fields.map(field => {
-                  const fieldGuidance = state.guidanceMode ? getArcTypeFieldGuidance(arc.type, field.key) : null;
-                  return `
-                  <div class="arc-field">
-                    <label class="arc-field-label">${field.label}</label>
-                    ${fieldGuidance ? `<div class="guidance-hint" style="margin-bottom: 0.35rem; font-size: 0.75rem;">${fieldGuidance}</div>` : ''}
-                    <textarea class="arc-field-input arc-field-textarea" 
-                              placeholder="${field.placeholder}" 
-                              onchange="updateArcFieldScoped(${charIdx}, ${arcIdx}, '${field.key}', this.value)">${escapeHtml((arc.fields || {})[field.key] || '')}</textarea>
-                  </div>
-                `}).join('')}
-              </div>
-              
-              <div class="arc-field" style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
-                <label class="arc-field-label">Arc Notes</label>
-                <textarea class="arc-field-input arc-field-textarea" 
-                          placeholder="Private notes about this arc..." 
-                          onchange="updateArcFieldScoped(${charIdx}, ${arcIdx}, 'notes', this.value)" 
-                          style="min-height: 60px;">${escapeHtml((arc.fields || {}).notes || '')}</textarea>
-              </div>
-            </div>
-          ` : `
-            <div class="arc-subtab-content arc-structure-content">
-              <div class="arc-structure-selector">
-                <label class="arc-field-label">Structure Framework</label>
-                <select class="arc-structure-select" onchange="changeArcStructureScoped(${charIdx}, ${arcIdx}, this.value)">
-                  <option value="custom" ${arcStructure === 'custom' ? 'selected' : ''}>Custom Beats</option>
-                  ${ARC_TYPES[arc.type]?.frameworks ? Object.entries(ARC_TYPES[arc.type].frameworks).map(([key, fw]) => `
-                    <option value="${key}" ${arcStructure === key ? 'selected' : ''}>${fw.name}</option>
-                  `).join('') : ''}
-                </select>
-              </div>
-              
-              ${arcStructure !== 'custom' && ARC_TYPES[arc.type]?.frameworks?.[arcStructure] ? `
-                <div class="arc-structure-info">
-                  <span class="arc-structure-desc">${ARC_TYPES[arc.type].frameworks[arcStructure].name}</span>
-                </div>
-              ` : ''}
-              
-              <div class="arc-beats-section">
-                <div class="arc-beats-header">
-                  <span class="arc-beats-title">Arc Beats</span>
-                  ${arcStructure === 'custom' ? `<button class="btn btn-xs" onclick="addArcBeatScoped(${charIdx}, ${arcIdx})">+ Beat</button>` : ''}
-                </div>
-                <div class="arc-beats-container">
-                  ${renderArcBeatsScoped(arc, charIdx, arcIdx)}
-                </div>
-              </div>
-            </div>
-          `}
-          
-          <div class="arc-actions">
-            <button class="arc-delete-btn" onclick="deleteArcScoped(${charIdx}, ${arcIdx})">Delete Arc</button>
-          </div>
-        </div>
+        ${arc.expanded ? renderArcExpandedContent(arc, arcIdx, charIdx, arcType) : ''}
       </div>
     `;
   }).join('');
+}
+
+function renderArcExpandedContent(arc, arcIdx, charIdx, arcType) {
+  const arcStructure = arc.structure || 'custom';
+  const activeSubTab = arc.activeSubTab || 'structure';
+  const arcTypeDesc = state.guidanceMode ? arcType.description : null;
+  
+  return `
+    <div class="arc-row-body">
+      <div class="arc-subtabs">
+        <button class="arc-subtab ${activeSubTab === 'structure' ? 'active' : ''}" onclick="event.stopPropagation(); setArcSubTab(${charIdx}, ${arcIdx}, 'structure')">Structure</button>
+        <button class="arc-subtab ${activeSubTab === 'type' ? 'active' : ''}" onclick="event.stopPropagation(); setArcSubTab(${charIdx}, ${arcIdx}, 'type')">Details</button>
+      </div>
+      
+      ${activeSubTab === 'type' ? `
+        <div class="arc-subtab-content arc-type-content">
+          ${arcTypeDesc ? `<div class="guidance-hint" style="margin-bottom: 0.5rem; font-size: 0.8rem;">${arcTypeDesc}</div>` : ''}
+          
+          <div class="arc-compact-fields">
+            <div class="arc-compact-row">
+              <label>Type</label>
+              <select class="arc-type-select-compact" onchange="changeArcTypeScoped(${charIdx}, ${arcIdx}, this.value)">
+                ${Object.entries(ARC_TYPES).map(([key, type]) => `
+                  <option value="${key}" ${arc.type === key ? 'selected' : ''}>${type.name}</option>
+                `).join('')}
+              </select>
+            </div>
+            
+            ${arcType.fields.map(field => {
+              const fieldGuidance = state.guidanceMode ? getArcTypeFieldGuidance(arc.type, field.key) : null;
+              return `
+              <div class="arc-compact-row arc-compact-textarea-row">
+                <label>${field.label}</label>
+                ${fieldGuidance ? `<div class="guidance-hint" style="font-size: 0.7rem; margin-bottom: 0.25rem;">${fieldGuidance}</div>` : ''}
+                <textarea placeholder="${field.placeholder}" 
+                          onchange="updateArcFieldScoped(${charIdx}, ${arcIdx}, '${field.key}', this.value)">${escapeHtml((arc.fields || {})[field.key] || '')}</textarea>
+              </div>
+            `}).join('')}
+            
+            <div class="arc-compact-row arc-compact-textarea-row">
+              <label>Notes</label>
+              <textarea placeholder="Private notes..." 
+                        onchange="updateArcFieldScoped(${charIdx}, ${arcIdx}, 'notes', this.value)">${escapeHtml((arc.fields || {}).notes || '')}</textarea>
+            </div>
+          </div>
+        </div>
+      ` : `
+        <div class="arc-subtab-content arc-structure-content">
+          <div class="arc-compact-row">
+            <label>Framework</label>
+            <select class="arc-structure-select-compact" onchange="changeArcStructureScoped(${charIdx}, ${arcIdx}, this.value)">
+              <option value="custom" ${arcStructure === 'custom' ? 'selected' : ''}>Custom Beats</option>
+              ${ARC_TYPES[arc.type]?.frameworks ? Object.entries(ARC_TYPES[arc.type].frameworks).map(([key, fw]) => `
+                <option value="${key}" ${arcStructure === key ? 'selected' : ''}>${fw.name}</option>
+              `).join('') : ''}
+            </select>
+            ${arcStructure === 'custom' ? `<button class="btn btn-xs" onclick="addArcBeatScoped(${charIdx}, ${arcIdx})" style="margin-left: 0.5rem;">+ Beat</button>` : ''}
+          </div>
+          
+          <div class="arc-beats-compact">
+            ${renderArcBeatsScoped(arc, charIdx, arcIdx)}
+          </div>
+        </div>
+      `}
+      
+      <div class="arc-row-actions">
+        <button class="arc-delete-btn-compact" onclick="deleteArcScoped(${charIdx}, ${arcIdx})">Delete Arc</button>
+      </div>
+    </div>
+  `;
 }
 
 function renderArcBeatsScoped(arc, charIdx, arcIdx) {
@@ -9239,36 +9801,85 @@ function renderArcBeatsScoped(arc, charIdx, arcIdx) {
 // Scoped character/arc functions
 function toggleCharacterScoped(charIdx) {
   const scopeData = getCurrentScopeData();
-  if (scopeData.characters && scopeData.characters[charIdx]) {
-    scopeData.characters[charIdx].expanded = !scopeData.characters[charIdx].expanded;
-    const story = getCurrentStory();
-    story.updatedAt = Date.now();
-    saveState();
-    renderArcs();
+  if (!scopeData.characters) return;
+  
+  const isCurrentlyExpanded = scopeData.characters[charIdx]?.expanded;
+  
+  // Accordion: collapse all characters first
+  scopeData.characters.forEach(char => {
+    char.expanded = false;
+  });
+  
+  // Expand clicked one (unless it was already expanded)
+  if (!isCurrentlyExpanded && scopeData.characters[charIdx]) {
+    scopeData.characters[charIdx].expanded = true;
   }
+  
+  const story = getCurrentStory();
+  story.updatedAt = Date.now();
+  saveState();
+  renderArcs();
 }
 
 function toggleArcScoped(charIdx, arcIdx) {
   const scopeData = getCurrentScopeData();
   const char = scopeData.characters?.[charIdx];
-  if (char?.arcs?.[arcIdx]) {
-    char.arcs[arcIdx].expanded = !char.arcs[arcIdx].expanded;
-    const story = getCurrentStory();
-    story.updatedAt = Date.now();
-    saveState();
-    renderArcs();
+  if (!char?.arcs?.[arcIdx]) return;
+  
+  const isCurrentlyExpanded = char.arcs[arcIdx].expanded;
+  
+  // Accordion: collapse all arcs in this character first
+  char.arcs.forEach((arc, i) => {
+    arc.expanded = false;
+  });
+  
+  // Then expand the clicked one (unless it was already expanded)
+  if (!isCurrentlyExpanded) {
+    char.arcs[arcIdx].expanded = true;
   }
+  
+  const story = getCurrentStory();
+  story.updatedAt = Date.now();
+  saveState();
+  renderArcs();
 }
 
 function addCharacterScoped() {
   const addBtn = document.querySelector('.add-character-btn');
-  if (!addBtn || document.getElementById('newCharacterScopedInput')) return;
+  if (!addBtn || document.getElementById('newCharacterScopedWrapper')) return;
+  
+  const scopeData = getCurrentScopeData();
+  const existingCharacters = scopeData.characters || [];
+  
+  // Get existing character identifiers (both rosterId and names for backwards compat)
+  const existingRosterIds = existingCharacters.map(c => c.rosterId).filter(Boolean);
+  const existingNames = existingCharacters.map(c => (c.name || '').toLowerCase());
+  
+  // Filter roster to only show characters not already in this scope
+  const availableRoster = state.globalRoster.filter(c => 
+    !existingRosterIds.includes(c.id) && 
+    !existingNames.includes((c.name || '').toLowerCase())
+  );
+  
+  let rosterHtml = '';
+  if (availableRoster.length > 0) {
+    rosterHtml = `
+      <div class="roster-quick-picks">
+        ${availableRoster.map(c => `
+          <button class="roster-quick-pick" onclick="addCharacterFromRosterScoped('${c.id}')">${escapeHtml(c.name)}</button>
+        `).join('')}
+      </div>
+    `;
+  }
   
   const inputHtml = `
-    <div id="newCharacterScopedWrapper" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
-      <input type="text" id="newCharacterScopedInput" class="modal-input" style="flex: 1; padding: 0.5rem;" placeholder="Character name...">
-      <button class="btn btn-primary btn-sm" onclick="confirmAddCharacterScoped()">Add</button>
-      <button class="btn btn-sm" onclick="cancelAddCharacterScoped()">Cancel</button>
+    <div id="newCharacterScopedWrapper" class="add-character-wrapper">
+      ${rosterHtml}
+      <div class="add-character-input-row">
+        <input type="text" id="newCharacterScopedInput" class="modal-input" placeholder="New character name...">
+        <button class="btn btn-primary btn-sm" onclick="confirmAddCharacterScoped()">Add</button>
+        <button class="btn btn-sm" onclick="cancelAddCharacterScoped()">Cancel</button>
+      </div>
     </div>
   `;
   
@@ -9283,6 +9894,70 @@ function addCharacterScoped() {
   });
 }
 
+function addCharacterFromRosterScoped(rosterId) {
+  const rosterChar = state.globalRoster.find(c => c.id === rosterId);
+  if (!rosterChar) return;
+  
+  const scopeData = getCurrentScopeData();
+  if (!scopeData.characters) scopeData.characters = [];
+  
+  // Check if already added (by rosterId or name)
+  const alreadyExists = scopeData.characters.some(c => 
+    c.rosterId === rosterId || 
+    (c.name || '').toLowerCase() === (rosterChar.name || '').toLowerCase()
+  );
+  
+  if (alreadyExists) {
+    showToast('Character already added', 'error');
+    return;
+  }
+  
+  scopeData.characters.push({
+    rosterId: rosterId,
+    name: rosterChar.name,
+    expanded: false,
+    arcs: []
+  });
+  
+  const story = getCurrentStory();
+  story.updatedAt = Date.now();
+  saveState();
+  renderArcs();
+}
+
+function migrateCharactersToRoster(characters) {
+  if (!characters || characters.length === 0) return;
+  
+  let needsSave = false;
+  
+  characters.forEach(char => {
+    // Skip if already has rosterId
+    if (char.rosterId) return;
+    
+    // Try to find existing roster entry by name (case insensitive)
+    let rosterChar = state.globalRoster.find(c => 
+      c.name.toLowerCase() === (char.name || '').toLowerCase()
+    );
+    
+    // If not found, create new roster entry
+    if (!rosterChar && char.name) {
+      rosterChar = { id: generateId(), name: char.name };
+      state.globalRoster.push(rosterChar);
+      needsSave = true;
+    }
+    
+    // Link character to roster
+    if (rosterChar) {
+      char.rosterId = rosterChar.id;
+      needsSave = true;
+    }
+  });
+  
+  if (needsSave) {
+    saveState();
+  }
+}
+
 function confirmAddCharacterScoped() {
   const input = document.getElementById('newCharacterScopedInput');
   const name = input?.value?.trim();
@@ -9295,9 +9970,18 @@ function confirmAddCharacterScoped() {
   const scopeData = getCurrentScopeData();
   if (!scopeData.characters) scopeData.characters = [];
   
+  // Check if this character exists in global roster, or add them
+  let rosterChar = state.globalRoster.find(c => c.name.toLowerCase() === name.toLowerCase());
+  if (!rosterChar) {
+    rosterChar = { id: generateId(), name: name };
+    state.globalRoster.push(rosterChar);
+  }
+  
+  // Add new character collapsed (don't auto-expand)
   scopeData.characters.push({
+    rosterId: rosterChar.id,
     name: name,
-    expanded: true,
+    expanded: false,
     arcs: []
   });
   
@@ -9341,25 +10025,26 @@ function removeCharacterScoped(charIdx) {
 let pendingArcCharIdx = null;
 
 function openNewArcModalScoped(charIdx) {
-  // Find the add arc button for this character
-  const charSection = document.querySelectorAll('.character-section')[charIdx];
-  if (!charSection) return;
+  event.stopPropagation(); // Prevent card collapse
   
-  const addBtn = charSection.querySelector('.add-arc-to-char-btn');
-  if (!addBtn || document.getElementById('newArcScopedInput')) return;
+  // Find the character card body
+  const charCard = document.querySelector(`.character-card.expanded[data-char-index="${charIdx}"]`);
+  if (!charCard) return;
+  
+  const actionsDiv = charCard.querySelector('.character-card-actions');
+  if (!actionsDiv || document.getElementById('newArcScopedInput')) return;
   
   pendingArcCharIdx = charIdx;
   
   const inputHtml = `
-    <div id="newArcScopedWrapper" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+    <div id="newArcScopedWrapper" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
       <input type="text" id="newArcScopedInput" class="modal-input" style="flex: 1; padding: 0.5rem;" placeholder="Arc name...">
       <button class="btn btn-primary btn-sm" onclick="confirmAddArcScoped()">Add</button>
       <button class="btn btn-sm" onclick="cancelAddArcScoped()">Cancel</button>
     </div>
   `;
   
-  addBtn.style.display = 'none';
-  addBtn.insertAdjacentHTML('afterend', inputHtml);
+  actionsDiv.insertAdjacentHTML('beforebegin', inputHtml);
   
   const input = document.getElementById('newArcScopedInput');
   input.focus();
@@ -9386,6 +10071,12 @@ function confirmAddArcScoped() {
   }
   
   if (!char.arcs) char.arcs = [];
+  
+  // Collapse all existing arcs first (accordion)
+  char.arcs.forEach(arc => {
+    arc.expanded = false;
+  });
+  
   char.arcs.push({
     name: name,
     type: 'positive',
@@ -9406,10 +10097,7 @@ function confirmAddArcScoped() {
 function cancelAddArcScoped() {
   const wrapper = document.getElementById('newArcScopedWrapper');
   if (wrapper) {
-    const charSection = wrapper.closest('.character-section');
-    const addBtn = charSection?.querySelector('.add-arc-to-char-btn');
     wrapper.remove();
-    if (addBtn) addBtn.style.display = '';
   }
   pendingArcCharIdx = null;
 }
