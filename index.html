@@ -280,6 +280,89 @@ body {
 .workspace-tab[data-tab="planning"].active { background: #9b59b6; color: var(--bg-base); }
 
 /* Planning Tab Sub-tabs */
+.planning-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Configure Levels Modal */
+.levels-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.level-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.level-number {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  min-width: 24px;
+}
+
+.level-name-input {
+  flex: 1;
+  padding: 0.5rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.level-name-input:focus {
+  outline: none;
+  border-color: var(--accent-main);
+}
+
+.level-delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.level-delete-btn:hover:not(:disabled) {
+  color: var(--accent-red, #e74c3c);
+}
+
+.level-delete-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Export Beats Modal */
+.export-beats-textarea {
+  width: 100%;
+  min-height: 300px;
+  padding: 0.75rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: monospace;
+  font-size: 0.8rem;
+  resize: vertical;
+  white-space: pre-wrap;
+}
+
+.export-beats-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
 .planning-subtabs {
   display: flex;
   gap: 0.25rem;
@@ -360,7 +443,7 @@ body {
 
 .brainstorm-beat {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   padding: 0.5rem;
   background: var(--bg-card);
@@ -389,7 +472,7 @@ body {
 .brainstorm-beat-handle {
   cursor: grab;
   color: var(--text-muted);
-  padding: 0 0.25rem;
+  padding: 0.4rem 0.25rem 0 0.25rem;
   user-select: none;
 }
 
@@ -405,6 +488,11 @@ body {
   border-radius: 4px;
   color: var(--text-primary);
   font-size: 0.95rem;
+  font-family: inherit;
+  resize: none;
+  overflow: hidden;
+  min-height: 1.8em;
+  line-height: 1.4;
 }
 
 .brainstorm-beat-input:focus {
@@ -580,6 +668,31 @@ body {
   border-color: #8e44ad;
 }
 
+.brainstorm-explanation {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.brainstorm-explanation strong {
+  color: var(--text-primary);
+}
+
+.brainstorm-explanation p {
+  margin: 0.5rem 0;
+}
+
+.brainstorm-explanation p:last-child {
+  margin-bottom: 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 /* Premise Subtab */
 .premise-container {
   max-width: 650px;
@@ -677,7 +790,7 @@ body {
 
 .ideabank-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
@@ -690,6 +803,11 @@ body {
   border-radius: 6px;
   color: var(--text-primary);
   font-size: 0.95rem;
+  font-family: inherit;
+  resize: none;
+  overflow: hidden;
+  min-height: 1.8em;
+  line-height: 1.4;
 }
 
 .ideabank-item-input:focus {
@@ -703,7 +821,7 @@ body {
   color: var(--text-muted);
   font-size: 1.2rem;
   cursor: pointer;
-  padding: 0.2rem 0.5rem;
+  padding: 0.35rem 0.5rem 0 0.5rem;
   border-radius: 4px;
 }
 
@@ -2682,6 +2800,21 @@ body.auto-expand-textareas textarea {
   font-size: 0.8rem;
   resize: vertical;
   min-height: 50px;
+}
+
+.arc-field-guidance {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--bg-base);
+  padding: 0.4rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.35rem;
+  line-height: 1.4;
+  border-left: 2px solid var(--accent-main);
+}
+
+.arc-field-guidance strong {
+  color: var(--text-secondary);
 }
 
 .arc-type-select-compact, .arc-structure-select-compact {
@@ -6134,6 +6267,10 @@ body.auto-expand-textareas textarea {
     <div class="workspace-body" id="workspaceBody">
       <!-- Planning Tab -->
       <div class="tab-content" id="planningTab">
+        <div class="planning-toolbar">
+          <button class="btn btn-sm" onclick="openConfigureLevelsModal()">Configure Levels</button>
+          <button class="btn btn-sm" onclick="openExportBeatsModal()">Export Planning</button>
+        </div>
         <div class="scope-nav" id="planningScopeNav">
           <!-- Scope breadcrumb populated by JS -->
         </div>
@@ -6607,11 +6744,19 @@ const ARC_TYPES = {
     symbol: '+',
     description: 'Character overcomes a Lie they believe, embraces Truth, and transforms for the better.',
     fields: [
+      { key: 'ghost', label: 'The Ghost', placeholder: 'What past wound made them believe the Lie?' },
       { key: 'lie', label: 'The Lie They Believe', placeholder: 'What false belief holds them back?' },
       { key: 'truth', label: 'The Truth They\'ll Learn', placeholder: 'What truth will they accept by the end?' },
-      { key: 'want', label: 'What They Want', placeholder: 'Conscious goal' },
-      { key: 'need', label: 'What They Need', placeholder: 'Unconscious need' }
+      { key: 'want', label: 'What They Want', placeholder: 'Conscious external goal' },
+      { key: 'need', label: 'What They Need', placeholder: 'Unconscious internal need' }
     ],
+    fieldGuidance: {
+      ghost: '<strong>The wound that created the Lie:</strong> Something happened in their past that taught them a false lesson. A betrayal that taught "never trust anyone." A failure that taught "I\'m not good enough." The Ghost is the WHY behind the Lie.<br><br><strong>Ask yourself:</strong> What happened to make this Lie feel like protection? How old were they? Who was involved?',
+      lie: '<strong>The Lie is their armor:</strong> This isn\'t just a wrong belief—it\'s a belief that once PROTECTED them. "I can\'t trust anyone" might stem from betrayal. "I\'m not good enough" might prevent risking failure.<br><br><strong>Lie vs Truth:</strong> The Lie feels safe but limits them. They believe it at the START. The Truth is its opposite—scary but freeing, believed at the END.',
+      truth: '<strong>The Truth terrifies them:</strong> The Truth should be something your character would RESIST, not welcome. If the Lie is "I must control everything," the Truth might be "Letting go doesn\'t mean losing." The Truth costs them their defense mechanism.<br><br><strong>Ask yourself:</strong> Why would my character fight against this Truth? What does accepting it require them to give up?',
+      want: '<strong>The Want is the symptom:</strong> What your character consciously pursues—often something they think will fix them. The detective wants to solve the case (external) but really needs to forgive themselves (internal).<br><br><strong>Want vs Need:</strong> Want is what they SAY they want, driven by the Lie. It\'s tangible and plot-driven. Getting the Want alone won\'t fulfill them.',
+      need: '<strong>The Need is invisible to them:</strong> What they actually require to be whole—but can\'t see or won\'t admit. The Need often requires accepting the Truth they\'re avoiding.<br><br><strong>Want vs Need:</strong> Need is what they ACTUALLY need to be whole. Meeting the Need requires accepting the Truth. Fulfilling the Need usually means letting go of the Want, or discovering the Want was pointing at the Need all along.'
+    },
     frameworks: {
       'positive-basic': {
         name: 'Basic Positive Arc',
@@ -6650,11 +6795,19 @@ const ARC_TYPES = {
     symbol: '-',
     description: 'Character rejects Truth and succumbs to a Lie, leading to their downfall or corruption.',
     fields: [
+      { key: 'ghost', label: 'The Ghost', placeholder: 'What past wound drives their fall?' },
       { key: 'lie', label: 'The Lie That Consumes', placeholder: 'What false belief do they succumb to?' },
       { key: 'truth', label: 'The Truth They Reject', placeholder: 'What truth could have saved them?' },
       { key: 'want', label: 'What They Want', placeholder: 'The goal that corrupts them' },
       { key: 'downfall', label: 'Downfall', placeholder: 'How do they fall?' }
     ],
+    fieldGuidance: {
+      ghost: '<strong>The wound that makes them vulnerable:</strong> Unlike positive arcs where the Ghost created a Lie they\'ll overcome, here the Ghost creates a weakness that the Lie exploits to destroy them.<br><br><strong>Ask yourself:</strong> What happened that left them open to this corruption? What fear or pain does the Lie promise to solve?',
+      lie: '<strong>The Lie seduces:</strong> In a negative arc, the Lie isn\'t just believed—it\'s EMBRACED. It offers power, protection, or justification. "The ends justify the means." "Only the strong survive." The Lie should feel TRUE to the character, even as we see its poison.<br><br><strong>Ask yourself:</strong> What makes this Lie appealing? Why does my character choose it?',
+      truth: '<strong>The Truth they reject:</strong> This is the lifeline they refuse. Someone offers it—a friend, a mentor, their own conscience. They see it and turn away because accepting it would mean admitting they were wrong, or giving up what they\'ve gained.<br><br><strong>Ask yourself:</strong> What truth could save my character? Why do they refuse it?',
+      want: '<strong>The Want corrupts:</strong> Their goal becomes their prison. They want power, revenge, control, validation—and pursuing it transforms them. Each step toward the Want takes them further from who they were.<br><br><strong>Ask yourself:</strong> What does my character want so badly they\'ll destroy themselves for it?',
+      downfall: '<strong>Make it tragic, not just bad:</strong> The best negative arcs make us mourn who the character could have been. We should see the good person they were, watch them choose poorly at each fork, and feel the inevitability of where it leads.<br><br><strong>Ask yourself:</strong> What is lost that can never be recovered? Does the character realize what they\'ve become?'
+    },
     frameworks: {
       'negative-disillusion': {
         name: 'Disillusionment Arc',
@@ -6703,6 +6856,11 @@ const ARC_TYPES = {
       { key: 'test', label: 'How They\'re Tested', placeholder: 'What challenges their conviction?' },
       { key: 'impact', label: 'Who They Change', placeholder: 'Which characters transform because of them?' }
     ],
+    fieldGuidance: {
+      truth: '<strong>The Truth they embody:</strong> Your flat-arc character doesn\'t need to learn—they need to HOLD. They enter the story already knowing something the world around them denies. Their arc is about maintaining conviction under pressure while changing others.<br><br><strong>Ask yourself:</strong> What truth does my character hold that others don\'t? What makes them certain when everyone else doubts?',
+      test: '<strong>Make the pressure real:</strong> A flat arc only works if we genuinely believe the character MIGHT break. Test them with consequences, isolation, apparent failure. Everyone tells them they\'re wrong. The world punishes their conviction. They hold anyway.<br><br><strong>Ask yourself:</strong> What does my character risk by maintaining their Truth? What would they lose if they compromised?',
+      impact: '<strong>Change flows outward:</strong> The flat-arc character doesn\'t transform—they transform OTHERS. Track who changes because of their example. These secondary arcs are where the transformation lives.<br><br><strong>Ask yourself:</strong> Who in my story changes because of my character\'s steadfastness? How does the world shift around them?'
+    },
     frameworks: {
       'flat-basic': {
         name: 'Basic Flat Arc',
@@ -7379,26 +7537,6 @@ const ARC_STRUCTURE_GUIDANCE = {
 };
 
 // Guidance for arc type fields (the Lie/Truth/Want/Need fields)
-const ARC_TYPE_FIELD_GUIDANCE = {
-  'positive': {
-    'lie': '<strong>The Lie is their armor:</strong> This isn\'t just a wrong belief—it\'s a belief that once PROTECTED them. "I can\'t trust anyone" might stem from betrayal. "I\'m not good enough" might prevent risking failure. Find the wound that made the Lie feel necessary.<br><br><strong>Make it specific:</strong> Not "they\'re insecure" but "they believe asking for help means they\'re weak."',
-    'truth': '<strong>The Truth terrifies them:</strong> The Truth should be something your character would RESIST, not welcome. If the Lie is "I must control everything," the Truth might be "Letting go doesn\'t mean losing." The Truth costs them their defense mechanism.<br><br><strong>Ask yourself:</strong> Why would my character fight against this Truth? What does accepting it require them to give up?',
-    'want': '<strong>The Want is the symptom:</strong> What your character consciously pursues—often something they think will fix them. The detective wants to solve the case (external) but really needs to forgive themselves (internal). The Want should be achievable; the Need is harder.<br><br><strong>Ask yourself:</strong> What does my character believe will make them whole? Why won\'t it actually work?',
-    'need': '<strong>The Need is invisible to them:</strong> What they actually require to be whole—but can\'t see or won\'t admit. The Need often requires accepting the Truth they\'re avoiding. Fulfilling the Need usually means letting go of the Want, or discovering the Want was pointing at the Need all along.<br><br><strong>Ask yourself:</strong> What would a wise friend say my character ACTUALLY needs?'
-  },
-  'negative': {
-    'lie': '<strong>The Lie seduces:</strong> In a negative arc, the Lie isn\'t just believed—it\'s EMBRACED. It offers power, protection, or justification. "The ends justify the means." "Only the strong survive." "Everyone is out for themselves." The Lie should feel TRUE to the character, even as we see its poison.<br><br><strong>Ask yourself:</strong> What makes this Lie appealing? Why does my character choose it?',
-    'truth': '<strong>The Truth they reject:</strong> This is the lifeline they refuse. Someone offers it—a friend, a mentor, their own conscience. They see it and turn away because accepting it would mean admitting they were wrong, or giving up what they\'ve gained.<br><br><strong>Ask yourself:</strong> What truth could save my character? Why do they refuse it?',
-    'want': '<strong>The Want corrupts:</strong> Their goal becomes their prison. They want power, revenge, control, validation—and pursuing it transforms them. Each step toward the Want takes them further from who they were.<br><br><strong>Ask yourself:</strong> What does my character want so badly they\'ll destroy themselves for it?',
-    'downfall': '<strong>Make it tragic, not just bad:</strong> The best negative arcs make us mourn who the character could have been. We should see the good person they were, watch them choose poorly at each fork, and feel the inevitability of where it leads.<br><br><strong>Ask yourself:</strong> What is lost that can never be recovered? Does the character realize what they\'ve become?'
-  },
-  'flat': {
-    'truth': '<strong>The Truth they embody:</strong> Your flat-arc character doesn\'t need to learn—they need to HOLD. They enter the story already knowing something the world around them denies. Their arc is about maintaining conviction under pressure while changing others.<br><br><strong>Ask yourself:</strong> What truth does my character hold that others don\'t? What makes them certain when everyone else doubts?',
-    'test': '<strong>Make the pressure real:</strong> A flat arc only works if we genuinely believe the character MIGHT break. Test them with consequences, isolation, apparent failure. Everyone tells them they\'re wrong. The world punishes their conviction. They hold anyway.<br><br><strong>Ask yourself:</strong> What does my character risk by maintaining their Truth? What would they lose if they compromised?',
-    'impact': '<strong>Change flows outward:</strong> The flat-arc character doesn\'t transform—they transform OTHERS. Track who changes because of their example. These secondary arcs are where the transformation lives.<br><br><strong>Ask yourself:</strong> Who in my story changes because of my character\'s steadfastness? How does the world shift around them?'
-  }
-};
-
 // ===== STATE =====
 let state = {
   stories: [],
@@ -7855,6 +7993,320 @@ function showConfirmModal(title, message, onConfirm, confirmText = 'Confirm', is
   };
 }
 
+// ===== CONFIGURE LEVELS MODAL =====
+function openConfigureLevelsModal() {
+  const story = getCurrentStory();
+  if (!story) return;
+  
+  const levels = story.scopeLevels || ['Story'];
+  
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.id = 'configureLevelsModal';
+  modal.innerHTML = `
+    <div class="modal" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3>Configure Scope Levels</h3>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+          Define your story's hierarchy. Examples: Series > Season > Episode, or Book > Part > Chapter.
+        </p>
+        <div class="levels-list" id="levelsListEditor">
+          ${levels.map((level, i) => `
+            <div class="level-row" data-index="${i}">
+              <span class="level-number">${i + 1}.</span>
+              <input type="text" class="level-name-input" value="${escapeHtml(level)}" placeholder="Level name...">
+              <button class="level-delete-btn" onclick="removeLevelRow(${i})" ${levels.length <= 1 ? 'disabled' : ''}>&times;</button>
+            </div>
+          `).join('')}
+        </div>
+        <button class="btn btn-sm" onclick="addLevelRow()" style="margin-top: 0.5rem;">+ Add Level</button>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeConfigureLevelsModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveConfiguredLevels()">Save</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  requestAnimationFrame(() => modal.classList.add('active'));
+  
+  modal.onclick = (e) => {
+    if (e.target === modal) closeConfigureLevelsModal();
+  };
+}
+
+function addLevelRow() {
+  const list = document.getElementById('levelsListEditor');
+  if (!list) return;
+  
+  const rows = list.querySelectorAll('.level-row');
+  const newIndex = rows.length;
+  
+  const newRow = document.createElement('div');
+  newRow.className = 'level-row';
+  newRow.dataset.index = newIndex;
+  newRow.innerHTML = `
+    <span class="level-number">${newIndex + 1}.</span>
+    <input type="text" class="level-name-input" value="" placeholder="Level name...">
+    <button class="level-delete-btn" onclick="removeLevelRow(${newIndex})">&times;</button>
+  `;
+  
+  list.appendChild(newRow);
+  newRow.querySelector('input').focus();
+  
+  // Enable all delete buttons if more than 1 row
+  updateLevelDeleteButtons();
+}
+
+function removeLevelRow(index) {
+  const list = document.getElementById('levelsListEditor');
+  if (!list) return;
+  
+  const rows = list.querySelectorAll('.level-row');
+  if (rows.length <= 1) return;
+  
+  rows[index]?.remove();
+  
+  // Renumber remaining rows
+  list.querySelectorAll('.level-row').forEach((row, i) => {
+    row.dataset.index = i;
+    row.querySelector('.level-number').textContent = `${i + 1}.`;
+    row.querySelector('.level-delete-btn').onclick = () => removeLevelRow(i);
+  });
+  
+  updateLevelDeleteButtons();
+}
+
+function updateLevelDeleteButtons() {
+  const list = document.getElementById('levelsListEditor');
+  if (!list) return;
+  
+  const rows = list.querySelectorAll('.level-row');
+  rows.forEach(row => {
+    const btn = row.querySelector('.level-delete-btn');
+    if (btn) btn.disabled = rows.length <= 1;
+  });
+}
+
+function closeConfigureLevelsModal() {
+  const modal = document.getElementById('configureLevelsModal');
+  if (modal) {
+    modal.classList.remove('active');
+    setTimeout(() => modal.remove(), 200);
+  }
+}
+
+function saveConfiguredLevels() {
+  const story = getCurrentStory();
+  if (!story) return;
+  
+  const list = document.getElementById('levelsListEditor');
+  if (!list) return;
+  
+  const newLevels = [];
+  list.querySelectorAll('.level-name-input').forEach(input => {
+    const name = input.value.trim();
+    if (name) newLevels.push(name);
+  });
+  
+  if (newLevels.length === 0) {
+    showToast('Need at least one level', 'error');
+    return;
+  }
+  
+  story.scopeLevels = newLevels;
+  story.updatedAt = Date.now();
+  saveState();
+  closeConfigureLevelsModal();
+  renderPlanningTab();
+  showToast('Levels updated', 'success');
+}
+
+// ===== EXPORT PLANNING MODAL =====
+function openExportBeatsModal() {
+  const story = getCurrentStory();
+  if (!story) return;
+  
+  // Compile all content from planning
+  const exportText = compileBeatsForExport(story);
+  
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.id = 'exportBeatsModal';
+  modal.innerHTML = `
+    <div class="modal" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3>Export Planning</h3>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">
+          Exports brainstorm beats, plot beats, questions, and chronology from all scope levels.
+        </p>
+        <textarea id="exportBeatsText" class="export-beats-textarea" readonly></textarea>
+        <div class="export-beats-actions">
+          <button class="btn btn-sm" onclick="copyExportBeats()">Copy to Clipboard</button>
+          <button class="btn btn-sm" onclick="downloadExportBeats()">Download as .txt</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeExportBeatsModal()">Close</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // Set textarea value after DOM insertion (avoids escaping issues)
+  document.getElementById('exportBeatsText').value = exportText;
+  
+  requestAnimationFrame(() => modal.classList.add('active'));
+  
+  modal.onclick = (e) => {
+    if (e.target === modal) closeExportBeatsModal();
+  };
+}
+
+function compileBeatsForExport(story) {
+  let output = '';
+  const title = story.title || 'Untitled Story';
+  output += `${title}\n${'='.repeat(title.length)}\n\n`;
+  
+  // Helper to recursively gather content from all scopes
+  function gatherFromScope(path, depth = 0) {
+    const pathStr = path.join('/');
+    const scopeData = story.scopeData?.[pathStr];
+    if (!scopeData) return '';
+    
+    let text = '';
+    const indent = '  '.repeat(depth);
+    
+    // Get scope name
+    let scopeName = '';
+    if (path.length === 1) {
+      scopeName = story.scopeLevels?.[0] || 'Story';
+    } else {
+      const parentPath = path.slice(0, -1).join('/');
+      const parentData = story.scopeData?.[parentPath];
+      const item = parentData?.items?.find(it => it.id === path[path.length - 1]);
+      scopeName = item?.name || path[path.length - 1];
+    }
+    
+    // Brainstorm beats
+    const brainstorm = scopeData.planning?.brainstorm;
+    if (brainstorm?.beats?.length > 0) {
+      text += `${indent}${scopeName} - Brainstorm Beats\n`;
+      text += `${indent}${'-'.repeat(30)}\n`;
+      brainstorm.beats.forEach((beat, i) => {
+        text += `${indent}${i + 1}. ${beat}\n`;
+      });
+      text += '\n';
+    }
+    
+    // Plot beats
+    const framework = scopeData.framework || 'custom';
+    const beatContent = scopeData.beatContent || {};
+    const customBeats = scopeData.beats || [];
+    const fw = FRAMEWORKS[framework];
+    
+    const plotBeats = framework === 'custom' ? customBeats : (fw?.beats || []);
+    const filledPlotBeats = plotBeats.filter(b => beatContent[b.id]?.trim());
+    
+    if (filledPlotBeats.length > 0) {
+      text += `${indent}${scopeName} - Plot Beats\n`;
+      text += `${indent}${'-'.repeat(30)}\n`;
+      filledPlotBeats.forEach(beat => {
+        text += `${indent}${beat.name}:\n`;
+        const content = beatContent[beat.id] || '';
+        content.split('\n').forEach(line => {
+          text += `${indent}  ${line}\n`;
+        });
+        text += '\n';
+      });
+    }
+    
+    // Questions
+    const questions = scopeData.planning?.questions;
+    if (questions?.items?.length > 0) {
+      text += `${indent}${scopeName} - Questions\n`;
+      text += `${indent}${'-'.repeat(30)}\n`;
+      questions.items.forEach((q, i) => {
+        const status = q.answered ? '[ANSWERED]' : '[OPEN]';
+        const priority = q.priority ? `#${q.priority}` : '';
+        text += `${indent}${priority ? priority + ' ' : ''}${status} ${q.question}\n`;
+        if (q.answer?.trim()) {
+          text += `${indent}  Answer: ${q.answer}\n`;
+        }
+      });
+      text += '\n';
+    }
+    
+    // Chronology
+    const chronology = scopeData.planning?.chronology;
+    if (chronology?.events?.length > 0) {
+      text += `${indent}${scopeName} - Chronology\n`;
+      text += `${indent}${'-'.repeat(30)}\n`;
+      chronology.events.forEach((event, i) => {
+        const order = event.order ? `[${event.order}]` : '';
+        text += `${indent}${order ? order + ' ' : ''}${event.when}: ${event.what}\n`;
+      });
+      text += '\n';
+    }
+    
+    // Recurse into children
+    if (scopeData.items?.length > 0) {
+      scopeData.items.forEach(item => {
+        text += gatherFromScope([...path, item.id], depth + 1);
+      });
+    }
+    
+    return text;
+  }
+  
+  output += gatherFromScope(['root']);
+  
+  return output.trim() || 'No content to export.';
+}
+
+function copyExportBeats() {
+  const textarea = document.getElementById('exportBeatsText');
+  if (!textarea) return;
+  
+  textarea.select();
+  document.execCommand('copy');
+  showToast('Copied to clipboard', 'success');
+}
+
+function downloadExportBeats() {
+  const textarea = document.getElementById('exportBeatsText');
+  if (!textarea) return;
+  
+  const story = getCurrentStory();
+  const filename = (story?.title || 'planning').replace(/[^a-z0-9]/gi, '_') + '_planning.txt';
+  
+  const blob = new Blob([textarea.value], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  showToast('Downloaded ' + filename, 'success');
+}
+
+function closeExportBeatsModal() {
+  const modal = document.getElementById('exportBeatsModal');
+  if (modal) {
+    modal.classList.remove('active');
+    setTimeout(() => modal.remove(), 200);
+  }
+}
+
 function getCurrentStory() {
   return state.stories.find(s => s.id === state.currentStoryId);
 }
@@ -7864,6 +8316,18 @@ function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
+}
+
+function autoResizeTextarea(textarea) {
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+}
+
+function initAutoResizeTextareas() {
+  // Auto-resize all textareas that need it on load
+  document.querySelectorAll('.brainstorm-beat-input, .ideabank-item-input').forEach(textarea => {
+    autoResizeTextarea(textarea);
+  });
 }
 
 function countWords(text) {
@@ -9710,11 +10174,11 @@ function renderArcExpandedContent(arc, arcIdx, charIdx, arcType) {
             </div>
             
             ${arcType.fields.map(field => {
-              const fieldGuidance = state.guidanceMode ? getArcTypeFieldGuidance(arc.type, field.key) : null;
+              const fieldGuidance = getArcTypeFieldGuidance(arc.type, field.key);
               return `
               <div class="arc-compact-row arc-compact-textarea-row">
                 <label>${field.label}</label>
-                ${fieldGuidance ? `<div class="guidance-hint" style="font-size: 0.7rem; margin-bottom: 0.25rem;">${fieldGuidance}</div>` : ''}
+                ${fieldGuidance ? `<div class="arc-field-guidance">${fieldGuidance}</div>` : ''}
                 <textarea placeholder="${field.placeholder}" 
                           onchange="updateArcFieldScoped(${charIdx}, ${arcIdx}, '${field.key}', this.value)">${escapeHtml((arc.fields || {})[field.key] || '')}</textarea>
               </div>
@@ -10202,7 +10666,7 @@ function getArcStructureGuidance(structureKey, beatName, arcType) {
 }
 
 function getArcTypeFieldGuidance(arcType, fieldKey) {
-  return ARC_TYPE_FIELD_GUIDANCE[arcType]?.[fieldKey] || null;
+  return ARC_TYPES[arcType]?.fieldGuidance?.[fieldKey] || null;
 }
 
 function changeArcFrameworkScoped(charIdx, arcIdx, frameworkKey) {
@@ -14081,9 +14545,10 @@ function renderBrainstormSubtab(container, scopeData) {
         ${bs.beats.map((beat, i) => `
           <div class="brainstorm-beat" draggable="true" data-index="${i}">
             <span class="brainstorm-beat-handle">⋮⋮</span>
-            <input type="text" class="brainstorm-beat-input" value="${escapeHtml(beat)}" 
-              onchange="updateBrainstormBeat(${i}, this.value)" 
-              placeholder="Beat ${i + 1}...">
+            <textarea class="brainstorm-beat-input" 
+              onchange="updateBrainstormBeat(${i}, this.value)"
+              oninput="autoResizeTextarea(this)"
+              placeholder="Beat ${i + 1}...">${escapeHtml(beat)}</textarea>
             <button class="brainstorm-to-plot-btn" onclick="openMoveToPlotMenu(${i})" title="Move to Plot">&#8594;</button>
             <button class="brainstorm-beat-delete" onclick="deleteBrainstormBeat(${i})">&times;</button>
           </div>
@@ -14115,6 +14580,13 @@ function renderBrainstormSubtab(container, scopeData) {
           onchange="updateBrainstormDraft(this.value)">${escapeHtml(bs.draft)}</textarea>
         <button class="btn btn-primary brainstorm-convert" onclick="convertBrainstormDraft()">Convert to Beats</button>
       </div>
+      
+      <div class="brainstorm-explanation">
+        <strong>Brainstorm vs Plot</strong>
+        <p><strong>Brainstorm</strong> is your rough outline. You're sketching the sequence - "this happens, therefore this happens, which causes this" - following the natural chain of events and character psychology.</p>
+        <p><strong>Plot</strong> is where you fit those events into a structure. Frameworks help with pacing and audience expectations, but shouldn't override the logic you discovered here.</p>
+        <p>Starting in Brainstorm helps prevent the "checking boxes" problem - where characters do things because the structure demands it, not because it follows from who they are and what just happened. Get the causal chain right first, then see where the beats land.</p>
+      </div>
     </div>
     
     <div class="move-to-plot-menu" id="moveToPlotMenu" style="display: none;">
@@ -14130,6 +14602,9 @@ function renderBrainstormSubtab(container, scopeData) {
   if (hasBeats) {
     setupBrainstormDrag();
   }
+  
+  // Auto-resize textareas on load
+  setTimeout(() => initAutoResizeTextareas(), 0);
 }
 
 function updateBrainstormTitle(value) {
@@ -14463,8 +14938,10 @@ function renderIdeaBankSubtab(container, scopeData) {
       <div class="ideabank-items">
         ${ib.ideas.map((idea, i) => `
           <div class="ideabank-item">
-            <input type="text" class="ideabank-item-input" value="${escapeHtml(idea)}" 
-              onchange="updateIdeaBankIdea(${i}, this.value)" placeholder="Idea...">
+            <textarea class="ideabank-item-input" 
+              onchange="updateIdeaBankIdea(${i}, this.value)"
+              oninput="autoResizeTextarea(this)"
+              placeholder="Idea...">${escapeHtml(idea)}</textarea>
             <button class="ideabank-item-delete" onclick="deleteIdeaBankIdea(${i})">&times;</button>
           </div>
         `).join('')}
@@ -14526,6 +15003,9 @@ function renderIdeaBankSubtab(container, scopeData) {
       </div>
     </div>
   `;
+  
+  // Auto-resize textareas on load
+  setTimeout(() => initAutoResizeTextareas(), 0);
 }
 
 function updateIdeaBankDraft(value) {
