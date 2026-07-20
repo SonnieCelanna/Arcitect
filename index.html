@@ -357,6 +357,26 @@ body {
   white-space: pre-wrap;
 }
 
+.export-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.export-option {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.export-option input[type="checkbox"] {
+  cursor: pointer;
+}
+
 .export-beats-actions {
   display: flex;
   gap: 0.5rem;
@@ -8130,9 +8150,6 @@ function openExportBeatsModal() {
   const story = getCurrentStory();
   if (!story) return;
   
-  // Compile all content from planning
-  const exportText = compileBeatsForExport(story);
-  
   const modal = document.createElement('div');
   modal.className = 'modal-overlay';
   modal.id = 'exportBeatsModal';
@@ -8142,9 +8159,13 @@ function openExportBeatsModal() {
         <h3>Export Planning</h3>
       </div>
       <div class="modal-body">
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">
-          Exports brainstorm beats, plot beats, questions, and chronology from all scope levels.
-        </p>
+        <div class="export-options">
+          <label class="export-option"><input type="checkbox" id="exportBrainstorm" checked> Brainstorm Beats</label>
+          <label class="export-option"><input type="checkbox" id="exportPlot" checked> Plot Beats</label>
+          <label class="export-option"><input type="checkbox" id="exportQuestions" checked> Questions</label>
+          <label class="export-option"><input type="checkbox" id="exportChronology" checked> Chronology</label>
+        </div>
+        <button class="btn btn-sm" onclick="regenerateExport()" style="margin-bottom: 0.75rem;">Regenerate</button>
         <textarea id="exportBeatsText" class="export-beats-textarea" readonly></textarea>
         <div class="export-beats-actions">
           <button class="btn btn-sm" onclick="copyExportBeats()">Copy to Clipboard</button>
@@ -8159,8 +8180,8 @@ function openExportBeatsModal() {
   
   document.body.appendChild(modal);
   
-  // Set textarea value after DOM insertion (avoids escaping issues)
-  document.getElementById('exportBeatsText').value = exportText;
+  // Generate initial export
+  regenerateExport();
   
   requestAnimationFrame(() => modal.classList.add('active'));
   
@@ -8169,7 +8190,29 @@ function openExportBeatsModal() {
   };
 }
 
-function compileBeatsForExport(story) {
+function regenerateExport() {
+  const story = getCurrentStory();
+  if (!story) return;
+  
+  const options = {
+    brainstorm: document.getElementById('exportBrainstorm')?.checked ?? true,
+    plot: document.getElementById('exportPlot')?.checked ?? true,
+    questions: document.getElementById('exportQuestions')?.checked ?? true,
+    chronology: document.getElementById('exportChronology')?.checked ?? true
+  };
+  
+  const exportText = compileBeatsForExport(story, options);
+  document.getElementById('exportBeatsText').value = exportText;
+}
+
+function compileBeatsForExport(story, options = {}) {
+  const include = {
+    brainstorm: options.brainstorm ?? true,
+    plot: options.plot ?? true,
+    questions: options.questions ?? true,
+    chronology: options.chronology ?? true
+  };
+  
   let output = '';
   const title = story.title || 'Untitled Story';
   output += `${title}\n${'='.repeat(title.length)}\n\n`;
@@ -8195,64 +8238,70 @@ function compileBeatsForExport(story) {
     }
     
     // Brainstorm beats
-    const brainstorm = scopeData.planning?.brainstorm;
-    if (brainstorm?.beats?.length > 0) {
-      text += `${indent}${scopeName} - Brainstorm Beats\n`;
-      text += `${indent}${'-'.repeat(30)}\n`;
-      brainstorm.beats.forEach((beat, i) => {
-        text += `${indent}${i + 1}. ${beat}\n`;
-      });
-      text += '\n';
+    if (include.brainstorm) {
+      const brainstorm = scopeData.planning?.brainstorm;
+      if (brainstorm?.beats?.length > 0) {
+        text += `${indent}${scopeName} - Brainstorm Beats\n`;
+        text += `${indent}${'-'.repeat(30)}\n`;
+        brainstorm.beats.forEach((beat, i) => {
+          text += `${indent}${i + 1}. ${beat}\n`;
+        });
+        text += '\n';
+      }
     }
     
     // Plot beats
-    const framework = scopeData.framework || 'custom';
-    const beatContent = scopeData.beatContent || {};
-    const customBeats = scopeData.beats || [];
-    const fw = FRAMEWORKS[framework];
-    
-    const plotBeats = framework === 'custom' ? customBeats : (fw?.beats || []);
-    const filledPlotBeats = plotBeats.filter(b => beatContent[b.id]?.trim());
-    
-    if (filledPlotBeats.length > 0) {
-      text += `${indent}${scopeName} - Plot Beats\n`;
-      text += `${indent}${'-'.repeat(30)}\n`;
-      filledPlotBeats.forEach(beat => {
-        text += `${indent}${beat.name}:\n`;
-        const content = beatContent[beat.id] || '';
-        content.split('\n').forEach(line => {
-          text += `${indent}  ${line}\n`;
+    if (include.plot) {
+      const framework = scopeData.framework || 'custom';
+      const beatContent = scopeData.beatContent || {};
+      const customBeats = scopeData.beats || [];
+      const fw = FRAMEWORKS[framework];
+      
+      const plotBeats = framework === 'custom' ? customBeats : (fw?.beats || []);
+      const filledPlotBeats = plotBeats.filter(b => beatContent[b.id]?.trim());
+      
+      if (filledPlotBeats.length > 0) {
+        text += `${indent}${scopeName} - Plot Beats\n`;
+        text += `${indent}${'-'.repeat(30)}\n`;
+        filledPlotBeats.forEach(beat => {
+          text += `${indent}${beat.name}:\n`;
+          const content = beatContent[beat.id] || '';
+          content.split('\n').forEach(line => {
+            text += `${indent}  ${line}\n`;
+          });
+          text += '\n';
         });
-        text += '\n';
-      });
+      }
     }
     
-    // Questions
-    const questions = scopeData.planning?.questions;
-    if (questions?.items?.length > 0) {
-      text += `${indent}${scopeName} - Questions\n`;
-      text += `${indent}${'-'.repeat(30)}\n`;
-      questions.items.forEach((q, i) => {
-        const status = q.answered ? '[ANSWERED]' : '[OPEN]';
-        const priority = q.priority ? `#${q.priority}` : '';
-        text += `${indent}${priority ? priority + ' ' : ''}${status} ${q.question}\n`;
-        if (q.answer?.trim()) {
-          text += `${indent}  Answer: ${q.answer}\n`;
-        }
-      });
-      text += '\n';
+    // Questions (clean format - no status tags)
+    if (include.questions) {
+      const questions = scopeData.planning?.questions;
+      if (questions?.items?.length > 0) {
+        text += `${indent}${scopeName} - Questions\n`;
+        text += `${indent}${'-'.repeat(30)}\n`;
+        questions.items.forEach((q, i) => {
+          const priority = q.priority ? `#${q.priority} ` : '';
+          text += `${indent}${priority}${q.question}\n`;
+          if (q.answer?.trim()) {
+            text += `${indent}  → ${q.answer}\n`;
+          }
+        });
+        text += '\n';
+      }
     }
     
     // Chronology
-    const chronology = scopeData.planning?.chronology;
-    if (chronology?.events?.length > 0) {
-      text += `${indent}${scopeName} - Chronology\n`;
-      text += `${indent}${'-'.repeat(30)}\n`;
-      chronology.events.forEach((event, i) => {
-        const order = event.order ? `[${event.order}]` : '';
-        text += `${indent}${order ? order + ' ' : ''}${event.when}: ${event.what}\n`;
-      });
-      text += '\n';
+    if (include.chronology) {
+      const chronology = scopeData.planning?.chronology;
+      if (chronology?.events?.length > 0) {
+        text += `${indent}${scopeName} - Chronology\n`;
+        text += `${indent}${'-'.repeat(30)}\n`;
+        chronology.events.forEach((event, i) => {
+          text += `${indent}${event.when}: ${event.what}\n`;
+        });
+        text += '\n';
+      }
     }
     
     // Recurse into children
