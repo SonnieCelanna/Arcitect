@@ -1459,6 +1459,237 @@ body {
   background: #8e44ad;
 }
 
+/* Planning Characters Subtab */
+.planning-characters-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.planning-characters-intro {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.planning-characters-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem;
+  background: var(--bg-card);
+  border-radius: 8px;
+  border: 1px dashed var(--border);
+}
+
+.planning-characters-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.planning-char-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.planning-char-card.expanded {
+  border-color: var(--accent-main);
+}
+
+.planning-char-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.planning-char-header:hover {
+  background: var(--bg-elevated);
+}
+
+.planning-char-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent-main);
+  color: var(--bg-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.planning-char-name {
+  flex: 1;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.planning-char-toggle {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+.planning-char-body {
+  border-top: 1px solid var(--border);
+}
+
+.planning-char-tabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+}
+
+.planning-char-tab {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.planning-char-tab:hover {
+  color: var(--text-secondary);
+}
+
+.planning-char-tab.active {
+  background: var(--accent-main);
+  border-color: var(--accent-main);
+  color: var(--bg-base);
+}
+
+.planning-char-content {
+  padding: 1rem;
+}
+
+.planning-char-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.planning-char-question label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+
+.planning-char-question textarea {
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: none;
+  overflow: hidden;
+  min-height: 2.5em;
+}
+
+.planning-char-question textarea:focus {
+  outline: none;
+  border-color: var(--accent-main);
+}
+
+/* Interview Section */
+.planning-char-interview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.interview-intro {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.interview-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.interview-item {
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem;
+}
+
+.interview-question-row,
+.interview-answer-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.interview-answer-row {
+  margin-top: 0.5rem;
+}
+
+.interview-label {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  min-width: 20px;
+  padding-top: 0.5rem;
+}
+
+.interview-q,
+.interview-a {
+  flex: 1;
+  padding: 0.5rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  resize: none;
+  overflow: hidden;
+  min-height: 2em;
+}
+
+.interview-q:focus,
+.interview-a:focus {
+  outline: none;
+  border-color: var(--accent-main);
+}
+
+.interview-a {
+  font-style: italic;
+}
+
+.interview-delete {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.interview-delete:hover {
+  color: var(--accent-red, #e74c3c);
+}
+
 /* Header Right - View Toggle */
 .header-right { display: flex; align-items: center; gap: 0.75rem; }
 
@@ -6300,6 +6531,7 @@ body.auto-expand-textareas textarea {
           <button class="planning-subtab" data-subtab="c">Idea Bank</button>
           <button class="planning-subtab" data-subtab="d">Questions</button>
           <button class="planning-subtab" data-subtab="e">Chronology</button>
+          <button class="planning-subtab" data-subtab="f">Characters</button>
         </div>
         <div class="planning-content" id="planningContent">
           <!-- Planning content populated by JS -->
@@ -8160,12 +8392,12 @@ function openExportBeatsModal() {
       </div>
       <div class="modal-body">
         <div class="export-options">
-          <label class="export-option"><input type="checkbox" id="exportBrainstorm" checked> Brainstorm Beats</label>
-          <label class="export-option"><input type="checkbox" id="exportPlot" checked> Plot Beats</label>
-          <label class="export-option"><input type="checkbox" id="exportQuestions" checked> Questions</label>
-          <label class="export-option"><input type="checkbox" id="exportChronology" checked> Chronology</label>
+          <label class="export-option"><input type="checkbox" id="exportBrainstorm" checked onchange="regenerateExport()"> Brainstorm Beats</label>
+          <label class="export-option"><input type="checkbox" id="exportPlot" checked onchange="regenerateExport()"> Plot Beats</label>
+          <label class="export-option"><input type="checkbox" id="exportQuestions" checked onchange="regenerateExport()"> Questions</label>
+          <label class="export-option"><input type="checkbox" id="exportChronology" checked onchange="regenerateExport()"> Chronology</label>
+          <label class="export-option"><input type="checkbox" id="exportCharacters" checked onchange="regenerateExport()"> Characters</label>
         </div>
-        <button class="btn btn-sm" onclick="regenerateExport()" style="margin-bottom: 0.75rem;">Regenerate</button>
         <textarea id="exportBeatsText" class="export-beats-textarea" readonly></textarea>
         <div class="export-beats-actions">
           <button class="btn btn-sm" onclick="copyExportBeats()">Copy to Clipboard</button>
@@ -8198,7 +8430,8 @@ function regenerateExport() {
     brainstorm: document.getElementById('exportBrainstorm')?.checked ?? true,
     plot: document.getElementById('exportPlot')?.checked ?? true,
     questions: document.getElementById('exportQuestions')?.checked ?? true,
-    chronology: document.getElementById('exportChronology')?.checked ?? true
+    chronology: document.getElementById('exportChronology')?.checked ?? true,
+    characters: document.getElementById('exportCharacters')?.checked ?? true
   };
   
   const exportText = compileBeatsForExport(story, options);
@@ -8210,7 +8443,8 @@ function compileBeatsForExport(story, options = {}) {
     brainstorm: options.brainstorm ?? true,
     plot: options.plot ?? true,
     questions: options.questions ?? true,
-    chronology: options.chronology ?? true
+    chronology: options.chronology ?? true,
+    characters: options.characters ?? true
   };
   
   let output = '';
@@ -8303,7 +8537,53 @@ function compileBeatsForExport(story, options = {}) {
         text += '\n';
       }
     }
-    
+
+    // Characters (planning data)
+    if (include.characters) {
+      const characters = scopeData.characters || [];
+      const charData = scopeData.planning?.characterData || {};
+
+      characters.forEach(char => {
+        const charId = char.rosterId || char.name;
+        const data = charData[charId];
+        if (!data) return;
+
+        const hasQuestions = data.questions && Object.values(data.questions).some(v => v?.trim());
+        const hasInterview = data.interview && data.interview.some(i => i.question?.trim() || i.answer?.trim());
+
+        if (hasQuestions || hasInterview) {
+          text += `${indent}${char.name}\n`;
+          text += `${indent}${'-'.repeat(30)}\n`;
+
+          // Role & Stakes questions
+          if (hasQuestions) {
+            Object.entries(data.questions).forEach(([key, value]) => {
+              if (value?.trim()) {
+                const label = key.charAt(0).toUpperCase() + key.slice(1);
+                text += `${indent}${label}: ${value}\n`;
+              }
+            });
+          }
+
+          // Interview Q&A
+          if (hasInterview) {
+            text += `${indent}\nInterview:\n`;
+            data.interview.forEach(item => {
+              if (item.question?.trim()) {
+                text += `${indent}Q: ${item.question}\n`;
+                if (item.answer?.trim()) {
+                  text += `${indent}A: ${item.answer}\n`;
+                }
+                text += '\n';
+              }
+            });
+          }
+
+          text += '\n';
+        }
+      });
+    }
+
     // Recurse into children
     if (scopeData.items?.length > 0) {
       scopeData.items.forEach(item => {
@@ -14480,8 +14760,11 @@ function renderPlanningTab() {
     case 'e':
       renderChronologySubtab(container, scopeData);
       break;
+    case 'f':
+      renderPlanningCharactersSubtab(container, scopeData);
+      break;
   }
-  
+
   // Auto-expand textareas if enabled
   setTimeout(setupAutoExpandListeners, 0);
 }
@@ -15823,6 +16106,233 @@ function switchPlanningSubtab(subtab) {
   
   if (!scopeData.planning) scopeData.planning = {};
   scopeData.planning.activeSubtab = subtab;
+  saveState();
+  renderPlanningTab();
+}
+
+// ===== PLANNING CHARACTERS SUBTAB =====
+const DEFAULT_CHARACTER_QUESTIONS = [
+  { key: 'role', question: 'What is their role in this story?', placeholder: 'Protagonist, antagonist, mentor, comic relief, love interest...' },
+  { key: 'importance', question: 'How integral are they to the plot?', placeholder: 'Central, supporting, minor, appears in specific scenes...' },
+  { key: 'stakes', question: 'What stakes affect them personally?', placeholder: 'What do they stand to lose or gain? What hits close to home for them?' },
+  { key: 'want', question: 'What do they want in this story?', placeholder: 'Their conscious goal for this scope level...' },
+  { key: 'conflict', question: 'What conflict do they face?', placeholder: 'Internal struggle, external obstacle, relationship tension...' }
+];
+
+function renderPlanningCharactersSubtab(container, scopeData) {
+  const story = getCurrentStory();
+  if (!story) return;
+
+  // Get characters from this scope's Arcs tab (they're shared)
+  const characters = scopeData.characters || [];
+
+  // Initialize planning character data if needed
+  if (!scopeData.planning) scopeData.planning = {};
+  if (!scopeData.planning.characterData) scopeData.planning.characterData = {};
+
+  const charData = scopeData.planning.characterData;
+
+  let html = `
+    <div class="planning-characters-container">
+      <div class="planning-characters-intro">
+        <p>Characters from your Arcs tab appear here for planning. Answer role/stakes questions and conduct in-character interviews to develop them.</p>
+      </div>
+  `;
+
+  if (characters.length === 0) {
+    html += `
+      <div class="planning-characters-empty">
+        <p>No characters yet. Add characters in the <strong>Arcs</strong> tab and they'll appear here.</p>
+      </div>
+    `;
+  } else {
+    html += `<div class="planning-characters-list">`;
+
+    characters.forEach((char, charIdx) => {
+      const charId = char.rosterId || `char_${charIdx}`;
+      if (!charData[charId]) {
+        charData[charId] = { questions: {}, interview: [] };
+      }
+      const thisCharData = charData[charId];
+      const isExpanded = thisCharData.expanded ?? false;
+      const activeTab = thisCharData.activeTab || 'questions';
+
+      html += `
+        <div class="planning-char-card ${isExpanded ? 'expanded' : 'collapsed'}" data-char-id="${charId}">
+          <div class="planning-char-header" onclick="togglePlanningChar('${charId}')">
+            <span class="planning-char-avatar">${getInitials(char.name)}</span>
+            <span class="planning-char-name">${escapeHtml(char.name)}</span>
+            <span class="planning-char-toggle">${isExpanded ? '−' : '+'}</span>
+          </div>
+      `;
+
+      if (isExpanded) {
+        html += `
+          <div class="planning-char-body">
+            <div class="planning-char-tabs">
+              <button class="planning-char-tab ${activeTab === 'questions' ? 'active' : ''}"
+                      onclick="setPlanningCharTab('${charId}', 'questions')">Role & Stakes</button>
+              <button class="planning-char-tab ${activeTab === 'interview' ? 'active' : ''}"
+                      onclick="setPlanningCharTab('${charId}', 'interview')">Interview</button>
+            </div>
+            <div class="planning-char-content">
+        `;
+
+        if (activeTab === 'questions') {
+          html += `<div class="planning-char-questions">`;
+          DEFAULT_CHARACTER_QUESTIONS.forEach(q => {
+            const answer = thisCharData.questions?.[q.key] || '';
+            html += `
+              <div class="planning-char-question">
+                <label>${q.question}</label>
+                <textarea placeholder="${q.placeholder}"
+                          onchange="updatePlanningCharQuestion('${charId}', '${q.key}', this.value)"
+                          oninput="autoResizeTextarea(this)">${escapeHtml(answer)}</textarea>
+              </div>
+            `;
+          });
+          html += `</div>`;
+        } else {
+          // Interview tab
+          const interviews = thisCharData.interview || [];
+          html += `
+            <div class="planning-char-interview">
+              <p class="interview-intro">Ask questions and answer them in character. Get into their head.</p>
+              <div class="interview-items">
+          `;
+
+          interviews.forEach((item, i) => {
+            html += `
+              <div class="interview-item">
+                <div class="interview-question-row">
+                  <span class="interview-label">Q:</span>
+                  <textarea class="interview-q" placeholder="Ask them something..."
+                            onchange="updateInterviewItem('${charId}', ${i}, 'question', this.value)"
+                            oninput="autoResizeTextarea(this)">${escapeHtml(item.question || '')}</textarea>
+                  <button class="interview-delete" onclick="deleteInterviewItem('${charId}', ${i})">&times;</button>
+                </div>
+                <div class="interview-answer-row">
+                  <span class="interview-label">A:</span>
+                  <textarea class="interview-a" placeholder="Answer in character..."
+                            onchange="updateInterviewItem('${charId}', ${i}, 'answer', this.value)"
+                            oninput="autoResizeTextarea(this)">${escapeHtml(item.answer || '')}</textarea>
+                </div>
+              </div>
+            `;
+          });
+
+          html += `
+              </div>
+              <button class="btn btn-sm" onclick="addInterviewItem('${charId}')">+ Add Question</button>
+            </div>
+          `;
+        }
+
+        html += `
+            </div>
+          </div>
+        `;
+      }
+
+      html += `</div>`;
+    });
+
+    html += `</div>`;
+  }
+
+  html += `</div>`;
+  container.innerHTML = html;
+
+  // Auto-resize textareas
+  setTimeout(() => initAutoResizeTextareas(), 0);
+}
+
+function togglePlanningChar(charId) {
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.characterData) return;
+
+  if (!scopeData.planning.characterData[charId]) {
+    scopeData.planning.characterData[charId] = { questions: {}, interview: [] };
+  }
+
+  // Accordion - collapse others, toggle this one
+  const wasExpanded = scopeData.planning.characterData[charId].expanded;
+  Object.keys(scopeData.planning.characterData).forEach(id => {
+    scopeData.planning.characterData[id].expanded = false;
+  });
+  scopeData.planning.characterData[charId].expanded = !wasExpanded;
+
+  saveState();
+  renderPlanningTab();
+}
+
+function setPlanningCharTab(charId, tab) {
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.characterData?.[charId]) return;
+
+  scopeData.planning.characterData[charId].activeTab = tab;
+  saveState();
+  renderPlanningTab();
+}
+
+function updatePlanningCharQuestion(charId, questionKey, value) {
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.characterData) return;
+
+  if (!scopeData.planning.characterData[charId]) {
+    scopeData.planning.characterData[charId] = { questions: {}, interview: [] };
+  }
+  if (!scopeData.planning.characterData[charId].questions) {
+    scopeData.planning.characterData[charId].questions = {};
+  }
+
+  scopeData.planning.characterData[charId].questions[questionKey] = value;
+
+  const story = getCurrentStory();
+  story.updatedAt = Date.now();
+  saveState();
+}
+
+function addInterviewItem(charId) {
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.characterData) return;
+
+  if (!scopeData.planning.characterData[charId]) {
+    scopeData.planning.characterData[charId] = { questions: {}, interview: [] };
+  }
+  if (!scopeData.planning.characterData[charId].interview) {
+    scopeData.planning.characterData[charId].interview = [];
+  }
+
+  scopeData.planning.characterData[charId].interview.push({ question: '', answer: '' });
+
+  const story = getCurrentStory();
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+}
+
+function updateInterviewItem(charId, index, field, value) {
+  const scopeData = getCurrentScopeData();
+  const interview = scopeData?.planning?.characterData?.[charId]?.interview;
+  if (!interview || !interview[index]) return;
+
+  interview[index][field] = value;
+
+  const story = getCurrentStory();
+  story.updatedAt = Date.now();
+  saveState();
+}
+
+function deleteInterviewItem(charId, index) {
+  const scopeData = getCurrentScopeData();
+  const interview = scopeData?.planning?.characterData?.[charId]?.interview;
+  if (!interview) return;
+
+  interview.splice(index, 1);
+
+  const story = getCurrentStory();
+  story.updatedAt = Date.now();
   saveState();
   renderPlanningTab();
 }
