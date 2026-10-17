@@ -5640,26 +5640,26 @@ body.auto-expand-textareas textarea {
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: var(--bg-elevated);
-  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(155, 89, 182, 0.15) 0%, rgba(52, 152, 219, 0.1) 100%);
+  border-bottom: 2px solid var(--accent-main);
   flex-wrap: wrap;
 }
 
 .scope-breadcrumb {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.85rem;
+  gap: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .scope-crumb,
 .scope-breadcrumb-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
   cursor: pointer;
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
   transition: all 0.15s;
   font-family: inherit;
   font-size: 0.85rem;
@@ -5668,25 +5668,41 @@ body.auto-expand-textareas textarea {
 .scope-crumb:hover,
 .scope-breadcrumb-btn:hover {
   color: var(--text-primary);
-  background: var(--bg-card);
+  background: var(--bg-elevated);
+  border-color: var(--accent-main);
 }
 
 .scope-crumb.current,
 .scope-breadcrumb-current {
-  color: var(--text-primary);
+  background: var(--accent-main);
+  color: white;
   font-weight: 600;
   cursor: default;
-  padding: 0.2rem 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--accent-main);
 }
 
 .scope-crumb.current:hover {
-  background: transparent;
+  background: var(--accent-main);
 }
 
 .scope-separator,
 .scope-breadcrumb-sep {
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.scope-level-label {
+  background: var(--accent-main);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  margin-right: 0.75rem;
 }
 
 .scope-actions {
@@ -5792,18 +5808,21 @@ body.auto-expand-textareas textarea {
 }
 
 .scope-item-btn {
-  background: var(--bg-elevated);
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.2rem 0.4rem;
-  color: var(--text-muted);
+  border-radius: 6px;
+  padding: 0.35rem 0.6rem;
+  color: var(--text-secondary);
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  transition: all 0.15s;
 }
 
 .scope-item-btn:hover {
-  color: var(--text-primary);
-  border-color: var(--accent-dim);
+  color: white;
+  background: var(--accent-main);
+  border-color: var(--accent-main);
 }
 
 .scope-item-btn.danger:hover {
@@ -8746,51 +8765,55 @@ function initializeScopeSystem(story) {
 function renderScopeNav() {
   const story = getCurrentStory();
   if (!story) return;
-  
+
   initializeScopeSystem(story);
-  
+
   const nav = document.getElementById('scopeNav');
   const path = story.currentScopePath;
   const levels = story.scopeLevels;
   const currentDepth = path.length - 1; // 0 = root
-  
+
+  // Current level type label
+  const currentLevelType = levels[currentDepth] || levels[levels.length - 1] || 'Story';
+  let levelLabelHtml = `<span class="scope-level-label">${escapeHtml(currentLevelType)} Level</span>`;
+
   // Build breadcrumb
   let breadcrumbHtml = '<div class="scope-breadcrumb">';
-  
+
   // Always show root
   breadcrumbHtml += `<span class="scope-crumb ${path.length === 1 ? 'current' : ''}" onclick="navigateToScopeLevel(0)">${escapeHtml(levels[0] || 'Story')}</span>`;
-  
+
   // Show path items
   for (let i = 1; i < path.length; i++) {
     const itemId = path[i];
     const parentPath = path.slice(0, i);
     const parentData = getScopeData(story, parentPath);
     const item = parentData?.items?.find(it => it.id === itemId);
-    
-    breadcrumbHtml += `<span class="scope-separator">»</span>`;
+
+    breadcrumbHtml += `<span class="scope-separator">›</span>`;
     breadcrumbHtml += `<span class="scope-crumb ${i === path.length - 1 ? 'current' : ''}" onclick="navigateToScopeLevel(${i})">${escapeHtml(item?.name || 'Unknown')}</span>`;
   }
-  
+
   breadcrumbHtml += '</div>';
-  
+
   // Actions
   let actionsHtml = '<div class="scope-actions">';
-  
+
   // If we can go deeper, show "Add [NextLevel]" button
   if (currentDepth < levels.length - 1) {
     const nextLevelName = levels[currentDepth + 1];
     actionsHtml += `<button class="scope-add-btn" onclick="addScopeItem()">+ Add ${escapeHtml(nextLevelName)}</button>`;
   }
-  
+
   // Setup scope button (only at root with no items)
   const rootData = getScopeData(story, ['root']);
   if (path.length === 1 && (!rootData.items || rootData.items.length === 0) && levels.length === 1) {
     actionsHtml += `<button class="scope-setup-btn" onclick="openScopeSetup()">Configure Levels</button>`;
   }
-  
+
   actionsHtml += '</div>';
-  
-  nav.innerHTML = breadcrumbHtml + actionsHtml;
+
+  nav.innerHTML = levelLabelHtml + breadcrumbHtml + actionsHtml;
 }
 
 function getScopeData(story, path) {
@@ -10257,42 +10280,47 @@ function renderArcs() {
 function renderArcsScopeNav() {
   const story = getCurrentStory();
   if (!story) return;
-  
+
   const tabsContainer = document.getElementById('organizerTabs');
   const scopeLevels = story.scopeLevels || ['Story'];
   const currentPath = story.currentScopePath || ['root'];
-  
+  const currentDepth = currentPath.length - 1;
+
+  // Current level type label
+  const currentLevelType = scopeLevels[currentDepth] || scopeLevels[scopeLevels.length - 1] || 'Story';
+
   // Build breadcrumb same as plot tab
   let html = '<div class="scope-nav" style="margin-bottom: 1rem;">';
+  html += `<span class="scope-level-label">${escapeHtml(currentLevelType)} Level</span>`;
   html += '<div class="scope-breadcrumb">';
-  
+
   currentPath.forEach((segment, i) => {
     const isLast = i === currentPath.length - 1;
     let name = scopeLevels[i] || 'Story';
-    
+
     if (i > 0) {
       const parentPath = currentPath.slice(0, i);
       const parentData = getScopeData(story, parentPath);
       const item = parentData?.items?.find(it => it.id === segment);
       name = item?.name || name;
     }
-    
+
     if (isLast) {
       html += `<span class="scope-crumb current">${escapeHtml(name)}</span>`;
     } else {
       html += `<span class="scope-crumb" onclick="navigateToScopeLevel(${i})">${escapeHtml(name)}</span>`;
-      html += `<span class="scope-separator">&raquo;</span>`;
+      html += `<span class="scope-separator">›</span>`;
     }
   });
-  
+
   html += '</div>';
-  
+
   if (currentPath.length === 1) {
     html += `<div class="scope-actions">
       <button class="scope-setup-btn" onclick="openScopeSetup()">Structure</button>
     </div>`;
   }
-  
+
   html += '</div>';
   tabsContainer.innerHTML = html;
 }
@@ -14772,20 +14800,24 @@ function renderPlanningTab() {
 function renderPlanningScopeNav() {
   const story = getCurrentStory();
   if (!story) return;
-  
+
   const nav = document.getElementById('planningScopeNav');
   if (!nav) return;
-  
+
   const path = story.currentScopePath || ['root'];
   const levels = story.scopeLevels || ['Story'];
-  
+
+  // Current level type label
+  const currentLevelType = levels[path.length - 1] || levels[levels.length - 1] || 'Story';
+  let levelLabelHtml = `<span class="scope-level-label">${escapeHtml(currentLevelType)} Level</span>`;
+
   // Build breadcrumb
   let breadcrumbHtml = '<div class="scope-breadcrumb">';
   path.forEach((segment, i) => {
     const isLast = i === path.length - 1;
-    const levelName = i === 0 ? (levels[0] || 'Story') : 
+    const levelName = i === 0 ? (levels[0] || 'Story') :
       (story.scopeData[path.slice(0, i).join('/')]?.items?.find(it => it.id === segment)?.name || segment);
-    
+
     if (isLast) {
       breadcrumbHtml += `<span class="scope-breadcrumb-current">${escapeHtml(levelName)}</span>`;
     } else {
@@ -14821,8 +14853,8 @@ function renderPlanningScopeNav() {
   }
   
   actionsHtml += '</div>';
-  
-  nav.innerHTML = breadcrumbHtml + actionsHtml;
+
+  nav.innerHTML = levelLabelHtml + breadcrumbHtml + actionsHtml;
 }
 
 function navigateToScopePlanning(level) {
