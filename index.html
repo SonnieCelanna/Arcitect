@@ -1687,6 +1687,120 @@ body {
 }
 
 .interview-delete:hover {
+  color: #e74c3c;
+}
+
+.interview-save-q {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.15s;
+}
+
+.interview-save-q:hover {
+  color: #f1c40f;
+}
+
+.interview-save-q.saved {
+  color: #f1c40f;
+}
+
+.interview-saved-bank {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(155, 89, 182, 0.1);
+  border: 1px solid rgba(155, 89, 182, 0.2);
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.interview-saved-bank label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.interview-saved-bank select {
+  flex: 1;
+  padding: 0.35rem 0.5rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.8rem;
+  max-width: 300px;
+}
+
+.interview-saved-bank.empty {
+  background: transparent;
+  border: 1px dashed var(--border);
+}
+
+.interview-saved-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.btn-muted {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.btn-muted:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.manage-questions-modal {
+  max-width: 500px;
+}
+
+.saved-questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.saved-question-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.saved-question-text {
+  flex: 1;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.saved-question-delete {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.saved-question-delete:hover {
+  color: #e74c3c;
+}
+
+.interview-delete:hover {
   color: var(--accent-red, #e74c3c);
 }
 
@@ -5638,18 +5752,167 @@ body.auto-expand-textareas textarea {
 .scope-nav {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   padding: 0.75rem 1rem;
-  background: linear-gradient(135deg, rgba(155, 89, 182, 0.15) 0%, rgba(52, 152, 219, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(155, 89, 182, 0.2) 0%, rgba(52, 152, 219, 0.15) 100%);
   border-bottom: 2px solid var(--accent-main);
   flex-wrap: wrap;
 }
 
-.scope-breadcrumb {
+.scope-nav-buttons {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.scope-nav-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: all 0.15s;
+}
+
+.scope-nav-btn:hover:not(:disabled) {
+  background: var(--accent-main);
+  color: white;
+  border-color: var(--accent-main);
+}
+
+.scope-nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.scope-level-label {
+  background: var(--accent-main);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+}
+
+.scope-current-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.scope-children-dropdown {
+  position: relative;
+}
+
+.scope-children-btn {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  border: none;
+  color: white;
+  padding: 0.45rem 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
+  gap: 0.4rem;
+  transition: all 0.15s;
+  box-shadow: 0 2px 4px rgba(155, 89, 182, 0.3);
+}
+
+.scope-children-btn:hover {
+  background: linear-gradient(135deg, #8e44ad, #7d3c98);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(155, 89, 182, 0.4);
+}
+
+.scope-children-btn .arrow {
+  font-size: 0.7rem;
+  transition: transform 0.15s;
+}
+
+.scope-children-dropdown.open .scope-children-btn .arrow {
+  transform: rotate(180deg);
+}
+
+.scope-children-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.35rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  min-width: 180px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.scope-children-dropdown.open .scope-children-menu {
+  display: block;
+}
+
+.scope-children-menu-item {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.scope-children-menu-item:hover {
+  background: var(--accent-main);
+  color: white;
+}
+
+.scope-children-menu-item:first-child {
+  border-radius: 7px 7px 0 0;
+}
+
+.scope-children-menu-item:last-child {
+  border-radius: 0 0 7px 7px;
+}
+
+.scope-children-menu-item:only-child {
+  border-radius: 7px;
+}
+
+.scope-add-inline {
+  padding: 0.5rem 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.scope-add-inline input {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.8rem;
+}
+
+.scope-add-inline input::placeholder {
+  color: var(--text-muted);
+}
+
+.scope-breadcrumb {
+  display: none; /* Hidden - replaced by new nav */
 }
 
 .scope-crumb,
@@ -5691,18 +5954,6 @@ body.auto-expand-textareas textarea {
   color: var(--text-muted);
   font-size: 0.9rem;
   font-weight: 500;
-}
-
-.scope-level-label {
-  background: var(--accent-main);
-  color: white;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 0.25rem 0.6rem;
-  border-radius: 4px;
-  margin-right: 0.75rem;
 }
 
 .scope-actions {
@@ -8775,45 +9026,134 @@ function renderScopeNav() {
 
   // Current level type label
   const currentLevelType = levels[currentDepth] || levels[levels.length - 1] || 'Story';
-  let levelLabelHtml = `<span class="scope-level-label">${escapeHtml(currentLevelType)} Level</span>`;
 
-  // Build breadcrumb
-  let breadcrumbHtml = '<div class="scope-breadcrumb">';
+  // Get current scope data for children
+  const currentData = getCurrentScopeData();
+  const children = currentData?.items || [];
+  const nextLevelName = currentDepth < levels.length - 1 ? levels[currentDepth + 1] : null;
 
-  // Always show root
-  breadcrumbHtml += `<span class="scope-crumb ${path.length === 1 ? 'current' : ''}" onclick="navigateToScopeLevel(0)">${escapeHtml(levels[0] || 'Story')}</span>`;
-
-  // Show path items
-  for (let i = 1; i < path.length; i++) {
-    const itemId = path[i];
-    const parentPath = path.slice(0, i);
+  // Get current scope name
+  let currentName = levels[0] || 'Story';
+  if (path.length > 1) {
+    const parentPath = path.slice(0, -1);
     const parentData = getScopeData(story, parentPath);
-    const item = parentData?.items?.find(it => it.id === itemId);
-
-    breadcrumbHtml += `<span class="scope-separator">›</span>`;
-    breadcrumbHtml += `<span class="scope-crumb ${i === path.length - 1 ? 'current' : ''}" onclick="navigateToScopeLevel(${i})">${escapeHtml(item?.name || 'Unknown')}</span>`;
+    const currentItem = parentData?.items?.find(it => it.id === path[path.length - 1]);
+    currentName = currentItem?.name || 'Unknown';
   }
 
-  breadcrumbHtml += '</div>';
+  let html = '';
 
-  // Actions
-  let actionsHtml = '<div class="scope-actions">';
+  // Navigation buttons (Home / Back)
+  html += '<div class="scope-nav-buttons">';
+  html += `<button class="scope-nav-btn" onclick="navigateToScopeLevel(0)" ${path.length === 1 ? 'disabled' : ''} title="Return to top level">Home</button>`;
+  html += `<button class="scope-nav-btn" onclick="navigateBack()" ${path.length === 1 ? 'disabled' : ''} title="Go back one level">Back</button>`;
+  html += '</div>';
 
-  // If we can go deeper, show "Add [NextLevel]" button
-  if (currentDepth < levels.length - 1) {
-    const nextLevelName = levels[currentDepth + 1];
-    actionsHtml += `<button class="scope-add-btn" onclick="addScopeItem()">+ Add ${escapeHtml(nextLevelName)}</button>`;
+  // Level label
+  html += `<span class="scope-level-label">${escapeHtml(currentLevelType)}</span>`;
+
+  // Current name
+  html += `<span class="scope-current-name">${escapeHtml(currentName)}</span>`;
+
+  // Children dropdown (if we can go deeper)
+  if (nextLevelName) {
+    html += `<div class="scope-children-dropdown" id="scopeChildrenDropdown">`;
+    html += `<button class="scope-children-btn" onclick="toggleScopeChildrenDropdown(event)">`;
+    html += `${escapeHtml(nextLevelName)}s (${children.length}) <span class="arrow">&#x25BC;</span>`;
+    html += `</button>`;
+    html += `<div class="scope-children-menu">`;
+
+    if (children.length === 0) {
+      html += `<div style="padding: 0.6rem 1rem; color: var(--text-muted); font-style: italic;">No ${escapeHtml(nextLevelName)}s yet</div>`;
+    } else {
+      children.forEach(child => {
+        html += `<button class="scope-children-menu-item" onclick="navigateToScopeItem('${child.id}')">${escapeHtml(child.name)}</button>`;
+      });
+    }
+
+    // Add new item input
+    html += `<div class="scope-add-inline">`;
+    html += `<input type="text" placeholder="+ Add ${escapeHtml(nextLevelName)}..." onkeydown="handleScopeInlineAdd(event)">`;
+    html += `</div>`;
+    html += `</div></div>`;
   }
 
   // Setup scope button (only at root with no items)
   const rootData = getScopeData(story, ['root']);
   if (path.length === 1 && (!rootData.items || rootData.items.length === 0) && levels.length === 1) {
-    actionsHtml += `<button class="scope-setup-btn" onclick="openScopeSetup()">Configure Levels</button>`;
+    html += `<button class="scope-setup-btn" onclick="openScopeSetup()" style="margin-left: auto;">Configure Levels</button>`;
   }
 
-  actionsHtml += '</div>';
+  nav.innerHTML = html;
+}
 
-  nav.innerHTML = levelLabelHtml + breadcrumbHtml + actionsHtml;
+function toggleScopeChildrenDropdown(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById('scopeChildrenDropdown');
+  dropdown.classList.toggle('open');
+
+  // Close when clicking elsewhere
+  if (dropdown.classList.contains('open')) {
+    const closeHandler = (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+        document.removeEventListener('click', closeHandler);
+      }
+    };
+    setTimeout(() => document.addEventListener('click', closeHandler), 0);
+  }
+}
+
+function handleScopeInlineAdd(event) {
+  if (event.key === 'Enter') {
+    const name = event.target.value.trim();
+    if (name) {
+      addScopeItemWithName(name);
+      event.target.value = '';
+      document.getElementById('scopeChildrenDropdown')?.classList.remove('open');
+    }
+  }
+}
+
+function addScopeItemWithName(name) {
+  const story = getCurrentStory();
+  if (!story) return;
+
+  const currentData = getCurrentScopeData();
+  if (!currentData.items) currentData.items = [];
+
+  const newItem = {
+    id: generateId(),
+    name: name
+  };
+
+  currentData.items.push(newItem);
+  saveStories();
+  renderScopeNav();
+  renderArcsScope();
+}
+
+function navigateBack() {
+  const story = getCurrentStory();
+  if (!story || story.currentScopePath.length <= 1) return;
+
+  story.currentScopePath = story.currentScopePath.slice(0, -1);
+  saveStories();
+  renderScopeNav();
+  renderArcsScope();
+}
+
+function navigateToScopeItem(itemId) {
+  const story = getCurrentStory();
+  if (!story) return;
+
+  story.currentScopePath.push(itemId);
+  saveStories();
+  renderScopeNav();
+  renderArcsScope();
+
+  // Close dropdown
+  document.getElementById('scopeChildrenDropdown')?.classList.remove('open');
 }
 
 function getScopeData(story, path) {
@@ -10289,40 +10629,114 @@ function renderArcsScopeNav() {
   // Current level type label
   const currentLevelType = scopeLevels[currentDepth] || scopeLevels[scopeLevels.length - 1] || 'Story';
 
-  // Build breadcrumb same as plot tab
+  // Get current scope data for children
+  const currentData = getCurrentScopeData();
+  const children = currentData?.items || [];
+  const nextLevelName = currentDepth < scopeLevels.length - 1 ? scopeLevels[currentDepth + 1] : null;
+
+  // Get current scope name
+  let currentName = scopeLevels[0] || 'Story';
+  if (currentPath.length > 1) {
+    const parentPath = currentPath.slice(0, -1);
+    const parentData = getScopeData(story, parentPath);
+    const currentItem = parentData?.items?.find(it => it.id === currentPath[currentPath.length - 1]);
+    currentName = currentItem?.name || 'Unknown';
+  }
+
   let html = '<div class="scope-nav" style="margin-bottom: 1rem;">';
-  html += `<span class="scope-level-label">${escapeHtml(currentLevelType)} Level</span>`;
-  html += '<div class="scope-breadcrumb">';
 
-  currentPath.forEach((segment, i) => {
-    const isLast = i === currentPath.length - 1;
-    let name = scopeLevels[i] || 'Story';
-
-    if (i > 0) {
-      const parentPath = currentPath.slice(0, i);
-      const parentData = getScopeData(story, parentPath);
-      const item = parentData?.items?.find(it => it.id === segment);
-      name = item?.name || name;
-    }
-
-    if (isLast) {
-      html += `<span class="scope-crumb current">${escapeHtml(name)}</span>`;
-    } else {
-      html += `<span class="scope-crumb" onclick="navigateToScopeLevel(${i})">${escapeHtml(name)}</span>`;
-      html += `<span class="scope-separator">›</span>`;
-    }
-  });
-
+  // Navigation buttons (Home / Back)
+  html += '<div class="scope-nav-buttons">';
+  html += `<button class="scope-nav-btn" onclick="navigateToScopeLevel(0); renderArcs();" ${currentPath.length === 1 ? 'disabled' : ''} title="Return to top level">Home</button>`;
+  html += `<button class="scope-nav-btn" onclick="navigateBackArcs()" ${currentPath.length === 1 ? 'disabled' : ''} title="Go back one level">Back</button>`;
   html += '</div>';
 
+  // Level label
+  html += `<span class="scope-level-label">${escapeHtml(currentLevelType)}</span>`;
+
+  // Current name
+  html += `<span class="scope-current-name">${escapeHtml(currentName)}</span>`;
+
+  // Children dropdown (if we can go deeper)
+  if (nextLevelName) {
+    html += `<div class="scope-children-dropdown" id="arcsScopeChildrenDropdown">`;
+    html += `<button class="scope-children-btn" onclick="toggleArcsScopeChildrenDropdown(event)">`;
+    html += `${escapeHtml(nextLevelName)}s (${children.length}) <span class="arrow">&#x25BC;</span>`;
+    html += `</button>`;
+    html += `<div class="scope-children-menu">`;
+
+    if (children.length === 0) {
+      html += `<div style="padding: 0.6rem 1rem; color: var(--text-muted); font-style: italic;">No ${escapeHtml(nextLevelName)}s yet</div>`;
+    } else {
+      children.forEach(child => {
+        html += `<button class="scope-children-menu-item" onclick="navigateToScopeItemArcs('${child.id}')">${escapeHtml(child.name)}</button>`;
+      });
+    }
+
+    // Add new item input
+    html += `<div class="scope-add-inline">`;
+    html += `<input type="text" placeholder="+ Add ${escapeHtml(nextLevelName)}..." onkeydown="handleArcsScopeInlineAdd(event)">`;
+    html += `</div>`;
+    html += `</div></div>`;
+  }
+
+  // Structure button at root
   if (currentPath.length === 1) {
-    html += `<div class="scope-actions">
+    html += `<div class="scope-actions" style="margin-left: auto;">
       <button class="scope-setup-btn" onclick="openScopeSetup()">Structure</button>
     </div>`;
   }
 
   html += '</div>';
   tabsContainer.innerHTML = html;
+}
+
+function toggleArcsScopeChildrenDropdown(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById('arcsScopeChildrenDropdown');
+  dropdown.classList.toggle('open');
+
+  if (dropdown.classList.contains('open')) {
+    const closeHandler = (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+        document.removeEventListener('click', closeHandler);
+      }
+    };
+    setTimeout(() => document.addEventListener('click', closeHandler), 0);
+  }
+}
+
+function handleArcsScopeInlineAdd(event) {
+  if (event.key === 'Enter') {
+    const name = event.target.value.trim();
+    if (name) {
+      addScopeItemWithName(name);
+      event.target.value = '';
+      document.getElementById('arcsScopeChildrenDropdown')?.classList.remove('open');
+      renderArcs();
+    }
+  }
+}
+
+function navigateBackArcs() {
+  const story = getCurrentStory();
+  if (!story || story.currentScopePath.length <= 1) return;
+
+  story.currentScopePath = story.currentScopePath.slice(0, -1);
+  saveStories();
+  renderArcs();
+}
+
+function navigateToScopeItemArcs(itemId) {
+  const story = getCurrentStory();
+  if (!story) return;
+
+  story.currentScopePath.push(itemId);
+  saveStories();
+  renderArcs();
+
+  document.getElementById('arcsScopeChildrenDropdown')?.classList.remove('open');
 }
 
 function renderArcsContent() {
@@ -14806,55 +15220,105 @@ function renderPlanningScopeNav() {
 
   const path = story.currentScopePath || ['root'];
   const levels = story.scopeLevels || ['Story'];
+  const currentDepth = path.length - 1;
 
   // Current level type label
-  const currentLevelType = levels[path.length - 1] || levels[levels.length - 1] || 'Story';
-  let levelLabelHtml = `<span class="scope-level-label">${escapeHtml(currentLevelType)} Level</span>`;
+  const currentLevelType = levels[currentDepth] || levels[levels.length - 1] || 'Story';
 
-  // Build breadcrumb
-  let breadcrumbHtml = '<div class="scope-breadcrumb">';
-  path.forEach((segment, i) => {
-    const isLast = i === path.length - 1;
-    const levelName = i === 0 ? (levels[0] || 'Story') :
-      (story.scopeData[path.slice(0, i).join('/')]?.items?.find(it => it.id === segment)?.name || segment);
+  // Get current scope data for children
+  const currentData = getCurrentScopeData();
+  const children = currentData?.items || [];
+  const nextLevelName = currentDepth < levels.length - 1 ? levels[currentDepth + 1] : null;
 
-    if (isLast) {
-      breadcrumbHtml += `<span class="scope-breadcrumb-current">${escapeHtml(levelName)}</span>`;
-    } else {
-      breadcrumbHtml += `<button class="scope-breadcrumb-btn" onclick="navigateToScopePlanning(${i})">${escapeHtml(levelName)}</button>`;
-      breadcrumbHtml += `<span class="scope-breadcrumb-sep">›</span>`;
-    }
-  });
-  breadcrumbHtml += '</div>';
-  
-  // Build actions (add item at current level)
-  let actionsHtml = '<div class="scope-actions">';
-  const currentLevelIndex = path.length - 1;
-  const nextLevelName = levels[currentLevelIndex + 1];
-  
+  // Get current scope name
+  let currentName = levels[0] || 'Story';
+  if (path.length > 1) {
+    const parentPath = path.slice(0, -1);
+    const parentData = getScopeData(story, parentPath);
+    const currentItem = parentData?.items?.find(it => it.id === path[path.length - 1]);
+    currentName = currentItem?.name || 'Unknown';
+  }
+
+  let html = '';
+
+  // Navigation buttons (Home / Back)
+  html += '<div class="scope-nav-buttons">';
+  html += `<button class="scope-nav-btn" onclick="navigateToScopePlanning(0)" ${path.length === 1 ? 'disabled' : ''} title="Return to top level">Home</button>`;
+  html += `<button class="scope-nav-btn" onclick="navigateBackPlanning()" ${path.length === 1 ? 'disabled' : ''} title="Go back one level">Back</button>`;
+  html += '</div>';
+
+  // Level label
+  html += `<span class="scope-level-label">${escapeHtml(currentLevelType)}</span>`;
+
+  // Current name
+  html += `<span class="scope-current-name">${escapeHtml(currentName)}</span>`;
+
+  // Children dropdown (if we can go deeper)
   if (nextLevelName) {
-    actionsHtml += `<button class="scope-add-btn" onclick="addScopeItemPlanning()">+ Add ${escapeHtml(nextLevelName)}</button>`;
+    html += `<div class="scope-children-dropdown" id="planningScopeChildrenDropdown">`;
+    html += `<button class="scope-children-btn" onclick="togglePlanningScopeChildrenDropdown(event)">`;
+    html += `${escapeHtml(nextLevelName)}s (${children.length}) <span class="arrow">&#x25BC;</span>`;
+    html += `</button>`;
+    html += `<div class="scope-children-menu">`;
+
+    if (children.length === 0) {
+      html += `<div style="padding: 0.6rem 1rem; color: var(--text-muted); font-style: italic;">No ${escapeHtml(nextLevelName)}s yet</div>`;
+    } else {
+      children.forEach(child => {
+        html += `<button class="scope-children-menu-item" onclick="enterScopeItemPlanning('${child.id}')">${escapeHtml(child.name)}</button>`;
+      });
+    }
+
+    // Add new item input
+    html += `<div class="scope-add-inline">`;
+    html += `<input type="text" placeholder="+ Add ${escapeHtml(nextLevelName)}..." onkeydown="handlePlanningScopeInlineAdd(event)">`;
+    html += `</div>`;
+    html += `</div></div>`;
   }
-  
-  // Show items at current level
-  const scopeData = getCurrentScopeData();
-  if (scopeData && scopeData.items && scopeData.items.length > 0 && nextLevelName) {
-    actionsHtml += `<div class="scope-items">`;
-    scopeData.items.forEach(item => {
-      actionsHtml += `<button class="scope-item-btn" onclick="enterScopeItemPlanning('${item.id}')">${escapeHtml(item.name)}</button>`;
-    });
-    actionsHtml += `</div>`;
-  }
-  
-  // Show configure button if at root with no items
+
+  // Show configure button if at root with no items and only default level
   const rootData = getScopeData(story, ['root']);
   if (path.length === 1 && (!rootData.items || rootData.items.length === 0) && levels.length === 1) {
-    actionsHtml += `<button class="scope-setup-btn" onclick="openScopeSetup()">Configure Levels</button>`;
+    html += `<button class="scope-setup-btn" onclick="openScopeSetup()" style="margin-left: auto;">Configure Levels</button>`;
   }
-  
-  actionsHtml += '</div>';
 
-  nav.innerHTML = levelLabelHtml + breadcrumbHtml + actionsHtml;
+  nav.innerHTML = html;
+}
+
+function togglePlanningScopeChildrenDropdown(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById('planningScopeChildrenDropdown');
+  dropdown.classList.toggle('open');
+
+  if (dropdown.classList.contains('open')) {
+    const closeHandler = (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+        document.removeEventListener('click', closeHandler);
+      }
+    };
+    setTimeout(() => document.addEventListener('click', closeHandler), 0);
+  }
+}
+
+function handlePlanningScopeInlineAdd(event) {
+  if (event.key === 'Enter') {
+    const name = event.target.value.trim();
+    if (name) {
+      addScopeItemPlanning(name);
+      event.target.value = '';
+      document.getElementById('planningScopeChildrenDropdown')?.classList.remove('open');
+    }
+  }
+}
+
+function navigateBackPlanning() {
+  const story = getCurrentStory();
+  if (!story || story.currentScopePath.length <= 1) return;
+
+  story.currentScopePath = story.currentScopePath.slice(0, -1);
+  saveStories();
+  renderPlanning();
 }
 
 function navigateToScopePlanning(level) {
@@ -14865,24 +15329,24 @@ function navigateToScopePlanning(level) {
   renderPlanningTab();
 }
 
-function addScopeItemPlanning() {
+function addScopeItemPlanning(name) {
   const story = getCurrentStory();
   if (!story) return;
-  
+
   const levels = story.scopeLevels || ['Story'];
   const currentLevelIndex = story.currentScopePath.length - 1;
   const nextLevelName = levels[currentLevelIndex + 1];
-  
+
   if (!nextLevelName) return;
-  
+
   const scopeData = getCurrentScopeData();
   if (!scopeData.items) scopeData.items = [];
-  
+
   const newItem = {
     id: generateId(),
-    name: `New ${nextLevelName}`
+    name: name || `New ${nextLevelName}`
   };
-  
+
   scopeData.items.push(newItem);
   story.updatedAt = Date.now();
   saveState();
@@ -16227,20 +16691,48 @@ function renderPlanningCharactersSubtab(container, scopeData) {
         } else {
           // Interview tab
           const interviews = thisCharData.interview || [];
+          const savedQuestions = story.savedInterviewQuestions || [];
+
           html += `
             <div class="planning-char-interview">
               <p class="interview-intro">Ask questions and answer them in character. Get into their head.</p>
-              <div class="interview-items">
           `;
 
+          // Saved questions bank dropdown
+          if (savedQuestions.length > 0) {
+            html += `
+              <div class="interview-saved-bank">
+                <label>Load saved question:</label>
+                <select onchange="loadSavedInterviewQuestion('${charId}', this.value); this.value='';">
+                  <option value="">Select a question...</option>
+                  ${savedQuestions.map((q, i) => `<option value="${i}">${escapeHtml(q.length > 50 ? q.substring(0, 50) + '...' : q)}</option>`).join('')}
+                </select>
+                <button class="btn btn-sm btn-muted" onclick="openManageSavedQuestionsModal()" title="Manage saved questions">Manage</button>
+              </div>
+            `;
+          } else {
+            html += `
+              <div class="interview-saved-bank empty">
+                <span class="interview-saved-hint">Save questions below to reuse them across characters in this project.</span>
+              </div>
+            `;
+          }
+
+          html += `<div class="interview-items">`;
+
           interviews.forEach((item, i) => {
+            const questionText = item.question || '';
+            const isSaved = savedQuestions.includes(questionText);
             html += `
               <div class="interview-item">
                 <div class="interview-question-row">
                   <span class="interview-label">Q:</span>
                   <textarea class="interview-q" placeholder="Ask them something..."
                             onchange="updateInterviewItem('${charId}', ${i}, 'question', this.value)"
-                            oninput="autoResizeTextarea(this)">${escapeHtml(item.question || '')}</textarea>
+                            oninput="autoResizeTextarea(this)">${escapeHtml(questionText)}</textarea>
+                  <button class="interview-save-q ${isSaved ? 'saved' : ''}"
+                          onclick="toggleSaveInterviewQuestion('${charId}', ${i})"
+                          title="${isSaved ? 'Remove from saved' : 'Save for reuse'}">${isSaved ? '★' : '☆'}</button>
                   <button class="interview-delete" onclick="deleteInterviewItem('${charId}', ${i})">&times;</button>
                 </div>
                 <div class="interview-answer-row">
@@ -16366,6 +16858,162 @@ function deleteInterviewItem(charId, index) {
   const story = getCurrentStory();
   story.updatedAt = Date.now();
   saveState();
+  renderPlanningTab();
+}
+
+function toggleSaveInterviewQuestion(charId, index) {
+  const story = getCurrentStory();
+  if (!story) return;
+
+  const scopeData = getCurrentScopeData();
+  const interview = scopeData?.planning?.characterData?.[charId]?.interview;
+  if (!interview || !interview[index]) return;
+
+  const question = interview[index].question?.trim();
+  if (!question) return; // Don't save empty questions
+
+  if (!story.savedInterviewQuestions) {
+    story.savedInterviewQuestions = [];
+  }
+
+  const existingIdx = story.savedInterviewQuestions.indexOf(question);
+  if (existingIdx >= 0) {
+    // Remove from saved
+    story.savedInterviewQuestions.splice(existingIdx, 1);
+  } else {
+    // Add to saved
+    story.savedInterviewQuestions.push(question);
+  }
+
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+}
+
+function loadSavedInterviewQuestion(charId, savedIndex) {
+  if (savedIndex === '' || savedIndex === null) return;
+
+  const story = getCurrentStory();
+  if (!story || !story.savedInterviewQuestions) return;
+
+  const question = story.savedInterviewQuestions[parseInt(savedIndex)];
+  if (!question) return;
+
+  const scopeData = getCurrentScopeData();
+  if (!scopeData?.planning?.characterData) return;
+
+  if (!scopeData.planning.characterData[charId]) {
+    scopeData.planning.characterData[charId] = { questions: {}, interview: [] };
+  }
+  if (!scopeData.planning.characterData[charId].interview) {
+    scopeData.planning.characterData[charId].interview = [];
+  }
+
+  // Add a new interview item with this question
+  scopeData.planning.characterData[charId].interview.push({
+    question: question,
+    answer: ''
+  });
+
+  story.updatedAt = Date.now();
+  saveState();
+  renderPlanningTab();
+}
+
+function openManageSavedQuestionsModal() {
+  const story = getCurrentStory();
+  if (!story) return;
+
+  const saved = story.savedInterviewQuestions || [];
+
+  let html = `
+    <div class="modal-overlay" onclick="closeManageSavedQuestionsModal()">
+      <div class="modal-content manage-questions-modal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Saved Interview Questions</h2>
+          <button class="modal-close" onclick="closeManageSavedQuestionsModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+            These questions are saved for this project and can be reused across any character.
+          </p>
+  `;
+
+  if (saved.length === 0) {
+    html += `<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No saved questions yet. Star a question in any character interview to save it here.</p>`;
+  } else {
+    html += `<div class="saved-questions-list">`;
+    saved.forEach((q, i) => {
+      html += `
+        <div class="saved-question-item">
+          <span class="saved-question-text">${escapeHtml(q)}</span>
+          <button class="saved-question-delete" onclick="deleteSavedQuestion(${i})" title="Remove">&times;</button>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  }
+
+  html += `
+          <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+            <input type="text" id="newSavedQuestionInput" placeholder="Add a new question..."
+                   style="width: 100%; padding: 0.5rem; background: var(--bg-input); border: 1px solid var(--border); border-radius: 4px; color: var(--text-primary); font-family: inherit;"
+                   onkeydown="if(event.key==='Enter')addNewSavedQuestion()">
+            <button class="btn btn-sm" style="margin-top: 0.5rem;" onclick="addNewSavedQuestion()">Add Question</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  let modal = document.getElementById('manageSavedQuestionsModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'manageSavedQuestionsModal';
+    document.body.appendChild(modal);
+  }
+  modal.innerHTML = html;
+}
+
+function closeManageSavedQuestionsModal() {
+  const modal = document.getElementById('manageSavedQuestionsModal');
+  if (modal) modal.innerHTML = '';
+}
+
+function deleteSavedQuestion(index) {
+  const story = getCurrentStory();
+  if (!story || !story.savedInterviewQuestions) return;
+
+  story.savedInterviewQuestions.splice(index, 1);
+  story.updatedAt = Date.now();
+  saveState();
+  openManageSavedQuestionsModal(); // Refresh the modal
+  renderPlanningTab();
+}
+
+function addNewSavedQuestion() {
+  const input = document.getElementById('newSavedQuestionInput');
+  if (!input) return;
+
+  const question = input.value.trim();
+  if (!question) return;
+
+  const story = getCurrentStory();
+  if (!story) return;
+
+  if (!story.savedInterviewQuestions) {
+    story.savedInterviewQuestions = [];
+  }
+
+  // Don't add duplicates
+  if (!story.savedInterviewQuestions.includes(question)) {
+    story.savedInterviewQuestions.push(question);
+    story.updatedAt = Date.now();
+    saveState();
+  }
+
+  input.value = '';
+  openManageSavedQuestionsModal(); // Refresh
   renderPlanningTab();
 }
 
