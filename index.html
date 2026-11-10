@@ -1146,6 +1146,10 @@ body {
   color: var(--text-primary);
   font-size: 0.95rem;
   font-weight: 500;
+  font-family: inherit;
+  resize: none;
+  overflow: hidden;
+  min-height: 1.8em;
 }
 
 .question-text:focus {
@@ -1161,8 +1165,9 @@ body {
   color: var(--text-secondary);
   font-family: inherit;
   font-size: 0.9rem;
-  min-height: 50px;
-  resize: vertical;
+  min-height: 2em;
+  resize: none;
+  overflow: hidden;
 }
 
 .question-answer:focus {
@@ -1322,6 +1327,10 @@ body {
   color: var(--text-secondary);
   font-size: 0.9rem;
   font-style: italic;
+  font-family: inherit;
+  resize: none;
+  overflow: hidden;
+  min-height: 1.8em;
 }
 
 .chronology-when:focus {
@@ -1337,6 +1346,10 @@ body {
   border-radius: 4px;
   color: var(--text-primary);
   font-size: 0.95rem;
+  font-family: inherit;
+  resize: none;
+  overflow: hidden;
+  min-height: 1.8em;
 }
 
 .chronology-what:focus {
@@ -9130,7 +9143,7 @@ function addScopeItemWithName(name) {
   currentData.items.push(newItem);
   saveStories();
   renderScopeNav();
-  renderArcsScope();
+  renderBeats();
 }
 
 function navigateBack() {
@@ -9140,7 +9153,7 @@ function navigateBack() {
   story.currentScopePath = story.currentScopePath.slice(0, -1);
   saveStories();
   renderScopeNav();
-  renderArcsScope();
+  renderBeats();
 }
 
 function navigateToScopeItem(itemId) {
@@ -9150,7 +9163,7 @@ function navigateToScopeItem(itemId) {
   story.currentScopePath.push(itemId);
   saveStories();
   renderScopeNav();
-  renderArcsScope();
+  renderBeats();
 
   // Close dropdown
   document.getElementById('scopeChildrenDropdown')?.classList.remove('open');
@@ -15377,7 +15390,7 @@ function renderBrainstormSubtab(container, scopeData) {
               onchange="updateBrainstormBeat(${i}, this.value)"
               oninput="autoResizeTextarea(this)"
               placeholder="Beat ${i + 1}...">${escapeHtml(beat)}</textarea>
-            <button class="brainstorm-to-plot-btn" onclick="openMoveToPlotMenu(${i})" title="Move to Plot">&#8594;</button>
+            <button class="brainstorm-to-plot-btn" onclick="openMoveToPlotMenu(${i})" title="Copy to Plot">&#8594;</button>
             <button class="brainstorm-beat-delete" onclick="deleteBrainstormBeat(${i})">&times;</button>
           </div>
         `).join('')}
@@ -15419,7 +15432,7 @@ function renderBrainstormSubtab(container, scopeData) {
     
     <div class="move-to-plot-menu" id="moveToPlotMenu" style="display: none;">
       <div class="move-to-plot-header">
-        <span>Move to Plot Beat</span>
+        <span>Copy to Plot Beat</span>
         <button class="move-to-plot-close" onclick="closeMoveToPlotMenu()">&times;</button>
       </div>
       <div class="move-to-plot-options" id="moveToPlotOptions"></div>
@@ -15540,7 +15553,7 @@ function openMoveToPlotMenu(beatIndex) {
           <button class="move-to-plot-option ${hasContent ? 'filled' : ''}" 
             ${hasContent ? 'disabled' : ''} 
             onclick="executeMoveToPlot('${b.id}')"
-            title="${hasContent ? 'Already has content' : 'Click to move beat here'}">
+            title="${hasContent ? 'Already has content' : 'Click to copy beat here'}">
             <span class="move-to-plot-name">${escapeHtml(b.name || 'Beat ' + (i + 1))}</span>
             ${hasContent ? '<span class="move-to-plot-filled-tag">filled</span>' : ''}
           </button>
@@ -15555,7 +15568,7 @@ function openMoveToPlotMenu(beatIndex) {
         <button class="move-to-plot-option ${hasContent ? 'filled' : ''}" 
           ${hasContent ? 'disabled' : ''} 
           onclick="executeMoveToPlot('${b.id}')"
-          title="${hasContent ? 'Already has content' : 'Click to move beat here'}">
+          title="${hasContent ? 'Already has content' : 'Click to copy beat here'}">
           <span class="move-to-plot-name">${escapeHtml(b.name)}</span>
           ${hasContent ? '<span class="move-to-plot-filled-tag">filled</span>' : ''}
         </button>
@@ -15575,20 +15588,17 @@ function closeMoveToPlotMenu() {
 
 function executeMoveToPlot(plotBeatId) {
   if (pendingMoveToPlotIndex === null) return;
-  
+
   const story = getCurrentStory();
   const scopeData = getCurrentScopeData();
   if (!scopeData?.planning?.brainstorm?.beats) return;
-  
+
   const beatText = scopeData.planning.brainstorm.beats[pendingMoveToPlotIndex];
   if (!beatText) return;
-  
-  // Add to plot beat content
+
+  // Copy to plot beat content (keep in brainstorm too)
   if (!scopeData.beatContent) scopeData.beatContent = {};
   scopeData.beatContent[plotBeatId] = beatText;
-  
-  // Remove from brainstorm
-  scopeData.planning.brainstorm.beats.splice(pendingMoveToPlotIndex, 1);
   
   story.updatedAt = Date.now();
   saveState();
@@ -15985,10 +15995,12 @@ function renderQuestionsSubtab(container, scopeData) {
               </button>
             </div>
             <div class="question-content">
-              <input type="text" class="question-text" value="${escapeHtml(item.question)}" 
-                onchange="updateQuestion(${i}, 'question', this.value)" placeholder="Question...">
+              <textarea class="question-text" placeholder="Question..."
+                onchange="updateQuestion(${i}, 'question', this.value)"
+                oninput="autoResizeTextarea(this)">${escapeHtml(item.question)}</textarea>
               <textarea class="question-answer" placeholder="Answer or notes..."
-                onchange="updateQuestion(${i}, 'answer', this.value)">${escapeHtml(item.answer || '')}</textarea>
+                onchange="updateQuestion(${i}, 'answer', this.value)"
+                oninput="autoResizeTextarea(this)">${escapeHtml(item.answer || '')}</textarea>
             </div>
             <button class="question-delete" onclick="deleteQuestion(${i})">&times;</button>
           </div>
@@ -16023,6 +16035,8 @@ What's the villain's actual motivation?"
   if (q.items && q.items.length > 0) {
     setupQuestionsDrag();
   }
+
+  setTimeout(() => initAutoResizeTextareas(), 0);
 }
 
 function updateQuestionsDraft(value) {
@@ -16342,10 +16356,12 @@ function renderChronologySubtab(container, scopeData) {
                     onchange="updateChronologyEvent(${event.index}, 'order', this.value)"
                     placeholder="#" title="Order (lower = earlier)">
                 </div>
-                <input type="text" class="chronology-when" value="${escapeHtml(event.when)}" 
-                  onchange="updateChronologyEvent(${event.index}, 'when', this.value)" placeholder="When...">
-                <input type="text" class="chronology-what" value="${escapeHtml(event.what)}" 
-                  onchange="updateChronologyEvent(${event.index}, 'what', this.value)" placeholder="What happened...">
+                <textarea class="chronology-when" placeholder="When..."
+                  onchange="updateChronologyEvent(${event.index}, 'when', this.value)"
+                  oninput="autoResizeTextarea(this)">${escapeHtml(event.when)}</textarea>
+                <textarea class="chronology-what" placeholder="What happened..."
+                  onchange="updateChronologyEvent(${event.index}, 'what', this.value)"
+                  oninput="autoResizeTextarea(this)">${escapeHtml(event.what)}</textarea>
                 <button class="chronology-delete" onclick="deleteChronologyEvent(${event.index})">&times;</button>
               </div>
             `;
@@ -16395,6 +16411,8 @@ function renderChronologySubtab(container, scopeData) {
   if (c.events && c.events.length > 0) {
     setupChronologyDrag();
   }
+
+  setTimeout(() => initAutoResizeTextareas(), 0);
 }
 
 function collectChildChronologyEvents(story, currentPath, childIndex = 0) {
